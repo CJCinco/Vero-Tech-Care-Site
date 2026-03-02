@@ -2,8 +2,8 @@
   --charcoal: #111514;
   --charcoal-soft: #1a1f1e;
   --charcoal-muted: #252b2a;
-  --ivory: #f4efe4;
-  --ivory-soft: #fbf8f2;
+  --ivory: #efe7d8;
+  --ivory-soft: #f7f1e8;
   --paper: #fffdf9;
   --stone: #605f59;
   --stone-soft: #8c8a83;
@@ -544,6 +544,10 @@ h3 {
 
 .package-copy {
   margin-bottom: 1rem;
+}
+
+.package-card .button {
+  margin-top: 1.45rem;
 }
 
 .package-card-featured {
