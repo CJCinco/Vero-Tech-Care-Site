@@ -159,12 +159,14 @@ ul {
 h1,
 h2 {
   font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", serif;
+  font-weight: 400;
+  text-shadow: none;
 }
 
 .brand-mark {
   font-size: clamp(1.8rem, 2.8vw, 2.35rem);
   line-height: 1;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
 }
 
 .brand-tag {
@@ -315,16 +317,16 @@ h2 {
 h1 {
   margin-bottom: 1rem;
   font-size: clamp(2.7rem, 8vw, 5.1rem);
-  line-height: 0.98;
-  letter-spacing: -0.03em;
+  line-height: 1.02;
+  letter-spacing: 0;
   max-width: 11ch;
 }
 
 h2 {
   margin-bottom: 1rem;
   font-size: clamp(2.2rem, 5vw, 3.5rem);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
+  line-height: 1.06;
+  letter-spacing: 0;
 }
 
 h3 {
@@ -455,6 +457,7 @@ h3 {
   border: 0;
   border-radius: calc(var(--radius-lg) - 0.35rem);
   background: var(--white);
+  scroll-margin-top: 1rem;
 }
 
 .hero-card {
@@ -952,7 +955,7 @@ summary:focus-visible {
   }
 
   .hero-panel {
-    margin-top: clamp(5.5rem, 7vw, 8.25rem);
+    margin-top: clamp(38rem, 48vw, 42rem);
   }
 
   .scheduler {
