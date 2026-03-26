@@ -905,20 +905,8 @@ summary:focus-visible {
     overflow: visible;
   }
 
-  .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    backdrop-filter: blur(12px);
-  }
-
   .nav {
     flex-wrap: nowrap;
-    position: sticky;
-    top: 3rem;
-    z-index: 29;
-    background: rgba(13, 17, 16, 0.72);
-    backdrop-filter: blur(12px);
   }
 
   .nav-links {
@@ -935,7 +923,6 @@ summary:focus-visible {
 
   .scheduler {
     padding-bottom: 7.5rem;
-    scroll-margin-top: 8rem;
   }
 
   .scheduler-shell {
