@@ -117,8 +117,12 @@ ul {
 }
 
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
   border-bottom: 1px solid var(--line-light);
   background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
 }
 
 .topbar-content {
@@ -397,6 +401,7 @@ h3 {
 
 .scheduler {
   padding: 0 0 6rem;
+  scroll-margin-top: 4.75rem;
 }
 
 .scheduler-shell {
@@ -778,6 +783,11 @@ h3 {
 .contact-support {
   display: grid;
   gap: 0.75rem;
+  color: var(--text);
+}
+
+.contact-support a {
+  color: var(--text);
 }
 
 .contact-support .card-label {
