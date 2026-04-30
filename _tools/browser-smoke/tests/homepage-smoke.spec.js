@@ -3,7 +3,7 @@ const path = require("path");
 const { pathToFileURL } = require("url");
 
 const homepageUrl = pathToFileURL(
-  path.resolve(__dirname, "../index.html")
+  path.resolve(__dirname, "../../../index.html")
 ).toString();
 
 async function assertAboutScrolledIntoView(page) {

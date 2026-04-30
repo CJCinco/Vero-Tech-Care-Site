@@ -1,4 +1,7 @@
+.DS_Store
 node_modules/
 test-results/
 playwright-report/
-.DS_Store
+_tools/**/node_modules/
+_tools/**/test-results/
+_tools/**/playwright-report/
