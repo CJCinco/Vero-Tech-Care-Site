@@ -2,6 +2,17 @@
 
 Website for Vero Tech Care.
 
+## Codex Website Workflow
+
+Use this workflow when Codex makes website changes.
+
+- Work only inside this `02 Website` repo for website source changes.
+- Keep browser smoke-test tooling in `_tools/browser-smoke/`.
+- Before publishing, run `npm run test:smoke` from `_tools/browser-smoke/`.
+- For small trusted updates, commit and push directly to `main`.
+- For larger or riskier updates, create a branch and use the GitHub connector to open a draft PR.
+- GitHub CLI is optional. Local Git credentials and the GitHub connector are enough for the normal workflow.
+
 ## Local SEO Checklist
 
 Use this checklist when updating the website or Google Business Profile.
