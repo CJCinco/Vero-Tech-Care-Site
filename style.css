@@ -900,6 +900,11 @@ h3 {
   color: #8ab4f8;
 }
 
+.social-link-badge-nextdoor {
+  background: rgba(0, 119, 73, 0.2);
+  color: #7fddb4;
+}
+
 .social-link-badge-facebook {
   background: rgba(24, 119, 242, 0.18);
   color: #7fb0ff;
