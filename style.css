@@ -854,9 +854,24 @@ h3 {
 
 .pricing-price {
   margin-bottom: 0;
-  color: var(--accent-deep);
-  font-weight: 800;
+  color: #244b48;
+  font-weight: 750;
   line-height: 1.25;
+  letter-spacing: 0.01em;
+}
+
+.pricing-note {
+  margin-top: 1.2rem;
+  padding: 0.95rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(62, 140, 140, 0.16);
+  background: rgba(62, 140, 140, 0.08);
+}
+
+.pricing-note p {
+  margin-bottom: 0;
+  color: var(--text-soft);
+  font-size: 0.96rem;
 }
 
 .pricing-helper,
@@ -1070,6 +1085,40 @@ h3 {
   padding: 0 1.35rem 1.3rem;
   margin-bottom: 0;
   color: var(--text-soft);
+}
+
+.faq-memberships {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0 1.35rem 1rem;
+}
+
+.faq-memberships article {
+  padding: 0.95rem;
+  border: 1px solid rgba(17, 21, 20, 0.08);
+  border-radius: var(--radius-sm);
+  background: rgba(62, 140, 140, 0.06);
+}
+
+.faq-memberships strong,
+.faq-memberships span {
+  display: block;
+}
+
+.faq-memberships strong {
+  color: var(--text);
+}
+
+.faq-memberships span {
+  margin-top: 0.1rem;
+  color: #244b48;
+  font-weight: 750;
+}
+
+.faq-memberships p {
+  padding: 0;
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
 }
 
 .section-contact {

@@ -139,12 +139,14 @@ Default service pricing:
 - evenings/weekends may carry a surcharge  
 - travel beyond the standard service area may carry a premium  
 - memberships begin at premium price points and should not feel bargain-tier  
+- memberships may mention 24/7 computer monitoring only when clearly limited to covered computers and secure monitoring software
   
 When showing pricing on the site:  
 - keep it concise  
 - use simple starting-price language when possible  
 - avoid large complex pricing sections unless explicitly requested  
 - do not undercut the premium positioning  
+- clarify that 24/7 computer monitoring is not 24/7 emergency live support
   
 ## Scope and messaging guardrails  
 This is not a bargain tech-repair brand.  

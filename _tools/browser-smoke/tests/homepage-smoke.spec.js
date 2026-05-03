@@ -38,6 +38,14 @@ async function runHomepageSmoke(page, viewportName, viewport) {
     "Patient, local tech help you can trust."
   );
   await expect(page.locator("#about .about-points li")).toHaveCount(4);
+  await expect(page.locator("#pricing")).toContainText("24/7 computer monitoring");
+  await expect(page.locator("#faq")).toContainText(
+    "What does 24/7 computer monitoring mean?"
+  );
+  await expect(page.locator("#faq")).toContainText(
+    "What membership options are available?"
+  );
+  await expect(page.locator("#faq")).toContainText("Tech Care Plus");
 
   await page.locator('.nav-links a[href="#about"]').click();
   await assertAboutScrolledIntoView(page);
