@@ -543,7 +543,8 @@ h3 {
 .proof-strip {
   display: grid;
   gap: 1rem;
-  margin: -2.8rem 0 4rem;
+  margin: -2.8rem 0 0;
+  padding-bottom: 3rem;
   position: relative;
   z-index: 1;
 }
