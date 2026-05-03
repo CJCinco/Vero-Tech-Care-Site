@@ -778,6 +778,77 @@ h3 {
   color: rgba(255, 255, 255, 0.78);
 }
 
+.section-visit {
+  color: var(--white);
+  background:
+    linear-gradient(145deg, rgba(17, 21, 20, 0.99), rgba(27, 62, 58, 0.97)),
+    var(--charcoal);
+}
+
+.section-visit .eyebrow-dark {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.section-visit .section-heading {
+  max-width: 45rem;
+}
+
+.section-visit .section-copy {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.visit-layout {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.visit-grid {
+  display: grid;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.visit-step {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.visit-step-featured {
+  color: var(--white);
+}
+
+.visit-step .path-number {
+  margin-bottom: 0.2rem;
+  color: #7fd0c8;
+}
+
+.visit-step h3 {
+  color: var(--white);
+}
+
+.visit-step p:last-child {
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.visit-note {
+  display: grid;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 0.85rem;
+  padding: 1.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.035));
+}
+
+.visit-note p {
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.78);
+}
+
 .pricing-card {
   max-width: none;
   border-color: rgba(62, 140, 140, 0.18);
@@ -1364,6 +1435,7 @@ summary:focus-visible {
   .trust-grid,
   .service-grid,
   .service-path-grid,
+  .visit-grid,
   .workshop-grid,
   .package-grid,
   .contact-grid {
@@ -1372,6 +1444,15 @@ summary:focus-visible {
 
   .hero-benefits {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .visit-grid {
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .visit-step {
+    padding: 1.35rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.14);
   }
 
   .contact-grid a:last-child {
@@ -1450,7 +1531,20 @@ summary:focus-visible {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .visit-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .visit-step {
+    min-height: 13rem;
+  }
+
   .service-scope-panel {
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 1.5rem;
+  }
+
+  .visit-note {
     grid-template-columns: minmax(0, 1fr) auto;
     padding: 1.5rem;
   }
