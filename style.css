@@ -501,6 +501,18 @@ h3 {
   font-size: 0.95rem;
 }
 
+.scheduler-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1rem;
+  align-items: center;
+  margin-top: 1.45rem;
+}
+
+.scheduler-actions .pricing-helper {
+  margin-bottom: 0;
+}
+
 .booking-guide {
   display: grid;
   gap: 0.85rem;

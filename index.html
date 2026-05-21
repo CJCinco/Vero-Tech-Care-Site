@@ -96,7 +96,7 @@
     "potentialAction": {
       "@type": "ScheduleAction",
       "name": "Book Online",
-      "target": "https://verotechcare.com/#booking-embed"
+      "target": "https://verotechcare.com/book.html"
     }
   }
   </script>
@@ -125,7 +125,7 @@
             <a href="digital-presence-management.html">For Businesses</a>
           </div>
 
-          <a class="button button-solid nav-cta" href="#booking-embed">Book Online</a>
+          <a class="button button-solid nav-cta" href="book.html">Book Online</a>
         </div>
       </nav>
 
@@ -140,7 +140,7 @@
           </p>
 
           <div class="hero-actions">
-            <a class="button button-solid" href="#booking-embed">Book Online</a>
+            <a class="button button-solid" href="book.html">Book Online</a>
             <p class="hero-helper">
               Not sure what to book?
               <a href="tel:+17725884324">Call</a>,
@@ -241,7 +241,7 @@
           </p>
 
           <div class="contact-actions">
-            <a class="button button-solid button-accent" href="#booking-embed">Book Online</a>
+            <a class="button button-solid button-accent" href="book.html">Book Online</a>
           </div>
 
           <div class="about-trust-grid" aria-label="Vero Tech Care trust highlights">
@@ -316,7 +316,7 @@
             </p>
           </div>
 
-          <a class="button button-solid" href="#booking-embed">Book the right visit</a>
+          <a class="button button-solid" href="book.html">Book the right visit</a>
         </div>
       </div>
     </section>
@@ -369,7 +369,7 @@
             </div>
 
             <div class="pricing-actions">
-              <a class="button button-solid button-accent" href="#booking-embed">Book Online</a>
+              <a class="button button-solid button-accent" href="book.html">Book Online</a>
               <p class="pricing-helper">
                 Need help choosing?
                 <a href="tel:+17725884324">Call</a>,
@@ -389,8 +389,8 @@
           <p class="eyebrow">Book Online</p>
           <h2 id="schedule-title">Schedule the right kind of help.</h2>
           <p class="scheduler-copy">
-            Pick the closest fit from the calendar below. If you are unsure, call, text, or
-            email first and I will point you toward the simplest next step.
+            Booking now has its own page so the homepage stays cleaner and easier to scan.
+            Choose a visit type there, or contact me first if you are not sure what to book.
           </p>
           <div class="booking-guide" aria-label="Which appointment to choose">
             <article>
@@ -406,16 +406,16 @@
               <p>Contact me first. A short conversation can keep you from booking the wrong kind of help.</p>
             </article>
           </div>
-          <iframe
-            id="booking-embed"
-            class="scheduler-frame"
-            src="https://app.acuityscheduling.com/schedule.php?owner=38883336&amp;calendarID=13853126&amp;ref=embedded_csp"
-            title="Schedule Appointment"
-            width="100%"
-            height="800"
-            frameborder="0"
-            allow="payment"
-          ></iframe>
+          <div class="scheduler-actions">
+            <a class="button button-accent" href="book.html">Open Booking Page</a>
+            <p class="pricing-helper">
+              Need help choosing?
+              <a href="tel:+17725884324">Call</a>,
+              <a href="sms:+17725884324">text</a>,
+              or
+              <a href="mailto:CJ@Verotechcare.com?subject=Vero%20Tech%20Care%20Question">email</a>.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -475,7 +475,7 @@
             The goal is calm, practical tech care: clear fixes, simple explanations, emailed next
             steps, and follow-up options when more support would help.
           </p>
-          <a class="button button-solid button-accent" href="#booking-embed">Book Online</a>
+          <a class="button button-solid button-accent" href="book.html">Book Online</a>
         </div>
       </div>
     </section>
@@ -624,7 +624,7 @@
           <h2>Ready to make tech easier?</h2>
           <p>Booking online is the fastest way to schedule an appointment.</p>
           <div class="contact-actions">
-            <a class="button button-solid button-accent" href="#booking-embed">Book Online</a>
+            <a class="button button-solid button-accent" href="book.html">Book Online</a>
           </div>
           <p class="contact-note">
             Serving Vero Beach, FL and nearby homes by appointment. Remote help is available beyond
@@ -696,7 +696,7 @@
       </div>
 
       <div class="footer-links">
-        <a href="#booking-embed">Book Online</a>
+        <a href="book.html">Book Online</a>
         <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#pricing">Starting prices</a>
@@ -709,7 +709,7 @@
   </footer>
 
   <div class="mobile-dock" aria-label="Quick booking and contact actions">
-    <a href="#booking-embed">Book Online</a>
+    <a href="book.html">Book Online</a>
     <a href="tel:+17725884324">Call</a>
     <a href="sms:+17725884324">Text</a>
     <a href="mailto:CJ@Verotechcare.com">Email</a>
@@ -727,6 +727,5 @@
     updateMobileDock();
     window.addEventListener("scroll", updateMobileDock, { passive: true });
   </script>
-  <script src="https://embed.acuityscheduling.com/js/embed.js" type="text/javascript"></script>
 </body>
 </html>

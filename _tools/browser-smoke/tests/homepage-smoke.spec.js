@@ -8,8 +8,12 @@ const homepageUrl = pathToFileURL(
 const digitalPresenceUrl = pathToFileURL(
   path.resolve(__dirname, "../../../digital-presence-management.html")
 ).toString();
-const digitalPresenceBookingUrl =
-  "https://app.acuityscheduling.com/schedule.php?owner=38883336&appointmentType=93474728";
+const bookingUrl = pathToFileURL(
+  path.resolve(__dirname, "../../../book.html")
+).toString();
+const digitalPresenceBookingPageUrl = pathToFileURL(
+  path.resolve(__dirname, "../../../book-digital-presence-checkup.html")
+).toString();
 
 async function assertAboutScrolledIntoView(page) {
   await page.waitForFunction(() => {
@@ -20,7 +24,7 @@ async function assertAboutScrolledIntoView(page) {
   });
 }
 
-async function runHomepageSmoke(page, viewportName, viewport) {
+function captureErrors(page) {
   const consoleErrors = [];
   const pageErrors = [];
 
@@ -32,6 +36,20 @@ async function runHomepageSmoke(page, viewportName, viewport) {
   page.on("pageerror", (error) => {
     pageErrors.push(error.message);
   });
+
+  return { consoleErrors, pageErrors };
+}
+
+async function assertNoOverflow(page) {
+  const overflow = await page.evaluate(() => ({
+    scrollWidth: document.documentElement.scrollWidth,
+    viewportWidth: window.innerWidth
+  }));
+  expect(overflow.scrollWidth).toBeLessThanOrEqual(overflow.viewportWidth + 1);
+}
+
+async function runHomepageSmoke(page, viewportName, viewport) {
+  const { consoleErrors, pageErrors } = captureErrors(page);
 
   await page.setViewportSize(viewport);
   await page.goto(homepageUrl, { waitUntil: "domcontentloaded" });
@@ -53,28 +71,22 @@ async function runHomepageSmoke(page, viewportName, viewport) {
   await expect(page.locator("#faq")).toContainText("Tech Care Plus");
 
   await expect(page.locator('.nav-links a[href="digital-presence-management.html"]')).toBeVisible();
+  await expect(page.locator('.nav-cta[href="book.html"]')).toBeVisible();
   await expect(page.locator(".page-nav")).toHaveCount(0);
 
   await page.locator(".footer-links").scrollIntoViewIfNeeded();
   await page.locator('.footer-links a[href="#about"]').click();
   await assertAboutScrolledIntoView(page);
 
-  const bookingLinks = page.locator('a[href="#booking-embed"]');
+  const bookingLinks = page.locator('a[href="book.html"]');
   await expect(bookingLinks.first()).toBeVisible();
   expect(await bookingLinks.count()).toBeGreaterThan(0);
-
-  const bookingFrame = page.locator("#booking-embed");
-  await expect(bookingFrame).toHaveAttribute(
-    "src",
-    /app\.acuityscheduling\.com\/schedule\.php\?owner=38883336/
+  await expect(page.locator("#booking")).toContainText(
+    "Booking now has its own page"
   );
-  await expect(bookingFrame).toHaveAttribute("src", /calendarID=13853126/);
+  await expect(page.locator("#booking-embed")).toHaveCount(0);
 
-  const overflow = await page.evaluate(() => ({
-    scrollWidth: document.documentElement.scrollWidth,
-    viewportWidth: window.innerWidth
-  }));
-  expect(overflow.scrollWidth).toBeLessThanOrEqual(overflow.viewportWidth + 1);
+  await assertNoOverflow(page);
 
   await page.screenshot({
     path: `test-results/screenshots/homepage-${viewportName}.png`,
@@ -86,17 +98,7 @@ async function runHomepageSmoke(page, viewportName, viewport) {
 }
 
 async function runDigitalPresenceSmoke(page, viewportName, viewport) {
-  const consoleErrors = [];
-  const pageErrors = [];
-
-  page.on("console", (message) => {
-    if (message.type() === "error") {
-      consoleErrors.push(message.text());
-    }
-  });
-  page.on("pageerror", (error) => {
-    pageErrors.push(error.message);
-  });
+  const { consoleErrors, pageErrors } = captureErrors(page);
 
   await page.setViewportSize(viewport);
   await page.goto(digitalPresenceUrl, { waitUntil: "domcontentloaded" });
@@ -112,20 +114,79 @@ async function runDigitalPresenceSmoke(page, viewportName, viewport) {
   await expect(page.locator('.nav-links a[href="index.html"]')).toBeVisible();
   await expect(page.locator(".page-nav")).toHaveCount(0);
 
-  const bookingLinks = page.locator(`a[href="${digitalPresenceBookingUrl}"]`);
+  const bookingLinks = page.locator('a[href="book-digital-presence-checkup.html"]');
   await expect(bookingLinks.first()).toBeVisible();
   expect(await bookingLinks.count()).toBeGreaterThan(0);
+  await expect(page.locator('a[href^="https://app.acuityscheduling.com"]')).toHaveCount(0);
 
-  const overflow = await page.evaluate(() => ({
-    scrollWidth: document.documentElement.scrollWidth,
-    viewportWidth: window.innerWidth
-  }));
-  expect(overflow.scrollWidth).toBeLessThanOrEqual(overflow.viewportWidth + 1);
+  await assertNoOverflow(page);
 
   await page.waitForTimeout(900);
 
   await page.screenshot({
     path: `test-results/screenshots/digital-presence-${viewportName}.png`,
+    fullPage: true
+  });
+
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+}
+
+async function runBookingPageSmoke(page, viewportName, viewport) {
+  const { consoleErrors, pageErrors } = captureErrors(page);
+
+  await page.setViewportSize(viewport);
+  await page.goto(bookingUrl, { waitUntil: "domcontentloaded" });
+  await expect(page).toHaveTitle(/Book Online/);
+  await expect(page.locator("#hero-title")).toHaveText(
+    "Book the right kind of tech help."
+  );
+  await expect(page.locator("#booking")).toContainText("Choose your appointment type");
+  await expect(page.locator("#booking .booking-guide article")).toHaveCount(3);
+
+  const bookingFrame = page.locator("#booking-embed");
+  await expect(bookingFrame).toHaveAttribute(
+    "src",
+    /app\.acuityscheduling\.com\/schedule\.php\?owner=38883336/
+  );
+  await expect(bookingFrame).toHaveAttribute("src", /calendarID=13853126/);
+
+  await assertNoOverflow(page);
+
+  await page.screenshot({
+    path: `test-results/screenshots/booking-${viewportName}.png`,
+    fullPage: true
+  });
+
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+}
+
+async function runDigitalPresenceBookingSmoke(page, viewportName, viewport) {
+  const { consoleErrors, pageErrors } = captureErrors(page);
+
+  await page.setViewportSize(viewport);
+  await page.goto(digitalPresenceBookingPageUrl, { waitUntil: "domcontentloaded" });
+  await expect(page).toHaveTitle(/Book Digital Presence Checkup/);
+  await expect(page.locator("#hero-title")).toHaveText(
+    "Book your Digital Presence Checkup."
+  );
+  await expect(page.locator("#booking")).toContainText(
+    "already pointed to the business checkup"
+  );
+  await expect(page.locator("#booking .booking-guide article")).toHaveCount(3);
+
+  const bookingFrame = page.locator("#booking-embed");
+  await expect(bookingFrame).toHaveAttribute(
+    "src",
+    /app\.acuityscheduling\.com\/schedule\.php\?owner=38883336/
+  );
+  await expect(bookingFrame).toHaveAttribute("src", /appointmentType=93474728/);
+
+  await assertNoOverflow(page);
+
+  await page.screenshot({
+    path: `test-results/screenshots/digital-presence-booking-${viewportName}.png`,
     fullPage: true
   });
 
@@ -147,4 +208,20 @@ test("Digital Presence Management page desktop smoke test", async ({ page }) => 
 
 test("Digital Presence Management page mobile smoke test", async ({ page }) => {
   await runDigitalPresenceSmoke(page, "mobile", { width: 390, height: 900 });
+});
+
+test("Book Online page desktop smoke test", async ({ page }) => {
+  await runBookingPageSmoke(page, "desktop", { width: 1440, height: 1100 });
+});
+
+test("Book Online page mobile smoke test", async ({ page }) => {
+  await runBookingPageSmoke(page, "mobile", { width: 390, height: 900 });
+});
+
+test("Digital Presence Checkup booking page desktop smoke test", async ({ page }) => {
+  await runDigitalPresenceBookingSmoke(page, "desktop", { width: 1440, height: 1100 });
+});
+
+test("Digital Presence Checkup booking page mobile smoke test", async ({ page }) => {
+  await runDigitalPresenceBookingSmoke(page, "mobile", { width: 390, height: 900 });
 });
