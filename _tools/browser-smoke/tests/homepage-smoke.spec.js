@@ -107,7 +107,7 @@ async function runDigitalPresenceSmoke(page, viewportName, viewport) {
     "Digital Presence Management for Local Businesses."
   );
   await expect(page.locator("#checkup")).toContainText("Founding price");
-  await expect(page.locator("#checkup")).toContainText("$297");
+  await expect(page.locator("#checkup")).toContainText("$300");
   await expect(page.locator("#scope .path-card")).toHaveCount(6);
   await expect(page.locator("#workflow")).toContainText("Audit first");
   await expect(page.locator("#access")).toContainText("Manager access or guided screen share");
