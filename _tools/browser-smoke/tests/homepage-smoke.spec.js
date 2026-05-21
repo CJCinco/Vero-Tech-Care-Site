@@ -53,10 +53,7 @@ async function runHomepageSmoke(page, viewportName, viewport) {
   await expect(page.locator("#faq")).toContainText("Tech Care Plus");
 
   await expect(page.locator('.nav-links a[href="digital-presence-management.html"]')).toBeVisible();
-  await expect(page.locator('.page-nav a[href="#about"]')).toBeVisible();
-
-  await page.locator('.page-nav a[href="#about"]').click();
-  await assertAboutScrolledIntoView(page);
+  await expect(page.locator(".page-nav")).toHaveCount(0);
 
   await page.locator(".footer-links").scrollIntoViewIfNeeded();
   await page.locator('.footer-links a[href="#about"]').click();
@@ -113,7 +110,7 @@ async function runDigitalPresenceSmoke(page, viewportName, viewport) {
   await expect(page.locator("#workflow")).toContainText("Audit first");
   await expect(page.locator("#access")).toContainText("Manager access or guided screen share");
   await expect(page.locator('.nav-links a[href="index.html"]')).toBeVisible();
-  await expect(page.locator('.page-nav a[href="#access"]')).toBeVisible();
+  await expect(page.locator(".page-nav")).toHaveCount(0);
 
   const bookingLinks = page.locator(`a[href="${digitalPresenceBookingUrl}"]`);
   await expect(bookingLinks.first()).toBeVisible();

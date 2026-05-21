@@ -194,58 +194,8 @@ h2 {
 }
 
 .nav-links a:hover,
-.page-nav a:hover,
 .footer-links a:hover {
   color: var(--white);
-}
-
-.page-nav {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  margin-bottom: 1.45rem;
-  padding: 0.78rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.09);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.page-nav::-webkit-scrollbar {
-  display: none;
-}
-
-.page-nav-label {
-  flex: 0 0 auto;
-  color: rgba(255, 255, 255, 0.56);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.page-nav-links {
-  display: flex;
-  flex: 0 0 auto;
-  gap: 0.55rem;
-  align-items: center;
-}
-
-.page-nav a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.25rem;
-  padding: 0.45rem 0.72rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.035);
-  color: rgba(255, 255, 255, 0.72);
-  text-decoration: none;
-  font-size: 0.84rem;
-  font-weight: 600;
-  line-height: 1.1;
-  white-space: nowrap;
 }
 
 .button {
@@ -1645,15 +1595,6 @@ summary:focus-visible {
     justify-content: flex-end;
     flex-wrap: nowrap;
     gap: 1.4rem;
-  }
-
-  .page-nav {
-    justify-content: flex-end;
-    margin-bottom: 1.2rem;
-  }
-
-  .page-nav-links {
-    gap: 0.8rem;
   }
 
   .hero {
