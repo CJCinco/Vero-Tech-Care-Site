@@ -5,6 +5,11 @@ const { pathToFileURL } = require("url");
 const homepageUrl = pathToFileURL(
   path.resolve(__dirname, "../../../index.html")
 ).toString();
+const digitalPresenceUrl = pathToFileURL(
+  path.resolve(__dirname, "../../../digital-presence-management.html")
+).toString();
+const digitalPresenceBookingUrl =
+  "https://app.acuityscheduling.com/schedule.php?owner=38883336&appointmentType=93474728";
 
 async function assertAboutScrolledIntoView(page) {
   await page.waitForFunction(() => {
@@ -47,7 +52,10 @@ async function runHomepageSmoke(page, viewportName, viewport) {
   );
   await expect(page.locator("#faq")).toContainText("Tech Care Plus");
 
-  await page.locator('.nav-links a[href="#about"]').click();
+  await expect(page.locator('.nav-links a[href="digital-presence-management.html"]')).toBeVisible();
+  await expect(page.locator('.page-nav a[href="#about"]')).toBeVisible();
+
+  await page.locator('.page-nav a[href="#about"]').click();
   await assertAboutScrolledIntoView(page);
 
   await page.locator(".footer-links").scrollIntoViewIfNeeded();
@@ -80,10 +88,66 @@ async function runHomepageSmoke(page, viewportName, viewport) {
   expect(consoleErrors).toEqual([]);
 }
 
+async function runDigitalPresenceSmoke(page, viewportName, viewport) {
+  const consoleErrors = [];
+  const pageErrors = [];
+
+  page.on("console", (message) => {
+    if (message.type() === "error") {
+      consoleErrors.push(message.text());
+    }
+  });
+  page.on("pageerror", (error) => {
+    pageErrors.push(error.message);
+  });
+
+  await page.setViewportSize(viewport);
+  await page.goto(digitalPresenceUrl, { waitUntil: "domcontentloaded" });
+  await expect(page).toHaveTitle(/Digital Presence Management/);
+  await expect(page.locator("#hero-title")).toHaveText(
+    "Digital Presence Management for Local Businesses."
+  );
+  await expect(page.locator("#checkup")).toContainText("Founding price");
+  await expect(page.locator("#checkup")).toContainText("$297");
+  await expect(page.locator("#scope .path-card")).toHaveCount(6);
+  await expect(page.locator("#workflow")).toContainText("Audit first");
+  await expect(page.locator("#access")).toContainText("Manager access or guided screen share");
+  await expect(page.locator('.nav-links a[href="index.html"]')).toBeVisible();
+  await expect(page.locator('.page-nav a[href="#access"]')).toBeVisible();
+
+  const bookingLinks = page.locator(`a[href="${digitalPresenceBookingUrl}"]`);
+  await expect(bookingLinks.first()).toBeVisible();
+  expect(await bookingLinks.count()).toBeGreaterThan(0);
+
+  const overflow = await page.evaluate(() => ({
+    scrollWidth: document.documentElement.scrollWidth,
+    viewportWidth: window.innerWidth
+  }));
+  expect(overflow.scrollWidth).toBeLessThanOrEqual(overflow.viewportWidth + 1);
+
+  await page.waitForTimeout(900);
+
+  await page.screenshot({
+    path: `test-results/screenshots/digital-presence-${viewportName}.png`,
+    fullPage: true
+  });
+
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+}
+
 test("Vero Tech Care homepage desktop smoke test", async ({ page }) => {
   await runHomepageSmoke(page, "desktop", { width: 1440, height: 1100 });
 });
 
 test("Vero Tech Care homepage mobile smoke test", async ({ page }) => {
   await runHomepageSmoke(page, "mobile", { width: 390, height: 900 });
+});
+
+test("Digital Presence Management page desktop smoke test", async ({ page }) => {
+  await runDigitalPresenceSmoke(page, "desktop", { width: 1440, height: 1100 });
+});
+
+test("Digital Presence Management page mobile smoke test", async ({ page }) => {
+  await runDigitalPresenceSmoke(page, "mobile", { width: 390, height: 900 });
 });
