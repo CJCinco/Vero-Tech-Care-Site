@@ -14,6 +14,9 @@ const bookingUrl = pathToFileURL(
 const digitalPresenceBookingPageUrl = pathToFileURL(
   path.resolve(__dirname, "../../../book-digital-presence-checkup.html")
 ).toString();
+const currentSpecialUrl = pathToFileURL(
+  path.resolve(__dirname, "../../../current-special.html")
+).toString();
 
 async function assertAboutScrolledIntoView(page) {
   await page.waitForFunction(() => {
@@ -194,6 +197,44 @@ async function runDigitalPresenceBookingSmoke(page, viewportName, viewport) {
   expect(consoleErrors).toEqual([]);
 }
 
+async function runCurrentSpecialSmoke(page, viewportName, viewport) {
+  const { consoleErrors, pageErrors } = captureErrors(page);
+
+  await page.setViewportSize(viewport);
+  await page.goto(currentSpecialUrl, { waitUntil: "domcontentloaded" });
+  await expect(page).toHaveTitle(/Memorial Day Special: 2-Hour Tech Tune-Up/);
+  await expect(page.locator("#hero-title")).toHaveText("2-Hour Tech Tune-Up.");
+  await expect(page.locator(".hero-intro")).toHaveText("Memorial Day Special");
+  await expect(page.locator("body")).toContainText("25% off");
+  await expect(page.locator("body")).toContainText("$250");
+  await expect(page.locator("body")).toContainText("$187.50");
+  await expect(page.locator("body")).not.toContainText("$200");
+  await expect(page.locator("body")).toContainText("MEMORIAL25");
+  await expect(page.locator("#booking")).toContainText(
+    "Choose a time below to book your 2-Hour Tech Tune-Up."
+  );
+  await expect(page.locator("#booking .booking-guide article")).toHaveCount(0);
+
+  const bookingFrame = page.locator("#booking-embed");
+  await expect(bookingFrame).toHaveAttribute(
+    "src",
+    /app\.acuityscheduling\.com\/schedule\.php\?owner=38883336/
+  );
+  await expect(bookingFrame).toHaveAttribute("src", /appointmentType=93634542/);
+  await expect(bookingFrame).toHaveAttribute("src", /certificate=MEMORIAL25/);
+  await expect(bookingFrame).not.toHaveAttribute("src", /calendarID=/);
+
+  await assertNoOverflow(page);
+
+  await page.screenshot({
+    path: `test-results/screenshots/current-special-${viewportName}.png`,
+    fullPage: true
+  });
+
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+}
+
 test("Vero Tech Care homepage desktop smoke test", async ({ page }) => {
   await runHomepageSmoke(page, "desktop", { width: 1440, height: 1100 });
 });
@@ -224,4 +265,12 @@ test("Digital Presence Checkup booking page desktop smoke test", async ({ page }
 
 test("Digital Presence Checkup booking page mobile smoke test", async ({ page }) => {
   await runDigitalPresenceBookingSmoke(page, "mobile", { width: 390, height: 900 });
+});
+
+test("Memorial Day Special booking page desktop smoke test", async ({ page }) => {
+  await runCurrentSpecialSmoke(page, "desktop", { width: 1440, height: 1100 });
+});
+
+test("Memorial Day Special booking page mobile smoke test", async ({ page }) => {
+  await runCurrentSpecialSmoke(page, "mobile", { width: 390, height: 900 });
 });
