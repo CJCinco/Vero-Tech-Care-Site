@@ -99,7 +99,7 @@ Copy should be:
 Write for clarity first.  
 Use minimal jargon.  
 Favor short sentences.  
-Favor plain English over clever wording.  
+Favor clear, specific wording over clever copy.  
   
 The tone should feel premium and reassuring, not flashy or over-enthusiastic.  
   
