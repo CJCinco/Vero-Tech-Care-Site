@@ -2,7 +2,7 @@
 
 Website for Vero Tech Care.
 
-Current offer page: `current-special.html` is the evergreen 2-hour Tech Tune-Up landing page; `/special` serves it as the public URL. Dated promo/code language should not return without a clear expiry/removal plan.
+Current offer page: `special.html` is the evergreen 2-hour Tech Tune-Up landing page; `/special` is the public URL. Dated promo/code language should not return without a clear expiry/removal plan.
 
 ## Codex Website Workflow
 

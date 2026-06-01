@@ -15,7 +15,7 @@ const digitalPresenceBookingPageUrl = pathToFileURL(
   path.resolve(__dirname, "../../../book-digital-presence-checkup.html")
 ).toString();
 const currentSpecialUrl = pathToFileURL(
-  path.resolve(__dirname, "../../../current-special.html")
+  path.resolve(__dirname, "../../../special.html")
 ).toString();
 
 async function assertAboutScrolledIntoView(page) {
@@ -224,7 +224,7 @@ async function runCurrentSpecialSmoke(page, viewportName, viewport) {
   await assertNoOverflow(page);
 
   await page.screenshot({
-    path: `test-results/screenshots/current-special-${viewportName}.png`,
+    path: `test-results/screenshots/special-${viewportName}.png`,
     fullPage: true
   });
 
