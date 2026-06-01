@@ -494,6 +494,19 @@ h3 {
   font-size: 1.02rem;
 }
 
+.scheduler-fallback {
+  max-width: 40rem;
+  margin: 1rem auto 0;
+  color: var(--text-soft);
+  text-align: center;
+  font-size: 0.96rem;
+}
+
+.scheduler-fallback a {
+  font-weight: 700;
+  text-underline-offset: 0.15em;
+}
+
 .scheduler-note {
   margin-bottom: 1.4rem;
   max-width: 48rem;
@@ -580,6 +593,14 @@ h3 {
     rgba(8, 14, 13, 0.72);
   box-shadow: 0 20px 44px rgba(0, 0, 0, 0.16);
   backdrop-filter: blur(12px);
+}
+
+.business-bridge-main {
+  width: min(1120px, calc(100% - 1.5rem));
+  margin: 4rem auto;
+  color: var(--white);
+  background:
+    linear-gradient(135deg, rgba(17, 21, 20, 0.96), rgba(24, 55, 53, 0.94));
 }
 
 .business-bridge h2 {

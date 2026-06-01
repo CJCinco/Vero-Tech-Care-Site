@@ -35,10 +35,11 @@
   {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "ProfessionalService"],
+    "@id": "https://verotechcare.com/#business",
     "name": "Vero Tech Care",
     "url": "https://verotechcare.com/",
     "telephone": "+17725884324",
-    "email": "CJ@Verotechcare.com",
+    "email": "cj@verotechcare.com",
     "description": "Patient in home and remote tech help in Vero Beach for Wi Fi, printers, phones, computers, passwords, photos, setup, memberships, and 24/7 computer monitoring.",
     "slogan": "Tech care you can trust",
     "priceRange": "$$",
@@ -74,6 +75,7 @@
         "itemOffered": {
           "@type": "Service",
           "name": "In home tech support",
+          "provider": { "@id": "https://verotechcare.com/#business" },
           "areaServed": "Vero Beach, FL"
         }
       },
@@ -82,6 +84,7 @@
         "itemOffered": {
           "@type": "Service",
           "name": "Remote tech support",
+          "provider": { "@id": "https://verotechcare.com/#business" },
           "areaServed": "Vero Beach, FL"
         }
       },
@@ -89,14 +92,15 @@
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Wi Fi, printer, device, password, photo, scam prevention, and setup help"
+          "name": "Wi Fi, printer, device, password, photo, scam prevention, and setup help",
+          "provider": { "@id": "https://verotechcare.com/#business" }
         }
       }
     ],
     "potentialAction": {
       "@type": "ScheduleAction",
       "name": "Book Online",
-      "target": "https://verotechcare.com/book.html"
+      "target": "https://verotechcare.com/book"
     }
   }
   </script>
@@ -113,19 +117,19 @@
 
     <div class="wrap">
       <nav class="nav" aria-label="Primary">
-        <a class="brand" href="index.html" aria-label="Vero Tech Care home">
+        <a class="brand" href="/" aria-label="Vero Tech Care home">
           <span class="brand-mark">Vero Tech Care</span>
           <span class="brand-tag">Tech care you can trust</span>
         </a>
 
         <div class="nav-cluster">
           <div class="nav-links site-nav-links">
-            <a href="index.html" aria-current="page">Home</a>
-            <a href="index.html#services">Tech Support</a>
-            <a href="digital-presence-management.html">For Businesses</a>
+            <a href="/" aria-current="page">Home</a>
+            <a href="#services">Tech Support</a>
+            <a href="/digital-presence-management">For Businesses</a>
           </div>
 
-          <a class="button button-solid nav-cta" href="book.html">Book Online</a>
+          <a class="button button-solid nav-cta" href="/book">Book Online</a>
         </div>
       </nav>
 
@@ -135,18 +139,18 @@
           <h1 id="hero-title">Premium in home tech care for Vero Beach homes.</h1>
           <p class="lead">
             Warm, patient tech care for Wi Fi, printers, phones, computers, passwords,
-            photos, scams, and everyday tech frustrations, explained simply and handled
-            with care.
+            photos, online safety, and everyday tech frustrations, explained simply and
+            handled with care.
           </p>
 
           <div class="hero-actions">
-            <a class="button button-solid" href="book.html">Book Online</a>
+            <a class="button button-solid" href="/book">Book Online</a>
             <p class="hero-helper">
               Not sure what to book?
               <a href="tel:+17725884324">Call</a>,
               <a href="sms:+17725884324">text</a>,
               or
-              <a href="mailto:CJ@Verotechcare.com?subject=Vero%20Tech%20Care%20Question">email</a>.
+              <a href="mailto:cj@verotechcare.com?subject=Vero%20Tech%20Care%20Question">email</a>.
             </p>
           </div>
 
@@ -173,7 +177,7 @@
             <ul class="check-list">
               <li>Wi Fi and internet issues</li>
               <li>Printers, email, phones, and computers</li>
-              <li>Passwords, scams, and account recovery planning</li>
+                  <li>Passwords, online safety, and account recovery planning</li>
               <li>Photos, files, setup, and simple coaching</li>
             </ul>
           </div>
@@ -188,15 +192,9 @@
             &ldquo;Helped me set up my computers and streaming services! Very understanding and
             reliable.&rdquo;
           </p>
-          <a href="https://nextdoor.com/page/vero-tech-care-vero-beach-fl?utm_campaign=1777659469097&amp;share_action_id=31c59abc-58a7-43a9-b700-f4c5872a3824" target="_blank" rel="noreferrer noopener">
+          <a href="https://nextdoor.com/pages/vero-tech-care-vero-beach-fl/" target="_blank" rel="noreferrer noopener">
             View on Nextdoor
           </a>
-        </article>
-
-        <article class="proof-card">
-          <p class="card-label">Neighbor signal</p>
-          <p class="proof-value">Recommended locally</p>
-          <p>Public Nextdoor profile includes neighbor Faves and a verified local business profile.</p>
         </article>
 
         <article class="proof-card">
@@ -206,20 +204,6 @@
         </article>
       </section>
 
-      <section class="business-bridge" aria-labelledby="business-bridge-title">
-        <div class="business-bridge-copy">
-          <p class="card-label">For local businesses</p>
-          <h2 id="business-bridge-title">Digital presence support is available for small businesses, too.</h2>
-          <p>
-            Vero Tech Care can review and improve the customer-facing pieces of your online
-            presence: your website, Google profile, reviews, social pages, and contact flow.
-          </p>
-        </div>
-
-        <a class="button button-solid" href="digital-presence-management.html">
-          View Digital Presence Management
-        </a>
-      </section>
     </div>
   </header>
 
@@ -235,13 +219,12 @@
             frustrating with patient in home and remote support.
           </p>
           <p>
-            The goal is not just to fix one issue. It is to offer steady, premium tech
-            care you can rely on: clearer next steps, simpler choices, and more peace of
-            mind around the technology in your home.
+            The goal is not just to fix one issue. It is to leave you with clearer next
+            steps, simpler choices, and more peace of mind around the technology in your home.
           </p>
 
           <div class="contact-actions">
-            <a class="button button-solid button-accent" href="book.html">Book Online</a>
+            <a class="button button-solid button-accent" href="/book">Book Online</a>
           </div>
 
           <div class="about-trust-grid" aria-label="Vero Tech Care trust highlights">
@@ -316,7 +299,7 @@
             </p>
           </div>
 
-          <a class="button button-solid" href="book.html">Book the right visit</a>
+          <a class="button button-solid" href="/book">Book the right visit</a>
         </div>
       </div>
     </section>
@@ -328,8 +311,7 @@
             <p class="eyebrow">Starting prices</p>
             <h2 id="pricing-title">Clear starting points.</h2>
             <p>
-              Clear starting points for practical help, ongoing peace of mind, and situations
-              that need trusted local tech care.
+              Simple starting prices for practical help and optional ongoing care.
             </p>
           </div>
 
@@ -369,52 +351,15 @@
             </div>
 
             <div class="pricing-actions">
-              <a class="button button-solid button-accent" href="book.html">Book Online</a>
+              <a class="button button-solid button-accent" href="/book">Book Online</a>
               <p class="pricing-helper">
                 Need help choosing?
                 <a href="tel:+17725884324">Call</a>,
                 <a href="sms:+17725884324">text</a>,
                 or
-                <a href="mailto:CJ@Verotechcare.com?subject=Vero%20Tech%20Care%20Question">email</a>.
+                <a href="mailto:cj@verotechcare.com?subject=Vero%20Tech%20Care%20Question">email</a>.
               </p>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="booking" class="section section-booking scheduler" aria-labelledby="schedule-title">
-      <div class="wrap">
-        <div class="scheduler-shell">
-          <p class="eyebrow">Book Online</p>
-          <h2 id="schedule-title">Schedule the right kind of help.</h2>
-          <p class="scheduler-copy">
-            Booking now has its own page so the homepage stays cleaner and easier to scan.
-            Choose a visit type there, or contact me first if you are not sure what to book.
-          </p>
-          <div class="booking-guide" aria-label="Which appointment to choose">
-            <article>
-              <h3>Remote support</h3>
-              <p>Best for quick troubleshooting, follow-up help, email, settings, and simple account questions.</p>
-            </article>
-            <article>
-              <h3>In home tech care</h3>
-              <p>Best for Wi Fi, printers, setup, multiple devices, home comfort settings, and hands-on coaching.</p>
-            </article>
-            <article>
-              <h3>Not sure yet?</h3>
-              <p>Contact me first. A short conversation can keep you from booking the wrong kind of help.</p>
-            </article>
-          </div>
-          <div class="scheduler-actions">
-            <a class="button button-accent" href="book.html">Open Booking Page</a>
-            <p class="pricing-helper">
-              Need help choosing?
-              <a href="tel:+17725884324">Call</a>,
-              <a href="sms:+17725884324">text</a>,
-              or
-              <a href="mailto:CJ@Verotechcare.com?subject=Vero%20Tech%20Care%20Question">email</a>.
-            </p>
           </div>
         </div>
       </div>
@@ -431,42 +376,23 @@
           </p>
         </div>
 
-        <div class="visit-grid" aria-label="Vero Tech Care visit flow">
+        <div class="visit-grid visit-grid-compact" aria-label="Vero Tech Care visit flow">
           <article class="visit-step">
             <p class="path-number">01</p>
-            <h3>First conversation</h3>
-            <p>
-              We begin with a brief consultation to clarify the issue, the devices involved,
-              and the outcome you are hoping for.
-            </p>
+            <h3>We clarify the problem</h3>
+            <p>We start with the devices involved, what is frustrating you, and what would make the visit successful.</p>
           </article>
 
           <article class="visit-step">
             <p class="path-number">02</p>
-            <h3>Clear arrival plan</h3>
-            <p>
-              Once I arrive, we review the plan, confirm what changed, and make sure the
-              most important items are covered first.
-            </p>
-          </article>
-
-          <article class="visit-step">
-            <p class="path-number">03</p>
-            <h3>Permission before changes</h3>
-            <p>
-              Important changes are explained clearly before I log in, adjust settings,
-              delete files, install software, or make anything significant.
-            </p>
+            <h3>Important changes are explained first</h3>
+            <p>I ask before changing settings, deleting files, installing software, or doing anything significant.</p>
           </article>
 
           <article class="visit-step visit-step-featured">
-            <p class="path-number">04</p>
-            <h3>Wrap-up and follow-up</h3>
-            <p>
-              We close by reviewing what was handled, what changed, and what still needs
-              attention. Afterward, I send a detailed follow-up report with a clear summary,
-              simple instructions, and recommended next steps.
-            </p>
+            <p class="path-number">03</p>
+            <h3>You get clear next steps</h3>
+            <p>We review what changed, what still needs attention, and the simplest follow-up path if more help would be useful.</p>
           </article>
         </div>
 
@@ -475,43 +401,24 @@
             The goal is calm, practical tech care: clear fixes, simple explanations, emailed next
             steps, and follow-up options when more support would help.
           </p>
-          <a class="button button-solid button-accent" href="book.html">Book Online</a>
+          <a class="button button-solid button-accent" href="/book">Book Online</a>
         </div>
       </div>
     </section>
 
-    <section id="workshops" class="section section-workshops" aria-labelledby="workshops-title">
-      <div class="wrap workshops-layout">
-        <div class="section-heading">
-          <p class="eyebrow eyebrow-dark">Community education</p>
-          <h2 id="workshops-title">Local classes that build confidence.</h2>
-          <p class="section-copy">
-            Vero Tech Care also supports local groups with practical, beginner-friendly
-            workshops for phones, online safety, and everyday tech confidence.
-          </p>
-        </div>
-
-        <div class="workshop-grid" aria-label="Workshop topics">
-          <article class="workshop-card">
-            <p class="card-label">Delivered</p>
-            <h3>Phone Clean Up + Speed Up</h3>
-            <p>A practical phone workshop focused on storage, speed, battery basics, cleanup, and easier everyday use.</p>
-          </article>
-
-          <article class="workshop-card">
-            <p class="card-label">Delivered</p>
-            <h3>AI for Everyday Life</h3>
-            <p>A beginner friendly session on using AI as a practical tool while keeping judgment, privacy, and accuracy in mind.</p>
-          </article>
-        </div>
-
-        <div class="workshop-actions">
-          <a class="button button-solid button-accent" href="mailto:CJ@Verotechcare.com?subject=Vero%20Tech%20Care%20Workshop%20Question">
-            Ask About Workshops
-          </a>
-          <p>For community groups, local organizations, and small classes in the Vero Beach area.</p>
-        </div>
+    <section class="business-bridge business-bridge-main" aria-labelledby="business-bridge-title">
+      <div class="business-bridge-copy">
+        <p class="card-label">For local businesses</p>
+        <h2 id="business-bridge-title">Need your online presence cleaned up, too?</h2>
+        <p>
+          Vero Tech Care also offers a $300 Digital Presence Checkup for local businesses
+          that need a clearer website, Google profile, reviews, social pages, and contact flow.
+        </p>
       </div>
+
+      <a class="button button-solid" href="/digital-presence-management">
+        View Business Checkup
+      </a>
     </section>
 
     <section id="faq" class="section section-faq">
@@ -532,15 +439,6 @@
           </details>
 
           <details class="faq-item">
-            <summary>What if I am not sure which appointment to choose?</summary>
-            <p>
-              Choose remote for quick troubleshooting and follow up help. Choose in home for Wi Fi,
-              printers, setup, and several device issues. If your situation is unusual, more
-              complex, or membership related, call, text, or email before booking.
-            </p>
-          </details>
-
-          <details class="faq-item">
             <summary>What does 24/7 computer monitoring mean?</summary>
             <p>
               For covered computers, secure monitoring software can watch for important update,
@@ -551,47 +449,11 @@
           </details>
 
           <details class="faq-item">
-            <summary>What membership options are available?</summary>
-            <div class="faq-memberships" aria-label="Vero Tech Care membership options">
-              <article>
-                <strong>Tech Care Check-In</strong>
-                <span>From $100/mo</span>
-                <p>Light peace of mind with a monthly remote check-in and monitoring for one covered computer.</p>
-              </article>
-
-              <article>
-                <strong>Tech Care Plus</strong>
-                <span>From $200/mo</span>
-                <p>The ideal fit for a monthly care review, priority scheduling, and 24/7 computer monitoring.</p>
-              </article>
-
-              <article>
-                <strong>Family Tech Care</strong>
-                <span>From $350/mo</span>
-                <p>Better for households, family coordination, and monitoring for up to two covered computers.</p>
-              </article>
-            </div>
-            <p>
-              Members receive a reduced member rate for extra help beyond their included monthly
-              support. Memberships are not unlimited support or 24/7 emergency live service.
-            </p>
-          </details>
-
-          <details class="faq-item">
             <summary>Where do you provide in home tech support?</summary>
             <p>
               In home appointments are focused on Vero Beach, Indian River County, and nearby homes
               by appointment. Remote support is available beyond the local area when the issue is a
               good fit.
-            </p>
-          </details>
-
-          <details class="faq-item">
-            <summary>What kinds of tech do you help with?</summary>
-            <p>
-              Support includes Wi Fi, printers, Apple and Windows computers, iPhones, iPads,
-              Android devices, smart TVs, streaming devices, email, photos, files, passwords,
-              and the everyday apps and accounts that connect them.
             </p>
           </details>
 
@@ -624,7 +486,7 @@
           <h2>Ready to make tech easier?</h2>
           <p>Booking online is the fastest way to schedule an appointment.</p>
           <div class="contact-actions">
-            <a class="button button-solid button-accent" href="book.html">Book Online</a>
+            <a class="button button-solid button-accent" href="/book">Book Online</a>
           </div>
           <p class="contact-note">
             Serving Vero Beach, FL and nearby homes by appointment. Remote help is available beyond
@@ -640,8 +502,8 @@
           </p>
           <p>
             Email:
-            <a href="mailto:CJ@Verotechcare.com?subject=Vero%20Tech%20Care%20Question">
-              CJ@Verotechcare.com
+            <a href="mailto:cj@verotechcare.com?subject=Vero%20Tech%20Care%20Question">
+              cj@verotechcare.com
             </a>
           </p>
           <p class="contact-support-note">
@@ -673,7 +535,7 @@
             </a>
             <a
               class="social-link"
-              href="https://nextdoor.com/page/vero-tech-care-vero-beach-fl?utm_campaign=1777659469097&amp;share_action_id=31c59abc-58a7-43a9-b700-f4c5872a3824"
+              href="https://nextdoor.com/pages/vero-tech-care-vero-beach-fl/"
               target="_blank"
               rel="noreferrer noopener"
               aria-label="Vero Tech Care on Nextdoor"
@@ -696,23 +558,23 @@
       </div>
 
       <div class="footer-links">
-        <a href="book.html">Book Online</a>
+        <a href="/book">Book Online</a>
         <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#pricing">Starting prices</a>
-        <a href="digital-presence-management.html">For Businesses</a>
+        <a href="/digital-presence-management">For Businesses</a>
         <a href="#faq">FAQ</a>
         <a href="tel:+17725884324">(772) 588 4324</a>
-        <a href="mailto:CJ@Verotechcare.com">CJ@Verotechcare.com</a>
+        <a href="mailto:cj@verotechcare.com">cj@verotechcare.com</a>
       </div>
     </div>
   </footer>
 
   <div class="mobile-dock" aria-label="Quick booking and contact actions">
-    <a href="book.html">Book Online</a>
+    <a href="/book">Book Online</a>
     <a href="tel:+17725884324">Call</a>
     <a href="sms:+17725884324">Text</a>
-    <a href="mailto:CJ@Verotechcare.com">Email</a>
+    <a href="mailto:cj@verotechcare.com">Email</a>
   </div>
 
   <script>

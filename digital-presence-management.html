@@ -8,7 +8,7 @@
     name="description"
     content="Vero Tech Care offers Digital Presence Management for local businesses in Vero Beach: website, Google profile, reviews, social pages, and contact-flow checkups."
   />
-  <link rel="canonical" href="https://verotechcare.com/digital-presence-management.html" />
+  <link rel="canonical" href="https://verotechcare.com/digital-presence-management" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
@@ -20,7 +20,7 @@
     property="og:description"
     content="A practical review of your website, Google profile, reviews, social pages, and customer contact flow, with a clear action plan."
   />
-  <meta property="og:url" content="https://verotechcare.com/digital-presence-management.html" />
+  <meta property="og:url" content="https://verotechcare.com/digital-presence-management" />
   <meta property="og:image" content="https://verotechcare.com/vero-beach-hero.jpg" />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary" />
@@ -35,9 +35,11 @@
   {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": "https://verotechcare.com/digital-presence-management#service",
     "name": "Digital Presence Management for Local Businesses",
     "description": "Website, Google Business Profile, reviews, social pages, and customer contact flow review and management for local small businesses.",
     "provider": {
+      "@id": "https://verotechcare.com/#business",
       "@type": ["LocalBusiness", "ProfessionalService"],
       "name": "Vero Tech Care",
       "url": "https://verotechcare.com/",
@@ -62,11 +64,11 @@
     ],
     "offers": {
       "@type": "Offer",
-      "name": "Digital Presence Checkup founding offer",
+      "name": "Digital Presence Checkup",
       "price": "300",
       "priceCurrency": "USD",
       "availability": "https://schema.org/LimitedAvailability",
-      "url": "https://verotechcare.com/digital-presence-management.html#checkup"
+      "url": "https://verotechcare.com/digital-presence-management#checkup"
     }
   }
   </script>
@@ -83,19 +85,19 @@
 
     <div class="wrap">
       <nav class="nav" aria-label="Primary">
-        <a class="brand" href="index.html" aria-label="Vero Tech Care home">
+        <a class="brand" href="/" aria-label="Vero Tech Care home">
           <span class="brand-mark">Vero Tech Care</span>
           <span class="brand-tag">Tech care you can trust</span>
         </a>
 
         <div class="nav-cluster">
           <div class="nav-links site-nav-links">
-            <a href="index.html">Home</a>
-            <a href="index.html#services">Tech Support</a>
-            <a href="digital-presence-management.html" aria-current="page">For Businesses</a>
+            <a href="/">Home</a>
+            <a href="/#services">Tech Support</a>
+            <a href="/digital-presence-management" aria-current="page">For Businesses</a>
           </div>
 
-          <a class="button button-solid nav-cta" href="book-digital-presence-checkup.html">Book Checkup</a>
+          <a class="button button-solid nav-cta" href="/book-digital-presence-checkup">Book Checkup</a>
         </div>
       </nav>
 
@@ -110,7 +112,7 @@
           </p>
 
           <div class="hero-actions">
-            <a class="button button-solid" href="book-digital-presence-checkup.html">Book Digital Presence Checkup</a>
+            <a class="button button-solid" href="/book-digital-presence-checkup">Book Digital Presence Checkup</a>
             <a class="button button-outline" href="#checkup">See what is included</a>
           </div>
 
@@ -203,21 +205,16 @@
         <div class="pricing-shell business-offer-shell">
           <div class="pricing-intro">
             <p class="eyebrow">Front-door offer</p>
-            <h2 id="checkup-title">Start with a Digital Presence Checkup.</h2>
+            <h2 id="checkup-title">Start with a $300 Digital Presence Checkup.</h2>
             <p>
               A paid audit gives you a useful action plan before you commit to a cleanup
               project or monthly management.
             </p>
-            <p>
-              In some warm, invitation-based conversations, I may share a brief public
-              Presence Snapshot first. The Checkup is the paid next step when the
-              business needs a full prioritized plan.
-            </p>
           </div>
 
           <div class="pricing-card package-card business-offer-card">
-            <p class="card-label">Founding price</p>
-            <p class="package-price">$300 <span>founding price during the launch proof period</span></p>
+            <p class="card-label">Current introductory price</p>
+            <p class="package-price">$300 <span>paid at booking</span></p>
 
             <div class="pricing-lines" aria-label="Digital Presence Checkup deliverables">
               <div class="pricing-line">
@@ -243,7 +240,7 @@
             </div>
 
             <div class="pricing-actions">
-              <a class="button button-solid button-accent" href="book-digital-presence-checkup.html">Book Digital Presence Checkup</a>
+              <a class="button button-solid button-accent" href="/book-digital-presence-checkup">Book Digital Presence Checkup</a>
               <p class="pricing-helper">
                 Questions first?
                 <a href="mailto:cj@verotechcare.com?subject=Digital%20Presence%20Management%20Question">Email CJ</a>.
@@ -258,7 +255,7 @@
       <div class="wrap visit-layout">
         <div class="section-heading">
           <p class="eyebrow eyebrow-dark">How it works</p>
-          <h2 id="workflow-title">Audit first. Clean up second. Maintain only where it makes sense.</h2>
+          <h2 id="workflow-title">Audit first. Clean up second. Maintain only where it fits.</h2>
           <p class="section-copy">
             The goal is not to sell a business a bloated marketing package. The goal is
             to make the digital front door accurate, active, and easier to manage.
@@ -321,13 +318,14 @@
           <h2 id="access-title">Designed to reduce login back-and-forth.</h2>
           <p>
             Many small businesses have old vendors, personal accounts, missing logins,
-            unclear admin rights, or too many customer message channels. That operational
-            mess is part of what Digital Presence Management is meant to clarify.
+            unclear admin rights, or too many customer message channels. The checkup
+            starts with what customers can see publicly, so no password handoff is
+            needed to begin.
           </p>
           <p>
-            The checkup can start public-only. For deeper setup or monthly work, Vero
-            Tech Care maps the account owner, best access method, approval contact, and
-            change boundaries before making updates.
+            If deeper setup is approved later, Vero Tech Care maps account ownership,
+            manager access, approval contacts, and change boundaries before making updates.
+            You keep control of the accounts.
           </p>
 
           <div class="about-trust-grid" aria-label="Access principles">
@@ -341,39 +339,12 @@
         <aside class="about-card business-method-card" aria-label="What can happen after the checkup">
           <p class="card-label">After the checkup</p>
           <ul class="about-points">
-            <li>Focused Google profile cleanup can be included in a quoted cleanup or launch plan</li>
-            <li>Review-flow improvements can be scoped when reputation follow-up is weak or inconsistent</li>
-            <li>Lead-flow fixes can cover forms, booking, messages, or follow-up gaps found in the audit</li>
-            <li>Ongoing Site, Plus, or Complete management is discussed only when monthly support is the right fit</li>
+            <li>No passwords by email, text, or form</li>
+            <li>Manager access or guided screen share first</li>
+            <li>Public changes only after owner approval</li>
+            <li>Cleanup or monthly support quoted only after the audit</li>
           </ul>
         </aside>
-      </div>
-    </section>
-
-    <section id="fit" class="section" aria-labelledby="fit-title">
-      <div class="wrap">
-        <div class="section-heading">
-          <p class="eyebrow eyebrow-dark">Good fit</p>
-          <h2 id="fit-title">Built for local businesses that need a steady operator.</h2>
-          <p class="section-copy">
-            This is a strong fit when the business needs practical digital upkeep but
-            does not need a large agency, full IT department, or complicated marketing stack.
-          </p>
-        </div>
-
-        <div class="service-scope-panel business-fit-panel">
-          <div>
-            <p class="card-label">Examples</p>
-            <p>
-              Wellness providers, spas, dance and fitness studios, realtors, contractors,
-              churches, nonprofits, solo consultants, and small local offices.
-            </p>
-          </div>
-
-          <a class="button button-solid" href="mailto:cj@verotechcare.com?subject=Digital%20Presence%20Management%20Question">
-            Ask About Your Business
-          </a>
-        </div>
       </div>
     </section>
 
@@ -387,7 +358,7 @@
             is working, what is stale, where customers may be getting stuck, and what to fix first.
           </p>
           <div class="contact-actions">
-            <a class="button button-solid button-accent" href="book-digital-presence-checkup.html">Book Digital Presence Checkup</a>
+            <a class="button button-solid button-accent" href="/book-digital-presence-checkup">Book Digital Presence Checkup</a>
           </div>
           <p class="contact-note">
             Serving Vero Beach, FL and nearby local businesses by appointment.
@@ -435,7 +406,7 @@
             </a>
             <a
               class="social-link"
-              href="https://nextdoor.com/page/vero-tech-care-vero-beach-fl?utm_campaign=1777659469097&amp;share_action_id=31c59abc-58a7-43a9-b700-f4c5872a3824"
+              href="https://nextdoor.com/pages/vero-tech-care-vero-beach-fl/"
               target="_blank"
               rel="noreferrer noopener"
               aria-label="Vero Tech Care on Nextdoor"
@@ -458,8 +429,8 @@
       </div>
 
       <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="book-digital-presence-checkup.html">Book Checkup</a>
+        <a href="/">Home</a>
+        <a href="/book-digital-presence-checkup">Book Checkup</a>
         <a href="#checkup">Digital Presence Checkup</a>
         <a href="#scope">What I review</a>
         <a href="#workflow">How it works</a>
@@ -470,7 +441,7 @@
   </footer>
 
   <div class="mobile-dock" aria-label="Quick booking and contact actions">
-    <a href="book-digital-presence-checkup.html">Book Checkup</a>
+    <a href="/book-digital-presence-checkup">Book Checkup</a>
     <a href="tel:+17725884324">Call</a>
     <a href="sms:+17725884324">Text</a>
     <a href="mailto:cj@verotechcare.com">Email</a>

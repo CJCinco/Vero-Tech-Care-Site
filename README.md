@@ -2,6 +2,8 @@
 
 Website for Vero Tech Care.
 
+Current offer page: `current-special.html` is the evergreen 2-hour Tech Tune-Up landing page; `/special` serves it as the public URL. Dated promo/code language should not return without a clear expiry/removal plan.
+
 ## Codex Website Workflow
 
 Use this workflow when Codex makes website changes.
@@ -20,7 +22,7 @@ Use this checklist when updating the website or Google Business Profile.
 - Business name: `Vero Tech Care`
 - Website URL: `https://verotechcare.com/`
 - Phone: `(772) 588 4324`
-- Email: `CJ@Verotechcare.com`
+- Email: `cj@verotechcare.com`
 - Primary local focus: Vero Beach, FL
 - Public location model: service area business; do not publish a street address unless CJ explicitly changes this.
 - Scheduling model: by appointment through online booking.

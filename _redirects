@@ -1,4 +1,9 @@
-/special /current-special.html 302
+/book.html /book 301
+/digital-presence-management.html /digital-presence-management 301
+/book-digital-presence-checkup.html /book-digital-presence-checkup 301
+/current-special.html /special 301
+/current-special /special 301
+/special /current-special.html 200
 /client-previews/rhythm-soul/* / 301
 /client-previews/rhythm-soul/ / 301
 /client-previews/rhythm-soul / 301

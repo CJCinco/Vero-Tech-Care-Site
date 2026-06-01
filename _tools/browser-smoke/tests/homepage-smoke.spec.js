@@ -68,25 +68,20 @@ async function runHomepageSmoke(page, viewportName, viewport) {
   await expect(page.locator("#faq")).toContainText(
     "What does 24/7 computer monitoring mean?"
   );
-  await expect(page.locator("#faq")).toContainText(
-    "What membership options are available?"
-  );
-  await expect(page.locator("#faq")).toContainText("Tech Care Plus");
+  await expect(page.locator("#faq .faq-item")).toHaveCount(5);
 
-  await expect(page.locator('.nav-links a[href="digital-presence-management.html"]')).toBeVisible();
-  await expect(page.locator('.nav-cta[href="book.html"]')).toBeVisible();
+  await expect(page.locator('.nav-links a[href="/digital-presence-management"]')).toBeVisible();
+  await expect(page.locator('.nav-cta[href="/book"]')).toBeVisible();
   await expect(page.locator(".page-nav")).toHaveCount(0);
 
   await page.locator(".footer-links").scrollIntoViewIfNeeded();
   await page.locator('.footer-links a[href="#about"]').click();
   await assertAboutScrolledIntoView(page);
 
-  const bookingLinks = page.locator('a[href="book.html"]');
+  const bookingLinks = page.locator('a[href="/book"]');
   await expect(bookingLinks.first()).toBeVisible();
   expect(await bookingLinks.count()).toBeGreaterThan(0);
-  await expect(page.locator("#booking")).toContainText(
-    "Booking now has its own page"
-  );
+  await expect(page.locator("#booking")).toHaveCount(0);
   await expect(page.locator("#booking-embed")).toHaveCount(0);
 
   await assertNoOverflow(page);
@@ -109,15 +104,15 @@ async function runDigitalPresenceSmoke(page, viewportName, viewport) {
   await expect(page.locator("#hero-title")).toHaveText(
     "Digital Presence Management for Local Businesses."
   );
-  await expect(page.locator("#checkup")).toContainText("Founding price");
+  await expect(page.locator("#checkup")).toContainText("Current introductory price");
   await expect(page.locator("#checkup")).toContainText("$300");
   await expect(page.locator("#scope .path-card")).toHaveCount(6);
   await expect(page.locator("#workflow")).toContainText("Audit first");
   await expect(page.locator("#access")).toContainText("Manager access or guided screen share");
-  await expect(page.locator('.nav-links a[href="index.html"]')).toBeVisible();
+  await expect(page.locator('.nav-links a[href="/"]')).toBeVisible();
   await expect(page.locator(".page-nav")).toHaveCount(0);
 
-  const bookingLinks = page.locator('a[href="book-digital-presence-checkup.html"]');
+  const bookingLinks = page.locator('a[href="/book-digital-presence-checkup"]');
   await expect(bookingLinks.first()).toBeVisible();
   expect(await bookingLinks.count()).toBeGreaterThan(0);
   await expect(page.locator('a[href^="https://app.acuityscheduling.com"]')).toHaveCount(0);
@@ -153,6 +148,7 @@ async function runBookingPageSmoke(page, viewportName, viewport) {
     /app\.acuityscheduling\.com\/schedule\.php\?owner=38883336/
   );
   await expect(bookingFrame).toHaveAttribute("src", /calendarID=13853126/);
+  await expect(page.locator(".scheduler-fallback")).toContainText("Can't see the scheduler?");
 
   await assertNoOverflow(page);
 
@@ -185,6 +181,7 @@ async function runDigitalPresenceBookingSmoke(page, viewportName, viewport) {
     /app\.acuityscheduling\.com\/schedule\.php\?owner=38883336/
   );
   await expect(bookingFrame).toHaveAttribute("src", /appointmentType=93474728/);
+  await expect(page.locator(".scheduler-fallback")).toContainText("Can't see the scheduler?");
 
   await assertNoOverflow(page);
 
@@ -202,14 +199,13 @@ async function runCurrentSpecialSmoke(page, viewportName, viewport) {
 
   await page.setViewportSize(viewport);
   await page.goto(currentSpecialUrl, { waitUntil: "domcontentloaded" });
-  await expect(page).toHaveTitle(/Memorial Day Special: 2-Hour Tech Tune-Up/);
+  await expect(page).toHaveTitle(/2-Hour Tech Tune-Up/);
   await expect(page.locator("#hero-title")).toHaveText("2-Hour Tech Tune-Up.");
-  await expect(page.locator(".hero-intro")).toHaveText("Memorial Day Special");
-  await expect(page.locator("body")).toContainText("25% off");
+  await expect(page.locator(".hero-intro")).toHaveText("Focused in-home visit");
   await expect(page.locator("body")).toContainText("$250");
-  await expect(page.locator("body")).toContainText("$187.50");
-  await expect(page.locator("body")).not.toContainText("$200");
-  await expect(page.locator("body")).toContainText("MEMORIAL25");
+  await expect(page.locator("body")).not.toContainText("$187.50");
+  await expect(page.locator("body")).not.toContainText("25% off");
+  await expect(page.locator("body")).not.toContainText("MEMORIAL25");
   await expect(page.locator("#booking")).toContainText(
     "Choose a time below to book your 2-Hour Tech Tune-Up."
   );
@@ -221,8 +217,9 @@ async function runCurrentSpecialSmoke(page, viewportName, viewport) {
     /app\.acuityscheduling\.com\/schedule\.php\?owner=38883336/
   );
   await expect(bookingFrame).toHaveAttribute("src", /appointmentType=93634542/);
-  await expect(bookingFrame).toHaveAttribute("src", /certificate=MEMORIAL25/);
+  await expect(bookingFrame).not.toHaveAttribute("src", /certificate=/);
   await expect(bookingFrame).not.toHaveAttribute("src", /calendarID=/);
+  await expect(page.locator(".scheduler-fallback")).toContainText("Can't see the scheduler?");
 
   await assertNoOverflow(page);
 
@@ -267,10 +264,10 @@ test("Digital Presence Checkup booking page mobile smoke test", async ({ page })
   await runDigitalPresenceBookingSmoke(page, "mobile", { width: 390, height: 900 });
 });
 
-test("Memorial Day Special booking page desktop smoke test", async ({ page }) => {
+test("2-Hour Tech Tune-Up booking page desktop smoke test", async ({ page }) => {
   await runCurrentSpecialSmoke(page, "desktop", { width: 1440, height: 1100 });
 });
 
-test("Memorial Day Special booking page mobile smoke test", async ({ page }) => {
+test("2-Hour Tech Tune-Up booking page mobile smoke test", async ({ page }) => {
   await runCurrentSpecialSmoke(page, "mobile", { width: 390, height: 900 });
 });
