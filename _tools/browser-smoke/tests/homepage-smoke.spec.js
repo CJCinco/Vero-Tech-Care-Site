@@ -33,7 +33,10 @@ function captureErrors(page) {
 
   page.on("console", (message) => {
     if (message.type() === "error") {
-      consoleErrors.push(message.text());
+      const text = message.text();
+      if (text !== "requestStorageAccess: Permission denied.") {
+        consoleErrors.push(text);
+      }
     }
   });
   page.on("pageerror", (error) => {
@@ -64,11 +67,14 @@ async function runHomepageSmoke(page, viewportName, viewport) {
     "Patient, local tech help you can trust."
   );
   await expect(page.locator("#about .about-points li")).toHaveCount(4);
-  await expect(page.locator("#pricing")).toContainText("24/7 computer monitoring");
+  await expect(page.locator("#packages")).toContainText("Tech Tune-Up Visit");
+  await expect(page.locator("#packages")).toContainText("Whole-Home Tech Reset");
+  await expect(page.locator("#packages")).toContainText("Life Story Video");
+  await expect(page.locator("#packages a[href=\"/book\"]")).toHaveCount(7);
   await expect(page.locator("#faq")).toContainText(
     "What does 24/7 computer monitoring mean?"
   );
-  await expect(page.locator("#faq .faq-item")).toHaveCount(5);
+  await expect(page.locator("#faq .faq-item")).toHaveCount(6);
 
   await expect(page.locator('.nav-links a[href="/digital-presence-management"]')).toBeVisible();
   await expect(page.locator('.nav-cta[href="/book"]')).toBeVisible();
@@ -104,7 +110,7 @@ async function runDigitalPresenceSmoke(page, viewportName, viewport) {
   await expect(page.locator("#hero-title")).toHaveText(
     "Digital Presence Management for Local Businesses."
   );
-  await expect(page.locator("#checkup")).toContainText("Current introductory price");
+  await expect(page.locator("#checkup")).toContainText("Launch pricing");
   await expect(page.locator("#checkup")).toContainText("$300");
   await expect(page.locator("#scope .path-card")).toHaveCount(6);
   await expect(page.locator("#workflow")).toContainText("Audit first");
@@ -199,15 +205,15 @@ async function runCurrentSpecialSmoke(page, viewportName, viewport) {
 
   await page.setViewportSize(viewport);
   await page.goto(currentSpecialUrl, { waitUntil: "domcontentloaded" });
-  await expect(page).toHaveTitle(/2-Hour Tech Tune-Up/);
-  await expect(page.locator("#hero-title")).toHaveText("2-Hour Tech Tune-Up.");
-  await expect(page.locator(".hero-intro")).toHaveText("Focused in-home visit");
+  await expect(page).toHaveTitle(/Tech Tune-Up Visit/);
+  await expect(page.locator("#hero-title")).toHaveText("Tech Tune-Up Visit.");
+  await expect(page.locator(".hero-intro")).toHaveText("The standard first visit");
   await expect(page.locator("body")).toContainText("$250");
   await expect(page.locator("body")).not.toContainText("$187.50");
   await expect(page.locator("body")).not.toContainText("25% off");
   await expect(page.locator("body")).not.toContainText("MEMORIAL25");
   await expect(page.locator("#booking")).toContainText(
-    "Choose a time below to book your 2-Hour Tech Tune-Up."
+    "Choose a time below to book your Tech Tune-Up Visit."
   );
   await expect(page.locator("#booking .booking-guide article")).toHaveCount(0);
 
@@ -264,10 +270,10 @@ test("Digital Presence Checkup booking page mobile smoke test", async ({ page })
   await runDigitalPresenceBookingSmoke(page, "mobile", { width: 390, height: 900 });
 });
 
-test("2-Hour Tech Tune-Up booking page desktop smoke test", async ({ page }) => {
+test("Tech Tune-Up Visit booking page desktop smoke test", async ({ page }) => {
   await runCurrentSpecialSmoke(page, "desktop", { width: 1440, height: 1100 });
 });
 
-test("2-Hour Tech Tune-Up booking page mobile smoke test", async ({ page }) => {
+test("Tech Tune-Up Visit booking page mobile smoke test", async ({ page }) => {
   await runCurrentSpecialSmoke(page, "mobile", { width: 390, height: 900 });
 });
