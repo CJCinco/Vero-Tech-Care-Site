@@ -72,28 +72,86 @@
     "makesOffer": [
       {
         "@type": "Offer",
+        "name": "Tech Tune-Up Visit",
+        "price": "250",
+        "priceCurrency": "USD",
         "itemOffered": {
           "@type": "Service",
-          "name": "In home tech support",
+          "name": "Tech Tune-Up Visit",
           "provider": { "@id": "https://verotechcare.com/#business" },
           "areaServed": "Vero Beach, FL"
         }
       },
       {
         "@type": "Offer",
+        "name": "Whole-Home Tech Reset",
+        "price": "495",
+        "priceCurrency": "USD",
         "itemOffered": {
           "@type": "Service",
-          "name": "Remote tech support",
+          "name": "Whole-Home Tech Reset",
           "provider": { "@id": "https://verotechcare.com/#business" },
           "areaServed": "Vero Beach, FL"
         }
       },
       {
         "@type": "Offer",
+        "name": "New Device Done Right",
+        "price": "225",
+        "priceCurrency": "USD",
         "itemOffered": {
           "@type": "Service",
-          "name": "Wi Fi, printer, device, password, photo, scam prevention, and setup help",
-          "provider": { "@id": "https://verotechcare.com/#business" }
+          "name": "New Device Done Right",
+          "provider": { "@id": "https://verotechcare.com/#business" },
+          "areaServed": "Vero Beach, FL"
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "Photo & Memory Safety",
+        "price": "350",
+        "priceCurrency": "USD",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Photo & Memory Safety",
+          "provider": { "@id": "https://verotechcare.com/#business" },
+          "areaServed": "Vero Beach, FL"
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "Scam Safety & Account Security",
+        "price": "325",
+        "priceCurrency": "USD",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Scam Safety & Account Security",
+          "provider": { "@id": "https://verotechcare.com/#business" },
+          "areaServed": "Vero Beach, FL"
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "Life Story Video",
+        "price": "750",
+        "priceCurrency": "USD",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Life Story Video",
+          "provider": { "@id": "https://verotechcare.com/#business" },
+          "areaServed": "Vero Beach, FL"
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "Remote Fix Session",
+        "price": "125",
+        "priceCurrency": "USD",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Remote Fix Session",
+          "provider": { "@id": "https://verotechcare.com/#business" },
+          "areaServed": "Vero Beach, FL"
         }
       }
     ],
@@ -184,7 +242,7 @@
         </aside>
       </section>
 
-      <section class="proof-strip" aria-label="Local trust and Nextdoor proof">
+      <section class="proof-strip" aria-label="Trusted by your neighbors">
         <article class="proof-card proof-card-featured">
           <p class="card-label">Nextdoor recommendation</p>
           <p class="proof-value">Very understanding and reliable</p>
@@ -195,6 +253,13 @@
           <a href="https://nextdoor.com/pages/vero-tech-care-vero-beach-fl/" target="_blank" rel="noreferrer noopener">
             View on Nextdoor
           </a>
+        </article>
+
+        <article class="proof-card">
+          <p class="card-label">Trusted by your neighbors</p>
+          <p class="proof-value">Community workshops</p>
+          <p>Taught tech workshops at Unity Spiritual Center attended by 20+ Vero Beach neighbors.</p>
+          <a href="/workshops">See workshops</a>
         </article>
 
         <article class="proof-card">
@@ -304,63 +369,130 @@
       </div>
     </section>
 
-    <section id="pricing" class="section section-pricing" aria-labelledby="pricing-title">
+    <section id="packages" class="section section-pricing" aria-labelledby="packages-title">
       <div class="wrap">
-        <div class="pricing-shell">
-          <div class="pricing-intro">
-            <p class="eyebrow">Starting prices</p>
-            <h2 id="pricing-title">Clear starting points.</h2>
+        <div class="section-heading">
+          <p class="eyebrow eyebrow-dark">Packages</p>
+          <h2 id="packages-title">Clear help, one clear price.</h2>
+          <p class="section-copy">
+            Every visit is a fixed price you&rsquo;ll know before I arrive &mdash; no hourly
+            surprises, no hidden fees, and travel around Vero Beach is always included.
+          </p>
+        </div>
+
+        <div class="package-grid" aria-label="Fixed-price service packages">
+          <article class="package-card package-card-featured">
+            <p class="card-label">Tech Tune-Up Visit</p>
+            <p class="package-price">$250</p>
+            <p class="package-copy">
+              The everyday tech issues that have been piling up &mdash; Wi-Fi, printer, phone,
+              computer, email, passwords &mdash; handled in one calm two-hour visit, with clear
+              next steps before I leave.
+            </p>
+            <a class="button button-outline" href="/special">Book the Tune-Up</a>
+          </article>
+
+          <article class="package-card">
+            <p class="card-label">Whole-Home Tech Reset</p>
+            <p class="package-price">$495</p>
+            <p class="package-copy">
+              Every device in your home working, synced, backed up, and explained. You keep a
+              written care sheet, and I check in two weeks later to make sure everything stuck.
+            </p>
+          </article>
+
+          <article class="package-card">
+            <p class="card-label">New Device Done Right</p>
+            <p class="package-price">$225</p>
+            <p class="package-copy">
+              Your new phone, iPad, or computer set up completely &mdash; everything transferred,
+              nothing lost, and you know how to use it.
+            </p>
+          </article>
+
+          <article class="package-card">
+            <p class="card-label">Photo &amp; Memory Safety</p>
+            <p class="package-price">$350</p>
+            <p class="package-copy">
+              Every photo you own, organized and backed up in three places. Verified, so you
+              never have to worry about losing them.
+            </p>
+          </article>
+
+          <article class="package-card">
+            <p class="card-label">Scam Safety &amp; Account Security</p>
+            <p class="package-price">$325</p>
+            <p class="package-copy">
+              Passwords simplified, logins protected, scam defenses turned on, and a simple
+              family plan if anything ever looks wrong.
+            </p>
+          </article>
+
+          <article class="package-card">
+            <p class="card-label">Life Story Video</p>
+            <p class="package-price">$750</p>
+            <p class="package-copy">
+              Your photos and videos turned into a beautiful video with music &mdash; delivered
+              on a USB drive, on your phone, and playing on your TV.
+            </p>
+          </article>
+        </div>
+
+        <div class="pricing-note">
+          <p>
+            Something smaller? A <strong>Remote Fix Session is $125</strong> &mdash; one issue,
+            fixed remotely, usually within the hour. If it turns out you need a visit, that $125
+            counts toward any package booked within a week.
+          </p>
+        </div>
+
+        <div id="memberships" class="pricing-card package-card" style="margin-top: 1.2rem;">
+          <p class="card-label">Ongoing Tech Care memberships</p>
+          <p class="package-copy">
+            For households that want a regular check-in instead of waiting for something to break.
+            Each includes monthly one-on-one time, quick answers between visits, and member
+            pricing on extra help.
+          </p>
+
+          <div class="pricing-lines">
+            <div class="pricing-line">
+              <div>
+                <strong>Tech Care Check-In</strong>
+              </div>
+              <p class="pricing-price">$100 per month</p>
+            </div>
+
+            <div class="pricing-line">
+              <div>
+                <strong>Tech Care Plus</strong>
+                <span>Most popular</span>
+              </div>
+              <p class="pricing-price">$200 per month</p>
+            </div>
+
+            <div class="pricing-line">
+              <div>
+                <strong>Family Tech Care</strong>
+              </div>
+              <p class="pricing-price">$350 per month</p>
+            </div>
+          </div>
+
+          <div class="pricing-note">
             <p>
-              Simple starting prices for practical help and optional ongoing care.
+              Ask about it after your first visit &mdash; it makes the most sense once
+              we&rsquo;ve worked together.
             </p>
           </div>
+        </div>
 
-          <div class="pricing-card package-card">
-            <div class="pricing-lines">
-              <div class="pricing-line">
-                <div>
-                  <strong>Remote support</strong>
-                  <span>Best for quick troubleshooting, coaching, and follow-up help.</span>
-                </div>
-                <p class="pricing-price">From $100 per hour</p>
-              </div>
-
-              <div class="pricing-line">
-                <div>
-                  <strong>In home tech care</strong>
-                  <span>Best for focused in home help. Larger jobs may need a two hour visit.</span>
-                </div>
-                <p class="pricing-price">From $125 first hour</p>
-              </div>
-
-              <div class="pricing-line">
-                <div>
-                  <strong>Memberships</strong>
-                  <span>Monthly tech care, priority scheduling, and 24/7 computer monitoring for covered computers.</span>
-                </div>
-                <p class="pricing-price">From $100 per month</p>
-              </div>
-            </div>
-
-            <div class="pricing-note">
-              <p>
-                Members receive a reduced member rate for extra help beyond their included monthly
-                support. Tech Care Plus is the ideal fit for a monthly check-in and
-                around-the-clock computer monitoring.
-              </p>
-            </div>
-
-            <div class="pricing-actions">
-              <a class="button button-solid button-accent" href="/book">Book Online</a>
-              <p class="pricing-helper">
-                Need help choosing?
-                <a href="tel:+17725884324">Call</a>,
-                <a href="sms:+17725884324">text</a>,
-                or
-                <a href="mailto:cj@verotechcare.com?subject=Vero%20Tech%20Care%20Question">email</a>.
-              </p>
-            </div>
-          </div>
+        <div class="pricing-actions">
+          <a class="button button-solid button-accent" href="/book">Book Online</a>
+          <p class="pricing-helper">
+            Not sure which fits? Call or text
+            <a href="tel:+17725884324">(772) 588 4324</a>
+            and I&rsquo;ll point you to the simplest next step.
+          </p>
         </div>
       </div>
     </section>
@@ -430,6 +562,14 @@
 
         <div class="faq-list">
           <details class="faq-item" open>
+            <summary>How does fixed-price help work?</summary>
+            <p>
+              You&rsquo;ll always know the price before I arrive. If your situation needs more
+              than the package covers, I&rsquo;ll tell you before doing anything, never after.
+            </p>
+          </details>
+
+          <details class="faq-item">
             <summary>Do you offer in home and remote support?</summary>
             <p>
               Yes. In home service is available around Vero Beach and nearby homes. Remote sessions
@@ -561,7 +701,9 @@
         <a href="/book">Book Online</a>
         <a href="#about">About</a>
         <a href="#services">Services</a>
-        <a href="#pricing">Starting prices</a>
+        <a href="#packages">Packages</a>
+        <a href="/tech-tips">Tech Tips</a>
+        <a href="/workshops">Workshops</a>
         <a href="/digital-presence-management">For Businesses</a>
         <a href="#faq">FAQ</a>
         <a href="tel:+17725884324">(772) 588 4324</a>
@@ -581,8 +723,8 @@
     const mobileDock = document.querySelector(".mobile-dock");
     const updateMobileDock = () => {
       if (!mobileDock) return;
-      const pricing = document.querySelector("#pricing");
-      const trigger = pricing ? pricing.offsetTop - window.innerHeight * 0.25 : 1200;
+      const packages = document.querySelector("#packages");
+      const trigger = packages ? packages.offsetTop - window.innerHeight * 0.25 : 1200;
       mobileDock.classList.toggle("is-visible", window.scrollY > trigger);
     };
 

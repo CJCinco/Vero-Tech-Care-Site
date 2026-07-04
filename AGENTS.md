@@ -135,7 +135,7 @@ Pricing should support premium positioning and qualification.
   
 Default service pricing:  
 - $125/hr minimum  
-- 2-hour minimum for in-home  
+- The $250 Tech Tune-Up Visit (up to 2 hours) is the standard entry offer; outcome packages in `06 Admin + Legal/Services.md` are the pricing source of truth (updated 2026-07-03)  
 - evenings/weekends may carry a surcharge  
 - travel beyond the standard service area may carry a premium  
 - memberships begin at premium price points and should not feel bargain-tier  
