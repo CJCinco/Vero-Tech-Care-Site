@@ -76,8 +76,8 @@
         <div class="nav-cluster">
           <div class="nav-links site-nav-links">
             <a href="/">Home</a>
-            <a href="/#services">Tech Support</a>
-            <a href="/book">Book Online</a>
+            <a href="/#services">Home Tech Help</a>
+            <a href="/business-websites">Business Help</a>
           </div>
 
           <a class="button button-solid nav-cta" href="#booking-embed">Book Tune-Up</a>
@@ -137,16 +137,19 @@
         <div class="scheduler-shell">
           <p class="eyebrow">Book Tune-Up</p>
           <h2 id="schedule-title">Choose a time below to book your Tech Tune-Up Visit.</h2>
-          <iframe
-            id="booking-embed"
-            class="scheduler-frame"
-            src="https://app.acuityscheduling.com/schedule.php?owner=38883336&amp;appointmentType=93634542&amp;ref=embedded_csp"
-            title="Schedule Tech Tune-Up Visit"
-            width="100%"
-            height="800"
-            frameborder="0"
-            allow="payment"
-          ></iframe>
+          <div class="scheduler-embed-shell">
+            <span class="scheduler-loading" aria-hidden="true">Loading secure scheduler...</span>
+            <iframe
+              id="booking-embed"
+              class="scheduler-frame"
+              src="https://app.acuityscheduling.com/schedule.php?owner=38883336&amp;appointmentType=93634542&amp;ref=embedded_csp"
+              title="Schedule Tech Tune-Up Visit"
+              width="100%"
+              height="672"
+              frameborder="0"
+              allow="payment"
+            ></iframe>
+          </div>
           <p class="scheduler-fallback">
             Can't see the scheduler? Call or text
             <a href="tel:+17725884324">(772) 588 4324</a>
@@ -205,11 +208,11 @@
 
       <div class="footer-links">
         <a href="#booking-embed">Book Tune-Up</a>
-        <a href="/book">Book Online</a>
         <a href="/">Home</a>
-        <a href="/#services">Services</a>
+        <a href="/#services">Home Tech Help</a>
         <a href="/tech-tips">Tech Tips</a>
         <a href="/workshops">Workshops</a>
+        <a href="/business-websites">Business Help</a>
         <a href="tel:+17725884324">(772) 588 4324</a>
         <a href="mailto:cj@verotechcare.com">cj@verotechcare.com</a>
       </div>
