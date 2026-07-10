@@ -12,7 +12,7 @@ Current residential offer: `special.html` is the evergreen Tech Tune-Up Visit la
 
 `book.html` is a no-indexed legacy booking file using the same verified Tech Tune-Up appointment embed. The public `/book` and `/book.html` routes redirect to `/special`.
 
-Current business page: `digital-presence-management.html` serves the public `/business-websites` route. The public offer is `Local Business Website Build or Redesign`, with complete website projects starting at `$1,500` and custom scoped before work. The legacy `/digital-presence-management` route redirects to `/business-websites`.
+Current business page: `business-websites.html` serves the public `/business-websites` route. The public offer is `Local Business Website Build or Redesign`, with complete website projects starting at `$1,500` and custom scoped before work. The legacy `/digital-presence-management` route redirects to `/business-websites`.
 
 `book-digital-presence-checkup.html` remains available for direct standalone-checkup referrals, but it is no-indexed, omitted from the sitemap, and is not the primary public business path. No website quote or fit-call Acuity appointment has been verified yet, so the public business page uses a quote-request contact path rather than an invented scheduler link.
 

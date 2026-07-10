@@ -61,7 +61,7 @@ Use each page for its job. Do not make every page carry the whole business.
 - `index.html`: primary residential trust, capability overview, one clear Tech Tune-Up offer, local proof, and path to `/special`
 - `book.html`: no-indexed legacy booking file with the verified Tech Tune-Up scheduler; public `/book` redirects to `/special`
 - `special.html`: evergreen Tech Tune-Up Visit landing page at `/special`
-- `digital-presence-management.html`: business-facing Website Build or Redesign page served publicly at `/business-websites`
+- `business-websites.html`: business-facing Website Build or Redesign page served publicly at `/business-websites`
 - `book-digital-presence-checkup.html`: no-indexed direct booking page for standalone Digital Presence Checkup referrals; not a primary public path
 - `tech-tips.html` and tip articles: helpful local education with a light path back to the Tech Tune-Up or contact
 - `workshops.html`: workshop trust and community proof with a path back to the Tech Tune-Up

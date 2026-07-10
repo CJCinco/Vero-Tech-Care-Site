@@ -9,7 +9,7 @@ const homepageUrl = pathToFileURL(
   path.resolve(__dirname, "../../../index.html")
 ).toString();
 const businessWebsitesUrl = pathToFileURL(
-  path.resolve(__dirname, "../../../digital-presence-management.html")
+  path.resolve(__dirname, "../../../business-websites.html")
 ).toString();
 const bookingUrl = pathToFileURL(
   path.resolve(__dirname, "../../../book.html")
@@ -438,9 +438,7 @@ test("all internal page links and fragments resolve", async () => {
       if (/^(?:https?:|mailto:|tel:|sms:)/i.test(href)) continue;
 
       const resolved = new URL(href, `https://verotechcare.com${currentRoute}`);
-      const routeFiles = new Map([
-        ["/business-websites", "digital-presence-management.html"]
-      ]);
+      const routeFiles = new Map();
       const targetFile = resolved.pathname === "/"
         ? "index.html"
         : routeFiles.get(resolved.pathname)
@@ -466,7 +464,7 @@ test("public route and sitemap contracts stay simplified", async () => {
 
   expect(redirects).toContain("/book /special 301");
   expect(redirects).toContain("/digital-presence-management /business-websites 301");
-  expect(redirects).toContain("/business-websites /digital-presence-management.html 200");
+  expect(redirects).not.toContain("/business-websites /digital-presence-management.html 200");
   expect(sitemap).toContain("https://verotechcare.com/special");
   expect(sitemap).toContain("https://verotechcare.com/business-websites");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/book</loc>");
