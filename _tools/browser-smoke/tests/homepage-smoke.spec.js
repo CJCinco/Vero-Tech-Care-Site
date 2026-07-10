@@ -32,15 +32,6 @@ const secondaryPages = [
   ["tips-senior-tech-safety-checklist", "tips-senior-tech-safety-checklist.html"]
 ];
 
-async function assertAboutScrolledIntoView(page) {
-  await page.waitForFunction(() => {
-    const about = document.querySelector("#about");
-    if (!about) return false;
-    const rect = about.getBoundingClientRect();
-    return rect.top >= -20 && rect.top < window.innerHeight * 0.35;
-  });
-}
-
 function captureErrors(page) {
   const consoleErrors = [];
   const pageErrors = [];
@@ -48,7 +39,13 @@ function captureErrors(page) {
   page.on("console", (message) => {
     if (message.type() === "error") {
       const text = message.text();
-      if (text !== "requestStorageAccess: Permission denied.") {
+      const isKnownThirdPartyNoise =
+        text === "requestStorageAccess: Permission denied." ||
+        (
+          text.includes("Framing 'https://www.google.com/'") &&
+          text.includes("report-only Content Security Policy directive")
+        );
+      if (!isKnownThirdPartyNoise) {
         consoleErrors.push(text);
       }
     }
@@ -155,13 +152,13 @@ async function runHomepageSmoke(page, viewportName, viewport) {
   await expect(page.locator("#services")).toContainText("Tech Tune-Up Visit");
   await expect(page.locator("#services")).toContainText("$250");
   await expect(page.locator("#services .pricing-card")).toHaveCount(1);
-  await expect(page.locator("#services .service-path-grid .path-card")).toHaveCount(6);
-  await expect(page.locator('#services a[href="/special"]')).toHaveCount(2);
+  await expect(page.locator("#services .service-path-grid .path-card")).toHaveCount(4);
+  await expect(page.locator('#services a[href="/special"]')).toHaveCount(1);
   await expect(page.locator("#services")).not.toContainText("Whole-Home Tech Reset");
   await expect(page.locator("#services")).not.toContainText("Remote Fix Session");
   await expect(page.locator("#services")).not.toContainText("per month");
   await expect(page.locator("#faq")).not.toContainText("24/7 computer monitoring");
-  await expect(page.locator("#faq .faq-item")).toHaveCount(5);
+  await expect(page.locator("#faq .faq-item")).toHaveCount(3);
 
   await expect(page.locator('.nav-links a[href="/business-websites"]')).toBeVisible();
   await expect(page.locator('.nav-links a[href="#services"]')).toHaveText("Home Tech Help");
@@ -174,10 +171,6 @@ async function runHomepageSmoke(page, viewportName, viewport) {
   );
   await expect(page.locator('.nav-cta[href="/special"]')).toHaveText("Book Tune-Up");
   await expect(page.locator(".page-nav")).toHaveCount(0);
-
-  await page.locator(".footer-links").scrollIntoViewIfNeeded();
-  await page.locator('.footer-links a[href="#about"]').click();
-  await assertAboutScrolledIntoView(page);
 
   const tuneUpLinks = page.locator('a[href="/special"]');
   await expect(tuneUpLinks.first()).toBeVisible();
@@ -206,11 +199,12 @@ async function runBusinessWebsitesSmoke(page, viewportName, viewport) {
   await expect(page.locator("#hero-title")).toHaveText(
     "Local Business Website Build or Redesign."
   );
-  await expect(page.locator("#website-offer")).toContainText("Starting price");
-  await expect(page.locator("#website-offer")).toContainText("$1,500");
-  await expect(page.locator("#scope .path-card")).toHaveCount(6);
+  await expect(page.locator(".hero-card-primary")).toContainText("$1,500");
+  await expect(page.locator("#website-offer")).toContainText("Website build or redesign");
+  await expect(page.locator("#scope")).toHaveCount(0);
   await expect(page.locator("#workflow")).toContainText("Simple scope");
-  await expect(page.locator("#ownership")).toContainText("Manager access or guided screen share");
+  await expect(page.locator("#workflow .visit-step")).toHaveCount(3);
+  await expect(page.locator("#faq")).toContainText("never send passwords");
   await expect(page.locator("body")).not.toContainText("Digital Presence");
   await expect(page.locator("body")).not.toContainText("$300");
   await expect(page.locator("body")).not.toContainText("Book Checkup");
@@ -285,12 +279,11 @@ async function runDigitalPresenceBookingSmoke(page, viewportName, viewport) {
     "Book your Digital Presence Checkup."
   );
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex,follow");
-  await expect(page.locator(".hero-card-primary")).toContainText("Founding price");
+  await expect(page.locator(".hero-card-primary")).toContainText("Checkup price");
   await expect(page.locator("body")).not.toContainText("through 2026");
-  await expect(page.locator("#booking")).toContainText(
-    "already pointed to the business checkup"
-  );
-  await expect(page.locator("#booking .booking-guide article")).toHaveCount(3);
+  await expect(page.locator("#booking")).toContainText("book at least 3 business days out");
+  await expect(page.locator("#booking .booking-guide article")).toHaveCount(0);
+  await expect(page.locator("#booking .scheduler-note")).toContainText("public website and profile links");
 
   const bookingFrame = page.locator("#booking-embed");
   await expect(bookingFrame).toHaveAttribute(
@@ -320,7 +313,7 @@ async function runCurrentSpecialSmoke(page, viewportName, viewport) {
   await page.goto(currentSpecialUrl, { waitUntil: "domcontentloaded" });
   await expect(page).toHaveTitle(/Tech Tune-Up Visit/);
   await expect(page.locator("#hero-title")).toHaveText("Tech Tune-Up Visit.");
-  await expect(page.locator(".hero-intro")).toHaveText("The standard first visit");
+  await expect(page.locator(".hero-intro")).toHaveText("Tech Tune-Up Visit");
   await expect(page.locator("body")).toContainText("$250");
   await expect(page.locator("body")).not.toContainText("$187.50");
   await expect(page.locator("body")).not.toContainText("25% off");

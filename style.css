@@ -1,26 +1,19 @@
 :root {
   --charcoal: #111514;
-  --charcoal-soft: #1a1f1e;
-  --charcoal-muted: #252b2a;
   --ivory: #f6f1e7;
   --ivory-soft: #fffaf2;
   --paper: #fffdf9;
-  --stone: #605f59;
   --stone-soft: #8c8a83;
   --text: #1b1f1d;
   --text-soft: #4f5652;
   --line: rgba(17, 21, 20, 0.1);
-  --line-strong: rgba(17, 21, 20, 0.18);
   --line-light: rgba(255, 255, 255, 0.1);
   --white: #ffffff;
   --accent: #3e8c8c;
   --accent-deep: #2f7777;
-  --accent-soft: rgba(62, 140, 140, 0.14);
-  --shadow-lg: 0 28px 80px rgba(6, 11, 10, 0.16);
   --shadow-md: 0 18px 46px rgba(6, 11, 10, 0.1);
   --radius-lg: 1rem;
   --radius-md: 0.85rem;
-  --radius-sm: 0.65rem;
 }
 
 *,
@@ -239,6 +232,10 @@ h2 {
 }
 
 @media (max-width: 420px) {
+  .topbar {
+    display: none;
+  }
+
   .brand-mark {
     font-size: 1.6rem;
   }
@@ -290,7 +287,7 @@ h2 {
 
 .button:focus-visible,
 .social-link:focus-visible {
-  outline: 3px solid rgba(74, 162, 155, 0.42);
+  outline: 3px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -313,42 +310,10 @@ h2 {
   background: transparent;
 }
 
-#packages .package-card .button-outline {
-  border-color: rgba(17, 21, 20, 0.24);
-  color: var(--charcoal);
-  background: rgba(255, 255, 255, 0.74);
-}
-
-#packages .package-card .button-outline:hover {
-  border-color: rgba(62, 140, 140, 0.42);
-  color: var(--charcoal);
-  background: var(--white);
-}
-
-.button-soft {
-  border-color: rgba(255, 255, 255, 0.12);
-  color: var(--white);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.05));
-}
-
-.button-dark {
-  border-color: rgba(255, 255, 255, 0.16);
-  color: var(--white);
-  background:
-    linear-gradient(135deg, var(--charcoal), var(--charcoal-muted));
-}
-
-.button-dark:hover {
-  color: var(--white);
-  background:
-    linear-gradient(135deg, var(--charcoal-soft), var(--charcoal-muted));
-}
-
 .button-accent {
   border-color: rgba(255, 255, 255, 0.18);
   background:
-    linear-gradient(135deg, #4aa29b 0%, var(--accent-deep) 100%);
+    linear-gradient(135deg, #327a76 0%, #245f5f 100%);
   color: var(--white);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.26),
@@ -357,7 +322,7 @@ h2 {
 
 .button-accent:hover {
   background:
-    linear-gradient(135deg, #55aaa4 0%, #266b6b 100%);
+    linear-gradient(135deg, #2f746f 0%, #1f5555 100%);
   color: var(--white);
 }
 
@@ -464,11 +429,7 @@ h3 {
   margin: 1.6rem 0 1.55rem;
 }
 
-.hero-benefits,
-.check-list,
-.service-list,
-.package-list,
-.about-points {
+.hero-benefits {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -481,22 +442,12 @@ h3 {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.hero-benefits li,
-.check-list li,
-.check-list-dark li,
-.service-list li,
-.package-list li,
-.about-points li {
+.hero-benefits li {
   position: relative;
   padding-left: 1.1rem;
 }
 
-.hero-benefits li::before,
-.check-list li::before,
-.check-list-dark li::before,
-.service-list li::before,
-.package-list li::before,
-.about-points li::before {
+.hero-benefits li::before {
   content: "";
   position: absolute;
   left: 0;
@@ -576,18 +527,6 @@ h3 {
   max-width: 48rem;
   color: var(--text-soft);
   font-size: 0.95rem;
-}
-
-.scheduler-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem 1rem;
-  align-items: center;
-  margin-top: 1.45rem;
-}
-
-.scheduler-actions .pricing-helper {
-  margin-bottom: 0;
 }
 
 .booking-guide {
@@ -686,7 +625,7 @@ h3 {
 
 .business-bridge-main {
   width: min(1120px, calc(100% - 1.5rem));
-  margin: 4rem auto;
+  margin: 3rem auto;
   color: var(--white);
   background:
     linear-gradient(135deg, rgba(17, 21, 20, 0.96), rgba(24, 55, 53, 0.94));
@@ -761,13 +700,6 @@ h3 {
   color: rgba(255, 255, 255, 0.76);
 }
 
-.hero-card-accent {
-  border-color: rgba(74, 162, 155, 0.35);
-  background:
-    linear-gradient(180deg, rgba(74, 162, 155, 0.15), rgba(74, 162, 155, 0.05)),
-    rgba(255, 255, 255, 0.02);
-}
-
 .business-header {
   background:
     linear-gradient(90deg, rgba(8, 14, 13, 0.97) 0%, rgba(12, 18, 17, 0.92) 48%, rgba(24, 55, 53, 0.68) 100%),
@@ -794,30 +726,11 @@ h3 {
   line-height: 1;
 }
 
-.business-scope-grid {
-  margin-bottom: 0;
-}
-
-.business-offer-card .package-price {
-  letter-spacing: 0;
-}
-
 .business-offer-card .pricing-lines {
   margin-top: 1.1rem;
 }
 
-.business-method-card {
-  align-self: start;
-}
-
-.business-fit-panel {
-  margin-top: 0.4rem;
-}
-
-.card-label,
-.package-kicker,
-.contact-label,
-.trust-value {
+.card-label {
   margin-bottom: 0.8rem;
   font-size: 0.84rem;
   font-weight: 700;
@@ -825,9 +738,7 @@ h3 {
   text-transform: uppercase;
 }
 
-.card-label,
-.package-kicker,
-.contact-label {
+.card-label {
   color: var(--stone-soft);
 }
 
@@ -835,25 +746,12 @@ h3 {
   color: rgba(255, 255, 255, 0.66);
 }
 
-.check-list {
-  display: grid;
-  gap: 0.7rem;
-}
-
-.check-list li {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.check-list-dark li {
-  color: var(--text-soft);
-}
-
 .section {
-  padding: 4.5rem 0;
+  padding: 3.75rem 0;
 }
 
 .section-pricing {
-  padding: 4rem 0;
+  padding: 3.5rem 0;
   background:
     linear-gradient(180deg, rgba(255, 253, 249, 0.94), rgba(239, 232, 219, 0.78)),
     var(--ivory);
@@ -867,33 +765,9 @@ h3 {
     rgba(255, 255, 255, 0.3);
 }
 
-.section-proof {
-  position: relative;
-  margin-top: -3rem;
-  padding-top: 0;
-}
-
-.trust-grid {
-  display: grid;
-  gap: 1rem;
-}
-
-.trust-card {
-  padding: 1.35rem;
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  border-radius: var(--radius-md);
-  background: rgba(255, 253, 249, 0.88);
-  box-shadow: var(--shadow-lg);
-  backdrop-filter: blur(8px);
-}
-
-.trust-value {
-  color: var(--accent-deep);
-}
-
 .section-heading {
   max-width: 42rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.6rem;
 }
 
 .section-heading-compact {
@@ -904,20 +778,15 @@ h3 {
   color: var(--text-soft);
 }
 
-.service-path-grid,
-.workshop-grid,
-.package-grid,
-.contact-grid {
+.service-path-grid {
   display: grid;
   gap: 1rem;
 }
 
 .path-card,
-.workshop-card,
 .package-card,
 .about-card,
-.faq-item,
-.contact-card {
+.faq-item {
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
   background: rgba(255, 253, 249, 0.9);
@@ -925,10 +794,8 @@ h3 {
 }
 
 .path-card,
-.workshop-card,
 .package-card,
-.about-card,
-.contact-card {
+.about-card {
   padding: 1.45rem;
 }
 
@@ -955,27 +822,14 @@ h3 {
   text-transform: uppercase;
 }
 
-.path-card p:last-child,
-.workshop-card p:last-child {
+.path-card p:last-child {
   margin-bottom: 0;
   color: var(--text-soft);
 }
 
-.service-list,
-.package-list,
-.about-points {
-  display: grid;
-  gap: 0.7rem;
-}
-
-.fine-print,
 .contact-note,
 .footer-copy {
   color: var(--text-soft);
-}
-
-.fine-print {
-  margin-top: 1.4rem;
 }
 
 .service-scope-panel {
@@ -1054,27 +908,6 @@ h3 {
   color: rgba(255, 255, 255, 0.72);
 }
 
-.visit-note {
-  display: grid;
-  gap: 1rem;
-  align-items: center;
-  margin-top: 0.85rem;
-  padding: 1.35rem;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: var(--radius-lg);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.035));
-}
-
-.visit-note p {
-  margin-bottom: 0;
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.visit-note-compact {
-  grid-template-columns: 1fr;
-}
-
 .pricing-card {
   max-width: none;
   border-color: rgba(62, 140, 140, 0.18);
@@ -1084,35 +917,12 @@ h3 {
   box-shadow: 0 28px 70px rgba(6, 11, 10, 0.14);
 }
 
-.pricing-shell {
-  display: grid;
-  gap: 1.25rem;
-  align-items: stretch;
+.pricing-card .card-label {
+  color: var(--accent-deep);
 }
 
-.pricing-intro {
-  padding: 1.55rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background:
-    linear-gradient(145deg, rgba(17, 21, 20, 0.98), rgba(29, 67, 64, 0.92));
-  color: var(--white);
-  box-shadow: var(--shadow-md);
-}
-
-.pricing-intro .eyebrow {
-  color: rgba(255, 255, 255, 0.64);
-}
-
-.pricing-intro h2 {
-  margin-bottom: 0.8rem;
-}
-
-.pricing-intro h3 {
-  margin-bottom: 0.8rem;
-  color: var(--white);
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
-  line-height: 1.06;
+.offer-card-compact {
+  max-width: 52rem;
 }
 
 .home-capabilities-heading {
@@ -1122,11 +932,6 @@ h3 {
 .home-capabilities-heading h3 {
   font-size: clamp(1.65rem, 3vw, 2.35rem);
   line-height: 1.08;
-}
-
-.pricing-intro p:last-child {
-  margin-bottom: 0;
-  color: rgba(255, 255, 255, 0.72);
 }
 
 .pricing-lines {
@@ -1151,8 +956,7 @@ h3 {
 }
 
 .pricing-line strong,
-.pricing-line span,
-.pricing-price {
+.pricing-line span {
   display: block;
 }
 
@@ -1163,14 +967,6 @@ h3 {
 .pricing-line span {
   color: var(--text-soft);
   font-size: 0.95rem;
-}
-
-.pricing-price {
-  margin-bottom: 0;
-  color: #244b48;
-  font-weight: 750;
-  line-height: 1.25;
-  letter-spacing: 0.01em;
 }
 
 .pricing-note {
@@ -1261,34 +1057,6 @@ h3 {
   gap: 1rem;
 }
 
-.about-trust-grid {
-  display: grid;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
-}
-
-.about-trust-grid p {
-  display: grid;
-  gap: 0.15rem;
-  margin: 0;
-  padding: 1rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  background: rgba(255, 253, 249, 0.72);
-}
-
-.about-trust-grid strong {
-  color: var(--accent-deep);
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.about-trust-grid span {
-  color: var(--text-soft);
-  font-size: 0.94rem;
-}
-
 .about-photo-card {
   margin: 0;
   overflow: hidden;
@@ -1300,6 +1068,7 @@ h3 {
 
 .about-photo-card img {
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   object-position: 50% 8%;
@@ -1311,12 +1080,8 @@ h3 {
     rgba(255, 255, 255, 0.92);
 }
 
-.about-points {
-  margin-top: 1.35rem;
-}
-
 .article-content {
-  max-width: 46rem;
+  max-width: 42rem;
 }
 
 .article-content h2 {
@@ -1348,48 +1113,8 @@ h3 {
   margin-top: 0.55rem;
 }
 
-.memberships-card {
-  margin-top: 1.2rem;
-}
-
 .section-faq .section-heading {
   margin-bottom: 1.5rem;
-}
-
-.section-workshops {
-  background:
-    linear-gradient(180deg, rgba(255, 253, 249, 0.9), rgba(246, 241, 231, 0.72)),
-    var(--paper);
-}
-
-.section-workshops {
-  padding: 4rem 0;
-}
-
-.workshops-layout {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.workshop-card {
-  background: rgba(255, 253, 249, 0.92);
-}
-
-.workshop-card .card-label {
-  color: var(--accent-deep);
-}
-
-.workshop-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem 1.25rem;
-  align-items: center;
-  margin-top: 1.4rem;
-}
-
-.workshop-actions p {
-  margin-bottom: 0;
-  color: var(--text-soft);
 }
 
 .faq-list {
@@ -1441,40 +1166,6 @@ h3 {
   color: var(--text-soft);
 }
 
-.faq-memberships {
-  display: grid;
-  gap: 0.75rem;
-  padding: 0 1.35rem 1rem;
-}
-
-.faq-memberships article {
-  padding: 0.95rem;
-  border: 1px solid rgba(17, 21, 20, 0.08);
-  border-radius: var(--radius-sm);
-  background: rgba(62, 140, 140, 0.06);
-}
-
-.faq-memberships strong,
-.faq-memberships span {
-  display: block;
-}
-
-.faq-memberships strong {
-  color: var(--text);
-}
-
-.faq-memberships span {
-  margin-top: 0.1rem;
-  color: #244b48;
-  font-weight: 750;
-}
-
-.faq-memberships p {
-  padding: 0;
-  margin-top: 0.4rem;
-  font-size: 0.95rem;
-}
-
 .section-contact {
   color: var(--white);
   background:
@@ -1494,28 +1185,6 @@ h3 {
 
 .contact-actions {
   margin: 1.6rem 0 1.25rem;
-}
-
-.contact-card {
-  display: grid;
-  gap: 0.55rem;
-  text-decoration: none;
-  color: var(--text);
-}
-
-.contact-card strong {
-  font-size: 1.3rem;
-}
-
-.contact-card span:last-child {
-  color: var(--text-soft);
-}
-
-.contact-card-primary {
-  border-color: rgba(74, 162, 155, 0.4);
-  background:
-    linear-gradient(180deg, rgba(74, 162, 155, 0.14), rgba(255, 253, 249, 0.94)),
-    rgba(255, 253, 249, 0.94);
 }
 
 .contact-support {
@@ -1549,12 +1218,16 @@ h3 {
 .footer-layout {
   display: grid;
   gap: 1.4rem;
-  padding: 2.2rem 0 calc(6rem + env(safe-area-inset-bottom));
+  padding: 2.2rem 0 calc(5rem + env(safe-area-inset-bottom));
 }
 
 .error-page {
   min-height: 100vh;
   background: #0e1211;
+}
+
+.error-links .section-copy {
+  color: rgba(255, 255, 255, 0.74);
 }
 
 .brand-mark-footer {
@@ -1586,8 +1259,8 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
-  min-height: 3.1rem;
-  padding: 0.68rem 1.05rem 0.68rem 0.78rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.8rem 0.5rem 0.6rem;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 999px;
   background:
@@ -1618,8 +1291,8 @@ h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 1.7rem;
+  height: 1.7rem;
   border-radius: 999px;
   font-size: 1rem;
   font-weight: 700;
@@ -1659,13 +1332,14 @@ h3 {
   bottom: 0;
   z-index: 40;
   display: grid;
-  grid-template-columns: 1.2fr repeat(3, 1fr);
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
   gap: 0.45rem;
   padding: 0.55rem 0.55rem calc(0.55rem + env(safe-area-inset-bottom));
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(12, 16, 15, 0.92);
   backdrop-filter: blur(12px);
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   transform: translateY(110%);
   transition:
@@ -1675,6 +1349,7 @@ h3 {
 
 .mobile-dock.is-visible {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
   transform: translateY(0);
 }
@@ -1708,21 +1383,12 @@ summary:focus-visible {
 }
 
 @media (min-width: 680px) {
-  .trust-grid,
-  .service-grid,
   .service-path-grid,
-  .visit-grid,
-  .workshop-grid,
-  .package-grid,
-  .contact-grid {
+  .visit-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .hero-benefits {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .about-trust-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1735,9 +1401,6 @@ summary:focus-visible {
     border-right: 1px solid rgba(255, 255, 255, 0.14);
   }
 
-  .contact-grid a:last-child {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (min-width: 820px) {
@@ -1804,14 +1467,6 @@ summary:focus-visible {
     padding: 1.45rem 1.55rem;
   }
 
-  .trust-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .service-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .service-path-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1833,32 +1488,6 @@ summary:focus-visible {
     padding: 1.5rem;
   }
 
-  .visit-note {
-    grid-template-columns: minmax(0, 1fr) auto;
-    padding: 1.5rem;
-  }
-
-  .pricing-shell {
-    grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 1.3fr);
-    gap: 1.4rem;
-  }
-
-  .pricing-line {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: start;
-    gap: 1.25rem;
-  }
-
-  .pricing-price {
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  .package-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: stretch;
-  }
-
   .package-card-featured {
     transform: translateY(-0.8rem);
   }
@@ -1873,18 +1502,6 @@ summary:focus-visible {
   .about-side {
     gap: 1.35rem;
     margin-top: 2.6rem;
-  }
-
-  .about-side .about-card {
-    margin-top: 0;
-  }
-
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-grid a:last-child {
-    grid-column: auto;
   }
 
   .footer-layout {
@@ -1922,6 +1539,15 @@ summary:focus-visible {
   .visit-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+
+  .visit-grid-compact {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.booking-hero,
+.business-hero {
+  padding-bottom: 4.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
