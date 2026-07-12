@@ -5,7 +5,7 @@ Website for Vero Tech Care.
 AI editing contract:
 
 - `AGENTS.md` is the required agent entrypoint.
-- `WEBSITE_STANDARDS.md` is the durable website editing standard.
+- `WEBSITE_STANDARDS.md` is the primary, binding website editing standard. Current HTML/CSS implement it but do not outrank it.
 - This `README.md` is the site map and workflow reference.
 
 Current residential offer: `special.html` is the evergreen Tech Tune-Up Visit landing and booking page; `/special` is the public URL. The Tech Tune-Up is the single core public residential offer at `$250`. Other home outcomes, remote help, larger projects, and ongoing care remain available by request or custom quote without a public package or membership price catalog. Two-hour language may describe included scope, but dated promo/code language should not return without a clear expiry/removal plan.
@@ -23,7 +23,8 @@ Primary public residential navigation now exposes only the verified Tech Tune-Up
 Use this workflow when Codex makes website changes.
 
 - Work only inside this `02 Website` repo for website source changes.
-- Read `AGENTS.md` and `WEBSITE_STANDARDS.md` before editing website files.
+- Read `AGENTS.md`, then `WEBSITE_STANDARDS.md`, before the README and target files.
+- Classify the task and preserve the locked baseline unless CJ explicitly approves a standards-level change.
 - Keep browser smoke test tooling in `_tools/browser-smoke/`.
 - Before publishing-level changes, run `npm run test:smoke` from `_tools/browser-smoke/` after confirming the tests match current intentional site copy.
 - Do not commit, push, deploy, publish, merge, create branches, or open pull requests without explicit CJ approval.

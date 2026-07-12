@@ -145,9 +145,9 @@ async function runHomepageSmoke(page, viewportName, viewport) {
 
   const about = page.locator("#about");
   await expect(about).toBeVisible();
-  await expect(page.locator("#about-title")).toHaveText(
-    "Hi, I’m CJ. I make technology feel less overwhelming."
-  );
+  await expect(page.locator("#about-title")).toContainText("CJ");
+  await expect(about).toContainText("local small businesses");
+  await expect(page.locator("#about .about-photo-card img")).toHaveCount(1);
   await expect(page.locator("#about .about-points li")).toHaveCount(0);
   await expect(page.locator("#services")).toContainText("Tech Tune-Up Visit");
   await expect(page.locator("#services")).toContainText("$250");
@@ -159,8 +159,25 @@ async function runHomepageSmoke(page, viewportName, viewport) {
   await expect(page.locator("#services")).not.toContainText("per month");
   await expect(page.locator("#faq")).not.toContainText("24/7 computer monitoring");
   await expect(page.locator("#faq .faq-item")).toHaveCount(3);
+  await expect(page.locator(".proof-strip .proof-card")).toHaveCount(3);
+  await expect(page.locator(".home-hero .hero-panel")).toHaveCount(0);
+
+  const homepageStructure = await page.locator("main > section").evaluateAll((sections) =>
+    sections.map((section) => section.id || (
+      section.classList.contains("business-bridge-main") ? "business-bridge-main" : ""
+    ))
+  );
+  expect(homepageStructure).toEqual([
+    "about",
+    "services",
+    "business-bridge-main",
+    "faq",
+    "contact"
+  ]);
 
   await expect(page.locator('.nav-links a[href="/business-websites"]')).toBeVisible();
+  await expect(page.locator(".nav-links a")).toHaveCount(3);
+  await expect(page.locator('.nav-links a[href="/"]')).toHaveText("Home");
   await expect(page.locator('.nav-links a[href="#services"]')).toHaveText("Home Tech Help");
   await expect(page.locator('.nav-links a[href="/business-websites"]')).toHaveText("Business Help");
   await expect(page.locator(".business-bridge-main")).toContainText(
@@ -196,14 +213,13 @@ async function runBusinessWebsitesSmoke(page, viewportName, viewport) {
   await page.setViewportSize(viewport);
   await page.goto(businessWebsitesUrl, { waitUntil: "domcontentloaded" });
   await expect(page).toHaveTitle(/Local Business Website Build or Redesign/);
-  await expect(page.locator("#hero-title")).toHaveText(
-    "Local Business Website Build or Redesign."
-  );
+  await expect(page.locator("#hero-title")).toContainText("website");
   await expect(page.locator(".hero-card-primary")).toContainText("$1,500");
   await expect(page.locator("#website-offer")).toContainText("Website build or redesign");
   await expect(page.locator("#scope")).toHaveCount(0);
-  await expect(page.locator("#workflow")).toContainText("Simple scope");
+  await expect(page.locator("#workflow")).toContainText("idea to launch");
   await expect(page.locator("#workflow .visit-step")).toHaveCount(3);
+  await expect(page.locator("#faq .faq-item")).toHaveCount(3);
   await expect(page.locator("#faq")).toContainText("never send passwords");
   await expect(page.locator("body")).not.toContainText("Digital Presence");
   await expect(page.locator("body")).not.toContainText("$300");
@@ -255,6 +271,8 @@ async function runBookingPageSmoke(page, viewportName, viewport) {
   await expect(bookingFrame).toHaveAttribute("src", /appointmentType=93634542/);
   await expect(bookingFrame).not.toHaveAttribute("src", /calendarID=/);
   await expect(page.locator(".scheduler-fallback")).toContainText("Can't see the scheduler?");
+  await expect(page.locator(".scheduler-loading")).toHaveAttribute("role", "status");
+  await expect(page.locator(".mobile-dock")).toHaveCount(0);
 
   await assertSchedulerLoaded(page);
 
@@ -292,6 +310,8 @@ async function runDigitalPresenceBookingSmoke(page, viewportName, viewport) {
   );
   await expect(bookingFrame).toHaveAttribute("src", /appointmentType=93474728/);
   await expect(page.locator(".scheduler-fallback")).toContainText("Can't see the scheduler?");
+  await expect(page.locator(".scheduler-loading")).toHaveAttribute("role", "status");
+  await expect(page.locator(".mobile-dock")).toHaveCount(0);
 
   await assertSchedulerLoaded(page);
 
@@ -332,6 +352,8 @@ async function runCurrentSpecialSmoke(page, viewportName, viewport) {
   await expect(bookingFrame).not.toHaveAttribute("src", /certificate=/);
   await expect(bookingFrame).not.toHaveAttribute("src", /calendarID=/);
   await expect(page.locator(".scheduler-fallback")).toContainText("Can't see the scheduler?");
+  await expect(page.locator(".scheduler-loading")).toHaveAttribute("role", "status");
+  await expect(page.locator(".mobile-dock")).toHaveCount(0);
 
   await assertSchedulerLoaded(page);
 
@@ -489,4 +511,15 @@ test("shared HTML source contracts stay valid", async () => {
       );
     }
   }
+});
+
+test("visual system contract stays stable", async () => {
+  const stylesheet = fs.readFileSync(path.join(siteRoot, "style.css"), "utf8");
+
+  expect(stylesheet).toMatch(/--charcoal:\s*#111514;/i);
+  expect(stylesheet).toMatch(/--ivory:\s*#f6f1e7;/i);
+  expect(stylesheet).toMatch(/--accent:\s*#3e8c8c;/i);
+  expect(stylesheet).toMatch(/font-family:\s*"Avenir Next",\s*"Segoe UI",\s*"Helvetica Neue",\s*Arial,\s*sans-serif;/i);
+  expect(stylesheet).toMatch(/font-family:\s*"Big Caslon",\s*"Book Antiqua",\s*"Palatino Linotype",\s*serif;/i);
+  expect(stylesheet).toMatch(/\.wrap\s*\{[\s\S]*?width:\s*min\(1120px,\s*calc\(100%\s*-\s*1\.5rem\)\);/i);
 });

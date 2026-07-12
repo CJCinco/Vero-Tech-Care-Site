@@ -4,12 +4,20 @@
 
 Before making website edits, read:
 
-1. `README.md`
-2. `WEBSITE_STANDARDS.md`
+1. `WEBSITE_STANDARDS.md`
+2. `README.md`
 3. The target HTML/CSS files
 4. Any source-of-truth files named by `WEBSITE_STANDARDS.md` for the specific edit
 
 Do not rely on memory or prior chat alone for offers, pricing, CTA rules, brand language, or publishing rules.
+
+## Primary Authority Rule
+
+`WEBSITE_STANDARDS.md` is the binding website editing contract. A normal request for copy, layout, spacing, SEO, conversion, modernization, or a more human feel must be implemented inside that contract.
+
+Do not treat broad improvement wording as permission to change locked offers, prices, public/private boundaries, CTA destinations, page roles, navigation, homepage structure, routes, booking embeds, palette, typography, or visual identity. Those are Class C changes and require an explicit CJ instruction to change the standard or approve the named exception.
+
+Before editing, identify the change class, target section, locked invariants touched, required factual sources, and expected file radius. If the task expands beyond that radius, identify why before continuing.
 
 ## Scope
 
@@ -21,6 +29,7 @@ Do not scan unrelated folders, client records, Mail, Messages, browser data, app
 
 ## Operating Rules
 
+- Preserve the locked baseline in `WEBSITE_STANDARDS.md`; it outranks incidental patterns in the current HTML/CSS.
 - Preserve the current premium, minimal, calm, local, senior-friendly website direction.
 - Make the smallest useful change that accomplishes the request.
 - Reuse existing HTML structure, CSS classes, layout patterns, images, nav/footer patterns, and Acuity booking embeds.
@@ -50,6 +59,8 @@ Before finishing a website edit:
 - Check the main CTA and booking path still match the page role.
 - Search for stale or conflicting offer, price, CTA, or booking language introduced by the edit.
 - Check that the edit did not add unnecessary copy or duplicate an existing section.
+- Check the locked navigation, homepage section order, proof/card/FAQ counts, and public/private boundaries.
+- Keep exact tests for contract facts and structural invariants; do not freeze ordinary subjective copy or weaken contract tests to bless drift.
 - Verify semantic HTML, keyboard accessibility, mobile usability, and obvious wrapping risks.
 - For publish-level or behavior/layout changes, run `npm run test:smoke` from `_tools/browser-smoke/` after making sure the smoke tests match current intentional site copy.
 

@@ -1,22 +1,40 @@
 # Vero Tech Care Website Standards
 
+Status: binding website editing contract
+Last reviewed: 2026-07-12
+
 Purpose: AI-facing standards for editing the Vero Tech Care website without drifting from the brand, offer model, booking flow, or current site structure.
 
 This file is a pre-edit contract, not a strategy doc, report, backlog, or full brand guide. Keep it compact and point to source files instead of duplicating them.
 
+## Standards Authority
+
+This file is the primary editing authority for every Vero Tech Care website task.
+
+A routine request to change copy, spacing, formatting, SEO, layout, a CTA, or a page does not silently override this contract. Interpret the requested outcome inside these standards. Change a locked standard only when CJ explicitly says to change the website standard, replace the current offer or conversion model, restructure the site, or approves the exact exception after it is named.
+
+If a request conflicts with a locked standard:
+
+1. preserve the locked standard
+2. implement the closest compliant version when the intent is still clear
+3. name the conflict in the closeout
+4. do not rewrite this file merely to make the requested patch appear compliant
+
+Current HTML and CSS show how the standard is implemented. They do not outrank this file and do not turn accidental drift into a new standard.
+
 ## Source Authority
 
-Use this order when a website edit depends on facts:
+Use the authority that matches the decision:
 
-1. Current website files in `02 Website/`
-2. Website workflow facts in `02 Website/README.md`
-3. Offer, pricing, memberships, monitoring language, service boundaries, and exclusions in `../06 Admin + Legal/Services.md`
-4. Digital Presence Management strategy and pricing in `../06 Admin + Legal/Digital Presence Management Launch Plan.md`
-5. Brand, voice, and visual direction in `../01 Brand/brand-core.md`, `../01 Brand/voice-and-tone.md`, and `../01 Brand/visual-rules.md`
-6. Practical VTC public voice rules in `../09 Knowledge Base/VTC Voice Rules.md`
-7. Digital Presence reusable client-facing language in `../08 Templates/Digital Presence Management/`
+1. This `WEBSITE_STANDARDS.md` for website architecture, conversion paths, page roles, voice rules, visual-system boundaries, change radius, and validation.
+2. `../06 Admin + Legal/Services.md` for residential offers, prices, memberships, monitoring language, service boundaries, and exclusions.
+3. `../06 Admin + Legal/Digital Presence Management Launch Plan.md` for the business website offer, business pricing, private Checkup, and internal Digital Presence rules.
+4. Current website files in `02 Website/` for compliant implementation details, exact current copy, routes, classes, embeds, metadata, and responsive behavior.
+5. `README.md` for website workflow and current route notes.
+6. `../01 Brand/brand-core.md`, `../01 Brand/voice-and-tone.md`, `../01 Brand/visual-rules.md`, and `../09 Knowledge Base/VTC Voice Rules.md` for broader brand and voice guidance where this file does not define a more specific website rule.
+7. `../08 Templates/Digital Presence Management/` for reusable business client-facing language when it fits the locked public business offer.
 
-If these sources conflict, do not invent a compromise. Use the most specific current source for the affected claim and mention the conflict in the closeout.
+If sources conflict, do not invent a compromise. This file wins for website behavior. The most specific current business source wins for factual claims, offers, and prices. Current site code never wins merely because drift is already present; fix the conflict or report it.
 
 ## Site Intention
 
@@ -41,6 +59,38 @@ Core positioning:
 - patient in-home help first, remote help when it fits
 - one clear public residential price and clear custom next steps
 - local trust over generic MSP or big-box support language
+
+## Locked Baseline Contract
+
+These are invariants, not suggestions:
+
+| Surface | Locked standard |
+| --- | --- |
+| Public model | Two public front doors only: residential Tech Tune-Up and local business website build or redesign. |
+| Residential offer | One public pricing card: Tech Tune-Up Visit at `$250`, with `/special` as the booking destination. |
+| Business offer | Local Business Website Build or Redesign, complete projects starting at `$1,500`, with a custom quote path. |
+| Primary navigation | `Home`, `Home Tech Help`, `Business Help`, plus one page-appropriate primary CTA. Do not add more primary nav items without changing this standard. |
+| Homepage structure | Header/nav, residential hero, three-card proof strip, About CJ, one residential offer with four capability cards, business bridge, three-item FAQ, contact, footer. Preserve this order and section ownership. |
+| Residential CTA | `Book Tune-Up`, `Book a Tech Tune-Up`, or `Book the Tech Tune-Up`, linking to `/special` or the verified scheduler anchor on a booking page. |
+| Business CTA | `Request a Website Quote` or `Request a Quote`, using the current quote/contact path until a dedicated fit appointment is verified. |
+| Voice | Human, local, first person when CJ is speaking about his help or process. Use `Vero Tech Care` in metadata, factual business references, and places where first person would be unclear. |
+| Visual system | Warm ivory, near-black, ocean teal, serif display headings, sans-serif body copy, generous whitespace, simple cards, pill buttons, and the current calm photography style. |
+| Secondary contact | Phone, text, and email remain visible but secondary to the page's primary conversion action. |
+| Claims | Only source-backed prices, proof, testimonials, service facts, and local facts. No invented reassurance, credentials, guarantees, or urgency. |
+| Private lanes | Internal packages, memberships, Remote Fix, monitoring, Digital Presence ladders, and the standalone Checkup remain private or direct-link-only unless CJ explicitly changes the public offer standard. |
+| Booking usability | Embedded schedulers must remain unobstructed on mobile. Do not place a sticky dock, floating CTA, or other fixed interface over scheduler controls. |
+
+## Change Classes And Override Gate
+
+Classify the task before editing:
+
+- **Class A — content or spacing:** wording, typo, metadata wording, wrapping, alignment, or local spacing inside an existing page role. Keep the locked baseline unchanged.
+- **Class B — shared presentation or behavior:** repeated header/footer updates, responsive behavior, shared CSS patterns, accessibility, or routing repairs. Preserve the locked baseline and verify every affected page.
+- **Class C — contract change:** offers, prices, primary CTA destinations, public/private boundaries, page roles, nav items, homepage sections, route names, booking embeds, brand palette, typography system, or visual identity. Do not implement from an ordinary edit request. Require an explicit standards or strategy change from CJ, update this file first, then update code and tests.
+
+Default edit radius is the named page, its necessary shared CSS, and its contract tests. Do not turn a copy or spacing task into a site-wide rewrite. Expand to repeated pages only when a shared component or locked fact must stay consistent.
+
+Broad requests such as “improve,” “modernize,” “make it convert,” “make it more human,” or “clean it up” are not Class C approval. They authorize the strongest compliant Class A or Class B improvement.
 
 ## Primary Conversion Path
 
@@ -68,6 +118,23 @@ Use each page for its job. Do not make every page carry the whole business.
 - `404.html`: recover visitors and route them to booking or contact
 
 When adding or revising copy, decide which page owns that message. Link to the owning page instead of repeating the same explanation everywhere.
+
+### Homepage Section Ownership
+
+Each homepage section has one job:
+
+- hero: audience, main outcome, local relevance, and primary residential CTA
+- proof strip: real trust evidence only; no new offer or pricing ladder
+- About CJ: personal trust, working style, and what it feels like to receive help; no service catalog
+- services: the single Tech Tune-Up offer, four capability examples, and custom-work boundary
+- business bridge: short handoff to `/business-websites`; do not duplicate the full business offer
+- FAQ: the three strongest pre-booking questions; do not turn it into a service encyclopedia
+- contact: primary booking action plus secondary question paths
+- footer: compact navigation, contact facts, and real social links
+
+Adding a homepage section, a second pricing card, a fifth capability card, a fourth FAQ item, or a fourth proof card is a Class C structure change.
+
+Keep the proof strip compact enough that About CJ follows naturally instead of feeling buried. The About copy may name both sides of CJ's work, patient home tech help and clear websites for local small businesses, without turning into a service list.
 
 ## CTA Rules
 
@@ -146,6 +213,15 @@ Write like Vero Tech Care:
 
 Use plain words before technical terms. Name the practical outcome first. Keep paragraphs short. Make the next step obvious. Explain risk without fear tactics.
 
+Website perspective rules:
+
+- Use first person for CJ's approach, process, reassurance, recommendations, and direct invitations: `I help`, `I explain`, `we decide`, `ask me`.
+- Use `Vero Tech Care` for metadata, structured data, factual business identification, and sentences where the company name improves clarity.
+- Do not switch between `I`, `we`, `CJ`, and `Vero Tech Care` inside one section without a clear reason.
+- The About headline and body must sound like a real introduction from CJ, not a generic agency biography or marketing slogan.
+- Prefer concrete human outcomes over abstract brand claims. Show patience through wording and process instead of repeatedly calling the service patient or premium.
+- Do not add more copy to make a page feel warmer. Replace stiff copy with warmer copy and keep the same or lower information load.
+
 Prefer language like:
 
 - patient in-home tech care
@@ -177,18 +253,29 @@ For public website copy, avoid dash-heavy writing when a comma, period, or line 
 
 Preserve the current design language:
 
-- warm ivory background
-- near-black text
-- ocean teal accents
-- clean typography hierarchy
+- warm ivory background: `--ivory: #f6f1e7`
+- near-black foundation: `--charcoal: #111514`
+- ocean teal accent: `--accent: #3e8c8c`
+- serif display and brand headings: `Big Caslon` with the current serif fallbacks
+- sans-serif body and interface copy: `Avenir Next` with the current sans-serif fallbacks
 - generous whitespace
 - premium minimal layout
 - calm photo/image style
 - simple cards and panels already present in the CSS
+- rounded pill buttons and the existing border-radius family
 
-Do not change brand colors, typography system, image style, visual identity, or major layout patterns unless explicitly requested.
+Color tokens, font families, button language, global width behavior, and the overall card/section system are Class C. Do not change them from a general styling request. Local spacing, wrapping, alignment, and responsive corrections are Class A or B when they preserve the system.
 
 Avoid trendy effects, dense cards, crowded layouts, unnecessary animation, heavy visual clutter, and adding sections that compete with booking.
+
+Readability and spacing rules:
+
+- Supporting interface copy, labels, top bars, and brand tags should render at about `14px` or larger in normal use, with enough contrast to read comfortably.
+- Generous whitespace should create calm hierarchy, not long empty runs or sparse sections. Remove repeated copy before adding more vertical space.
+- Keep proof, FAQ, contact, and footer sections compact enough to support the page's main path.
+- On desktop, do not leave a single offer card artificially narrow when the surrounding section has useful space.
+- Embedded booking controls must never sit beneath a fixed mobile dock or floating action bar.
+- Business-page headings should describe the customer outcome in natural language. Keep internal strategy terms and stacked slogan fragments out of public headings.
 
 Small spacing, consistency, wrapping, accessibility, and alignment improvements are acceptable when directly tied to the requested edit.
 
@@ -249,7 +336,26 @@ When editing:
 - update repeated nav/footer/mobile-dock links consistently when a page-level CTA changes
 - do not create new abstractions or tooling unless explicitly requested
 
+Test the contract, not every subjective sentence:
+
+- Exact tests should protect locked prices, offer names, CTA destinations, routes, appointment IDs, page counts, card counts, and public/private boundaries.
+- Do not freeze ordinary headlines or body copy word-for-word unless the wording itself is an approved claim or conversion standard.
+- When compliant copy changes, update only stale subjective assertions. Do not weaken an invariant test to make drift pass.
+- A test update must explain whether the standard changed or only the implementation wording changed.
+
 If copy changes invalidate smoke-test expectations, update the smoke tests as part of the same website edit or report that the tests are stale.
+
+## Required Pre-Edit Contract
+
+Before changing files, establish:
+
+- change class: A, B, or C
+- target page and section
+- locked invariants touched: normally `none`
+- factual sources required
+- expected file radius
+
+Then read this file, the target files, and only the factual sources required. If the expected radius expands during the task, stop and identify why before widening the edit.
 
 ## Final Validation Checklist
 
@@ -262,8 +368,13 @@ Before closing a website edit, verify:
 - contact methods are available but secondary
 - no unsupported claims were introduced
 - no redundant section or repeated copy was added
+- homepage section order and card counts still match the locked baseline
+- primary nav still contains only the locked items and page CTA
+- first-person and business-name perspective are consistent inside changed sections
+- visual tokens and typography families were not changed by a routine styling task
 - mobile wrapping and spacing risks were considered
 - semantic HTML and accessibility were preserved
 - affected metadata or structured data stayed accurate
 - smoke tests were run or the reason for not running them is stated
+- tests still protect standards rather than merely matching the latest implementation
 - no push, deploy, publish, merge, branch, or PR happened without explicit approval
