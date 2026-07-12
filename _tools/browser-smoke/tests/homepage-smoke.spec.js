@@ -145,8 +145,12 @@ async function runHomepageSmoke(page, viewportName, viewport) {
 
   const about = page.locator("#about");
   await expect(about).toBeVisible();
-  await expect(page.locator("#about-title")).toContainText("CJ");
-  await expect(about).toContainText("local small businesses");
+  await expect(page.locator("#about-title")).toHaveText("About CJ");
+  await expect(page.locator("#about .about-copy > p:not(.eyebrow)")).toHaveText([
+    "I help people around Vero Beach feel more confident with everyday technology, and I help local small businesses create a clearer, more professional presence across their website and the places customers find them online.",
+    "My technical background began in U.S. Army aviation maintenance, working on helicopter electrical, avionics, and weapon systems. I later earned an associate degree in Recording Arts with highest honors, combining music production with extensive computer-based work using professional recording and editing software.",
+    "Whether I’m sorting out devices and accounts at home or building a clearer website for a local business, I bring the same careful approach: troubleshoot methodically, explain things clearly, and leave you with a practical next step."
+  ]);
   await expect(page.locator("#about .about-photo-card img")).toHaveCount(1);
   await expect(page.locator("#about .about-points li")).toHaveCount(0);
   await expect(page.locator("#services")).toContainText("Tech Tune-Up Visit");

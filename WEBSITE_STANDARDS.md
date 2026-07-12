@@ -134,7 +134,19 @@ Each homepage section has one job:
 
 Adding a homepage section, a second pricing card, a fifth capability card, a fourth FAQ item, or a fourth proof card is a Class C structure change.
 
-Keep the proof strip compact enough that About CJ follows naturally instead of feeling buried. The About copy may name both sides of CJ's work, patient home tech help and clear websites for local small businesses, without turning into a service list.
+Keep the proof strip compact enough that About CJ follows naturally instead of feeling buried.
+
+### Locked About CJ Copy
+
+The homepage About section uses the simple title `About CJ` and these three approved paragraphs:
+
+> I help people around Vero Beach feel more confident with everyday technology, and I help local small businesses create a clearer, more professional presence across their website and the places customers find them online.
+>
+> My technical background began in U.S. Army aviation maintenance, working on helicopter electrical, avionics, and weapon systems. I later earned an associate degree in Recording Arts with highest honors, combining music production with extensive computer-based work using professional recording and editing software.
+>
+> Whether I’m sorting out devices and accounts at home or building a clearer website for a local business, I bring the same careful approach: troubleshoot methodically, explain things clearly, and leave you with a practical next step.
+
+This is approved credibility language, not a service catalog. Preserve the meaning and the second and third paragraphs exactly unless CJ explicitly approves replacement copy and a standards update.
 
 ## CTA Rules
 
