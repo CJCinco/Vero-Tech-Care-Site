@@ -146,7 +146,7 @@ async function runHomepageSmoke(page, viewportName, viewport) {
   const about = page.locator("#about");
   await expect(about).toBeVisible();
   await expect(page.locator("#about-title")).toHaveText(
-    "Local help from someone who explains things clearly."
+    "Hi, I’m CJ. I make technology feel less overwhelming."
   );
   await expect(page.locator("#about .about-points li")).toHaveCount(0);
   await expect(page.locator("#services")).toContainText("Tech Tune-Up Visit");
