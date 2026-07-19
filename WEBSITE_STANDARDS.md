@@ -1,7 +1,7 @@
 # Vero Tech Care Website Standards
 
 Status: binding website editing contract
-Last reviewed: 2026-07-12
+Last reviewed: 2026-07-19
 
 Purpose: AI-facing standards for editing the Vero Tech Care website without drifting from the brand, offer model, booking flow, or current site structure.
 
@@ -28,7 +28,7 @@ Use the authority that matches the decision:
 
 1. This `WEBSITE_STANDARDS.md` for website architecture, conversion paths, page roles, voice rules, visual-system boundaries, change radius, and validation.
 2. `../06 Admin + Legal/Services.md` for residential offers, prices, memberships, monitoring language, service boundaries, and exclusions.
-3. `../06 Admin + Legal/Digital Presence Management Launch Plan.md` for the business website offer, business pricing, private Checkup, and internal Digital Presence rules.
+3. `../06 Admin + Legal/Digital Presence Management Launch Plan.md` for internal business pricing, the private Checkup, and Digital Presence fulfillment rules.
 4. Current website files in `02 Website/` for compliant implementation details, exact current copy, routes, classes, embeds, metadata, and responsive behavior.
 5. `README.md` for website workflow and current route notes.
 6. `../01 Brand/brand-core.md`, `../01 Brand/voice-and-tone.md`, `../01 Brand/visual-rules.md`, and `../09 Knowledge Base/VTC Voice Rules.md` for broader brand and voice guidance where this file does not define a more specific website rule.
@@ -49,7 +49,7 @@ Primary audience:
 
 Secondary audience:
 
-- local business owners who need a clear website build or redesign
+- local business owners who need practical technology, digital setup, online-presence, or website support
 - workshop, partner, and community contacts
 
 Core positioning:
@@ -66,13 +66,14 @@ These are invariants, not suggestions:
 
 | Surface | Locked standard |
 | --- | --- |
-| Public model | Two public front doors only: residential Tech Tune-Up and local business website build or redesign. |
+| Public model | Two public front doors only: residential Tech Tune-Up and practical technology and digital support for local businesses. |
 | Residential offer | One public pricing card: Tech Tune-Up Visit at `$250`, with `/special` as the booking destination. |
-| Business offer | Local Business Website Build or Redesign, complete projects starting at `$1,500`, with a custom quote path. |
-| Primary navigation | `Home`, `Home Tech Help`, `Business Help`, plus one page-appropriate primary CTA. Do not add more primary nav items without changing this standard. |
-| Homepage structure | Header/nav, residential hero, three-card proof strip, About CJ, one residential offer with four capability cards, business bridge, three-item FAQ, contact, footer. Preserve this order and section ownership. |
+| Business offer | Broad, consultation-first business technology support. Websites and online presence are capabilities within that lane, not the sole front-facing offer. Business work is scoped and quoted after the initial conversation. |
+| Primary navigation | `Home`, `Personal Tech Support`, and `Business Tech Support`. The overview homepage stops at these three destinations; dedicated service pages may add one page-appropriate conversion CTA. Do not add more primary nav items without changing this standard. |
+| Shared hero template | Every customer-facing page uses the root homepage's continuous image-backed header and the same reserved title, lead, and three-card zones. Page copy may change, but the desktop footprint, card count, card shape, and content rhythm stay consistent. Cards begin with their main title and do not use a smaller eyebrow label. |
+| Homepage structure | Shared image-backed header/nav, general Vero Tech Care hero, three capability cards within the header, two equal audience paths, owner introduction, contact, footer. Preserve this order and section ownership. |
 | Residential CTA | `Book Tune-Up`, `Book a Tech Tune-Up`, or `Book the Tech Tune-Up`, linking to `/special` or the verified scheduler anchor on a booking page. |
-| Business CTA | `Request a Website Quote` or `Request a Quote`, using the current quote/contact path until a dedicated fit appointment is verified. |
+| Business CTA | `Book Consult`, linking to the dedicated Acuity booking page at `/business-consult`. |
 | Voice | Human, local, first person when CJ is speaking about his help or process. Use `Vero Tech Care` in metadata, factual business references, and places where first person would be unclear. |
 | Visual system | Warm ivory, near-black, ocean teal, serif display headings, sans-serif body copy, generous whitespace, simple cards, pill buttons, and the current calm photography style. |
 | Secondary contact | Phone, text, and email remain visible but secondary to the page's primary conversion action. |
@@ -92,9 +93,45 @@ Default edit radius is the named page, its necessary shared CSS, and its contrac
 
 Broad requests such as “improve,” “modernize,” “make it convert,” “make it more human,” or “clean it up” are not Class C approval. They authorize the strongest compliant Class A or Class B improvement.
 
-## Primary Conversion Path
+### Approved Homepage Preview Exception — 2026-07-18
 
-The residential website should guide visitors toward one primary action:
+CJ explicitly approved a direct-link homepage experiment before changing the production root:
+
+- `testhome1.html` at `/testhome1`
+- `testhome2.html` at `/testhome2`
+- `testhome3.html` at `/testhome3`
+
+These three pages may test different section orders and balanced Home/Business layouts while keeping the existing palette, typography, source-backed facts, public offers, and destination routes. Their shared umbrella language is `Tech Support`, `Digital Setup`, and `Online Presence`; these are capability themes, not three new public packages.
+
+Preview rules:
+
+- keep `index.html` unchanged as the current residential homepage until CJ selects a concept
+- give Personal Tech Support and Business Tech Support equal prominence on each preview
+- route Personal Tech Support to the current residential homepage `/` during review and Business Tech Support to `/business-websites`
+- keep the previews out of public navigation, the sitemap, and search indexing
+- label them as direct-link previews and provide a compact concept switcher for CJ's review
+- do not treat any preview structure or copy as the new production standard until CJ explicitly selects it
+
+### Selected Homepage Direction — 2026-07-18
+
+CJ selected Concept 2, `Business Card Expanded`, as the new root homepage direction.
+
+- `/` is the inclusive overview and routing page for Vero Tech Care.
+- `/home-tech-help` preserves the complete residential Tech Tune-Up homepage and is the dedicated Personal Tech Support route.
+- `/business-websites` remains the dedicated Business Tech Support route until a separate route change is explicitly approved.
+- The root gives Personal Tech Support and Business Tech Support equal prominence and uses `Tech Support`, `Digital Setup`, and `Online Presence` as capability themes, not new packages.
+- The root navigation has no fourth CTA. The two equal audience cards below the hero route directly to Personal Tech Support and Business Tech Support; audience-specific conversion actions live within the dedicated residential and business pages.
+- The temporary concept files remain no-indexed and outside public navigation and the sitemap until they are intentionally retired.
+- Navigation, metadata, structured data, sitemap, tests, and internal Personal Tech Support links must reflect this routing model together.
+
+## Primary Conversion Paths
+
+The root homepage is a balanced router with two equally prominent audience cards beneath its hero:
+
+- `Personal Tech Support` to `/home-tech-help`
+- `Business Tech Support` to `/business-websites`
+
+The dedicated residential path should guide visitors toward one primary action:
 
 `Book Tune-Up`
 
@@ -102,16 +139,18 @@ The main residential booking path is the verified Tech Tune-Up Acuity scheduler 
 
 Do not make phone, text, or email the main booking path unless CJ explicitly requests that change for a specific page or campaign.
 
-The business website path uses `Request a Website Quote` as its primary action until a dedicated website-fit Acuity appointment is verified. Do not invent an appointment type or reuse the standalone checkup appointment as the website-project front door.
+The business path uses `Book Consult` as its primary action and routes to `/business-consult`. That page embeds the verified free 15-minute Business Tech Consult appointment, Acuity type `91121958`. Do not reuse the standalone Checkup appointment as the general business front door.
 
 ## Page Roles
 
 Use each page for its job. Do not make every page carry the whole business.
 
-- `index.html`: primary residential trust, capability overview, one clear Tech Tune-Up offer, local proof, and path to `/special`
+- `index.html`: inclusive Vero Tech Care overview, the three capability themes, two equal audience paths, owner introduction, contact, and routing to `/home-tech-help` or `/business-websites`
+- `home-tech-help.html`: primary residential trust, capability overview, one clear Tech Tune-Up offer, local proof, and path to `/special`
 - `book.html`: no-indexed legacy booking file with the verified Tech Tune-Up scheduler; public `/book` redirects to `/special`
 - `special.html`: evergreen Tech Tune-Up Visit landing page at `/special`
-- `business-websites.html`: business-facing Website Build or Redesign page served publicly at `/business-websites`
+- `business-websites.html`: broad Business Tech Support page served publicly at `/business-websites`; websites are one supported capability, not the page's sole offer
+- `business-consult.html`: public free 15-minute Business Tech Consult booking page at `/business-consult`, using Acuity appointment type `91121958`
 - `book-digital-presence-checkup.html`: no-indexed direct booking page for standalone Digital Presence Checkup referrals; not a primary public path
 - `tech-tips.html` and tip articles: helpful local education with a light path back to the Tech Tune-Up or contact
 - `workshops.html`: workshop trust and community proof with a path back to the Tech Tune-Up
@@ -119,48 +158,49 @@ Use each page for its job. Do not make every page carry the whole business.
 
 When adding or revising copy, decide which page owns that message. Link to the owning page instead of repeating the same explanation everywhere.
 
-### Homepage Section Ownership
+### Root Homepage Section Ownership
 
-Each homepage section has one job:
+Each root homepage section has one job:
 
-- hero: audience, main outcome, local relevance, and primary residential CTA
-- proof strip: real trust evidence only; no new offer or pricing ladder
-- About CJ: personal trust, working style, and what it feels like to receive help; no service catalog
-- services: the single Tech Tune-Up offer, four capability examples, and custom-work boundary
-- business bridge: short handoff to `/business-websites`; do not duplicate the full business offer
-- FAQ: the three strongest pre-booking questions; do not turn it into a service encyclopedia
-- contact: primary booking action plus secondary question paths
+- hero: inclusive positioning and equal Home/Business actions, using the same image-backed base layout as the dedicated pages
+- capability strip: three dark glass cards within the image-backed header, with one concise explanation for each capability theme; no package or pricing ladder
+- audience paths: one Personal Tech Support card and one Business Tech Support card with equal visual prominence
+- owner introduction: personal trust, working style, and what it feels like to receive help; no service catalog
+- contact: repeat the two audience routes and keep phone, text, and email secondary
 - footer: compact navigation, contact facts, and real social links
 
-Adding a homepage section, a second pricing card, a fifth capability card, a fourth FAQ item, or a fourth proof card is a Class C structure change.
+Adding a root homepage section, a fourth capability card, or a third audience path is a Class C structure change.
 
-Keep the proof strip compact enough that About CJ follows naturally instead of feeling buried.
+The dedicated Personal Tech Support page uses this approved page-specific sequence: residential hero, three-card proof strip, one Tech Tune-Up offer, four-item capability guide, six-item FAQ, business bridge, and footer.
 
-### Locked About CJ Copy
+The dedicated Business Tech Support page uses this approved page-specific sequence: business hero, three-card capability strip, one business support offer, six-item FAQ, personal-tech-support bridge, and footer. The bridge mirrors the residential page&rsquo;s business bridge and routes to `/home-tech-help`.
 
-The homepage About section uses the simple title `About CJ` and these three approved paragraphs:
+### Locked Owner Introduction Copy
 
-> I help people around Vero Beach feel more confident with everyday technology, and I help local small businesses create a clearer, more professional presence across their website and the places customers find them online.
+The homepage owner-introduction section uses the title `About CJ`. The signature `CJ Watson · Owner & Tech Care Specialist` appears once, centered directly beneath the owner photo in the established teal serif treatment. The section uses these three approved paragraphs:
+
+> I help people around Vero Beach feel more confident with everyday technology, and I help local small businesses improve the technology, digital tools, and online presence they rely on every day.
 >
 > My technical background began in U.S. Army aviation maintenance, working on helicopter electrical, avionics, and weapon systems. I later earned an associate degree in Recording Arts with highest honors, combining music production with extensive computer-based work using professional recording and editing software.
 >
-> Whether I’m sorting out devices and accounts at home or building a clearer website for a local business, I bring the same careful approach: troubleshoot methodically, explain things clearly, and leave you with a practical next step.
+> Whether I’m sorting out devices and accounts at home or improving the technology behind a local business, I bring the same careful approach: troubleshoot methodically, explain things clearly, and leave you with a practical next step.
 
 This is approved credibility language, not a service catalog. Preserve the meaning and the second and third paragraphs exactly unless CJ explicitly approves replacement copy and a standards update.
 
 ## CTA Rules
 
+Hero action rows are intentionally absent from every site hero. Keep the shared hero limited to its title, lead, and three-card strip; place page-appropriate conversion actions in the relevant content section or mobile dock instead.
+
 Default primary CTA:
 
 - `Book Tune-Up`
 - `Book the Tech Tune-Up`
-- `Request a Website Quote`
-- `Request a Quote`
+- `Book Consult`
 
 Acceptable contextual CTAs:
 
 - `See what is included`
-- `View Business Websites`
+- `Explore Business Tech Support`
 
 Secondary helper language:
 
@@ -198,13 +238,15 @@ Membership rules:
 - Monitoring is not 24/7 emergency live support, personal file browsing, password access, banking access, or broad account surveillance.
 - Do not imply monitored membership activation is ready until the platform stack has been selected and tested.
 
-Business website rules:
+Business support rules:
 
 - `../06 Admin + Legal/Digital Presence Management Launch Plan.md` is the authority for strategy, pricing, and founding-mode rules.
-- The public business front door is `Local Business Website Build or Redesign` at `/business-websites`.
-- Complete website projects publicly start at `$1,500`; the final scope and price are quoted before work begins.
-- The internal Digital Presence system may guide website implementation and ongoing care, but do not lead public copy with `Digital Presence Management` or `DPM` jargon.
-- Ongoing website and broader online-presence care may be offered after launch with a client-specific scope and quote.
+- The public business front door is `Business Tech Support` at `/business-websites`.
+- Lead with practical technology and digital support for local businesses. Websites, online presence, digital setup, customer contact paths, and focused technology projects may be described as capabilities rather than a package catalog.
+- Do not publish a business starting price on the general support page. Scope and quote each project after the initial conversation.
+- The primary action is `Book Consult`, routing to the dedicated Acuity booking page at `/business-consult`.
+- The internal Digital Presence system may guide implementation and ongoing care, but do not lead public copy with `Digital Presence Management` or `DPM` jargon.
+- Ongoing technology, website, and broader online-presence care may be offered with a client-specific scope and quote.
 - The standalone Digital Presence Checkup may remain available by direct referral, but it is not the primary public CTA and should not be listed in the sitemap.
 - Do not promise guaranteed rankings, guaranteed leads, ad results, or 24/7 coverage.
 - Do not request passwords by email, text, or form.
@@ -291,6 +333,12 @@ Readability and spacing rules:
 
 Small spacing, consistency, wrapping, accessibility, and alignment improvements are acceptable when directly tied to the requested edit.
 
+Every customer-facing page uses the same continuous, image-backed top section as the root homepage: shared logo treatment, navigation spacing, base hero layout, and a three-card strip inside the photograph. The Google ownership-verification stub is the only non-page exception. Exactly one primary destination link uses `aria-current="page"` where the page belongs directly to Home, Personal Tech Support, or Business Tech Support. The overview homepage omits a fourth navigation CTA; other pages may retain one page-appropriate navigation CTA when it supports the page's established conversion path.
+
+Within that shared top section, every page uses one typography and spacing rhythm: the same brand and navigation type sizes, responsive `h1` scale and line height, hero padding, button sizing, and glass-card padding. The title, lead, and action area each occupy a reserved zone on desktop so different copy does not change the overall header footprint. Every hero includes an action zone, even when its contents are page-specific, followed by exactly three equal-width, equal-height cards. Each card begins with its main title and one concise supporting description; do not add a small uppercase eyebrow or category label above the card title. Keep card titles and descriptions concise enough to preserve the common template. On smaller screens the same zones and cards may grow naturally to avoid clipping, but their order, spacing rhythm, and shape remain consistent.
+
+Do not stack a small eyebrow title above a larger title that repeats or competes with it elsewhere in the site. Use the clearer short phrase as the heading when it carries the section meaning, while preserving unique article titles and the locked `About CJ` title. On desktop, the destination links stay centered in a reserved three-column navigation grid so they do not move when a page adds its CTA.
+
 ## Redundancy Gate
 
 Before adding any new section, paragraph, card, FAQ, or CTA, check whether the same job is already handled by:
@@ -301,7 +349,7 @@ Before adding any new section, paragraph, card, FAQ, or CTA, check whether the s
 - services section
 - packages section
 - visit/process section
-- business website bridge
+- business support bridge
 - FAQ
 - contact section
 - footer
@@ -381,7 +429,7 @@ Before closing a website edit, verify:
 - no unsupported claims were introduced
 - no redundant section or repeated copy was added
 - homepage section order and card counts still match the locked baseline
-- primary nav still contains only the locked items and page CTA
+- primary nav still contains only the locked destination links and any page CTA permitted for that route
 - first-person and business-name perspective are consistent inside changed sections
 - visual tokens and typography families were not changed by a routine styling task
 - mobile wrapping and spacing risks were considered

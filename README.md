@@ -12,9 +12,13 @@ Current residential offer: `special.html` is the evergreen Tech Tune-Up Visit la
 
 `book.html` is a no-indexed legacy booking file using the same verified Tech Tune-Up appointment embed. The public `/book` and `/book.html` routes redirect to `/special`.
 
-Current business page: `business-websites.html` serves the public `/business-websites` route. The public offer is `Local Business Website Build or Redesign`, with complete website projects starting at `$1,500` and custom scoped before work. The legacy `/digital-presence-management` route redirects to `/business-websites`.
+Current business page: `business-websites.html` serves the public `/business-websites` route as the broad `Business Tech Support` destination. Websites and online presence are supported capabilities rather than the sole front-facing offer. Business work starts with a free 15-minute consultation and is scoped and quoted around the actual need. The legacy `/digital-presence-management` route redirects to `/business-websites`.
 
-`book-digital-presence-checkup.html` remains available for direct standalone-checkup referrals, but it is no-indexed, omitted from the sitemap, and is not the primary public business path. No website quote or fit-call Acuity appointment has been verified yet, so the public business page uses a quote-request contact path rather than an invented scheduler link.
+`business-consult.html` serves the public `/business-consult` route and embeds the free 15-minute Business Tech Consult, Acuity appointment type `91121958`. All public `Book Consult` actions route there. `book-digital-presence-checkup.html` remains available for direct standalone-checkup referrals, but it is no-indexed, omitted from the sitemap, and is not the primary public business path.
+
+CJ selected homepage Concept 2, `Business Card Expanded`, on 2026-07-18. The local root now serves the inclusive Vero Tech Care overview, while `home-tech-help.html` serves the dedicated `/home-tech-help` Personal Tech Support route and `business-websites.html` serves the `/business-websites` Business Tech Support route. The direct-link concept pages at `/testhome1`, `/testhome2`, and `/testhome3` remain temporary, no-indexed comparison pages omitted from public navigation and the sitemap until they are intentionally retired.
+
+As of 2026-07-19, every customer-facing page uses the selected root homepage hero as its shared template: one image-backed title, lead, and action area followed by three equal cards without small eyebrow labels. The page-specific copy and CTA may change, but the desktop footprint and content zones remain aligned.
 
 Primary public residential navigation now exposes only the verified Tech Tune-Up appointment path. The no-indexed standalone Checkup referral page remains direct-access, and Acuity's public appointment-type catalog still needs a coordinated live review so legacy residential package types do not conflict with the simplified website.
 
@@ -30,6 +34,8 @@ Use this workflow when Codex makes website changes.
 - Do not commit, push, deploy, publish, merge, create branches, or open pull requests without explicit CJ approval.
 - GitHub CLI is optional. Local Git credentials and the GitHub connector are enough when CJ explicitly asks for GitHub work.
 
+For local sidebar review with production-style extensionless routes, run `python3 _tools/browser-smoke/local_preview_server.py --port 4173` from this website folder.
+
 ## Local SEO Checklist
 
 Use this checklist when updating the website or Google Business Profile.
@@ -42,6 +48,7 @@ Use this checklist when updating the website or Google Business Profile.
 - Public location model: service area business; do not publish a street address unless CJ explicitly changes this.
 - Scheduling model: by appointment through online booking.
 - Primary residential website action: `Book Tune-Up`
+- Primary business website action: `Book Consult`
 - Keep Google Business Profile services aligned with the website: in home tech support, remote tech support, Wi Fi help, printer help, phone, tablet, and computer setup, password help, scam prevention help, photo and file organization, and ongoing support.
 - Keep Google Business Profile fresh with accurate service area, phone, website URL, booking link, service descriptions, photos, and review replies.
 - Local ranking focus from Google: relevance, distance, and prominence. Improve relevance with accurate services and copy, distance with clear Vero Beach service area signals, and prominence with real reviews, photos, links, and consistent business information across the web.

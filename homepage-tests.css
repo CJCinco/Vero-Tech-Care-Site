@@ -1,0 +1,733 @@
+/* Selected overview homepage plus the local concept comparison pages. */
+.homepage-overview,
+.test-homepage {
+  min-height: 100vh;
+  background: var(--ivory);
+}
+
+.preview-bar {
+  position: relative;
+  z-index: 45;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background: #08100f;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.preview-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  min-height: 2.8rem;
+  padding: 0.4rem 0;
+}
+
+.preview-label {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.preview-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.preview-switcher a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.2rem;
+  min-height: 2.2rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  color: var(--white);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.preview-switcher a[aria-current="page"] {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--charcoal);
+}
+
+.test-site-header {
+  position: relative;
+  overflow: hidden;
+}
+
+.test-site-header .nav {
+  position: relative;
+  z-index: 2;
+}
+
+.test-site-header .nav-cta {
+  background: var(--accent);
+  color: var(--charcoal);
+  border-color: transparent;
+}
+
+.test-hero {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1.75rem;
+  padding: clamp(2.4rem, 7vw, 5.8rem) 0 clamp(3.2rem, 8vw, 6.4rem);
+}
+
+.test-hero h1 {
+  max-width: 14ch;
+  margin-bottom: 1.15rem;
+  font-size: clamp(3rem, 8.5vw, 6.2rem);
+  line-height: 0.98;
+}
+
+.test-hero .lead {
+  max-width: 46rem;
+}
+
+.service-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.7rem;
+  margin: 0 0 1.15rem;
+  padding: 0;
+  list-style: none;
+}
+
+.service-line li {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.35rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.test-path-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.test-path-card {
+  position: relative;
+  display: grid;
+  align-content: start;
+  min-height: 100%;
+  padding: clamp(1.4rem, 4vw, 2rem);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-lg);
+  background: rgba(9, 15, 14, 0.76);
+  color: var(--white);
+  box-shadow: 0 24px 58px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px);
+}
+
+.test-path-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--accent);
+}
+
+.test-path-card h2,
+.test-path-card h3 {
+  color: var(--white);
+}
+
+.test-path-card h2 {
+  max-width: 12ch;
+  margin-bottom: 0.7rem;
+  font-size: clamp(2rem, 5vw, 3.15rem);
+}
+
+.test-path-card h2 a {
+  color: inherit;
+  text-decoration-color: rgba(47, 119, 119, 0.32);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.12em;
+}
+
+.test-path-card h2 a:hover {
+  text-decoration-color: var(--accent-deep);
+}
+
+.test-path-card p {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.test-path-card .button {
+  justify-self: start;
+}
+
+.audience-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.audience-actions .button {
+  margin-top: 0;
+}
+
+.audience-tag {
+  margin-bottom: 0.9rem;
+  color: #8ed7d0;
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.audience-meta {
+  display: block;
+  margin-top: 1.1rem;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.9rem;
+}
+
+.button-dark {
+  border-color: rgba(17, 21, 20, 0.16);
+  background: var(--charcoal);
+  color: var(--white);
+}
+
+.button-dark:hover {
+  color: var(--white);
+}
+
+.button-light-outline {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: transparent;
+  color: var(--white);
+}
+
+.button-light-outline:hover {
+  color: var(--white);
+}
+
+.test-capability-grid,
+.test-principle-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.test-capability-card,
+.test-principle-card {
+  padding: 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 253, 249, 0.92);
+  box-shadow: var(--shadow-md);
+}
+
+.test-capability-card p:last-child,
+.test-principle-card p:last-child {
+  margin-bottom: 0;
+  color: var(--text-soft);
+}
+
+.test-card-number {
+  margin-bottom: 1rem;
+  color: var(--accent-deep);
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.test-proof-shell {
+  color: var(--white);
+  background:
+    radial-gradient(circle at 90% 0%, rgba(62, 140, 140, 0.18), transparent 26%),
+    var(--charcoal);
+}
+
+.test-proof-shell .section-heading h2 {
+  color: var(--white);
+}
+
+.test-proof-shell .section-copy {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.test-proof-shell .proof-strip {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.test-contact .contact-layout {
+  align-items: center;
+}
+
+.test-contact .contact-actions {
+  align-items: stretch;
+}
+
+.test-footer .footer-copy {
+  max-width: 34rem;
+}
+
+.test-footer .footer-links {
+  align-content: start;
+}
+
+/* Concept 1: Two Doors, One Brand */
+.concept-one .test-site-header {
+  color: var(--white);
+  background:
+    linear-gradient(90deg, rgba(8, 14, 13, 0.97) 0%, rgba(12, 18, 17, 0.91) 48%, rgba(20, 53, 50, 0.7) 100%),
+    url("vero-beach-hero.jpg"),
+    var(--charcoal);
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.concept-one .test-hero {
+  padding-bottom: 2rem;
+}
+
+.concept-one .test-hero-copy {
+  max-width: 56rem;
+}
+
+.concept-one .test-path-grid {
+  padding-bottom: 4.5rem;
+}
+
+.concept-one .home-path {
+  background:
+    linear-gradient(145deg, rgba(33, 74, 70, 0.76), rgba(9, 15, 14, 0.82)),
+    rgba(9, 15, 14, 0.76);
+}
+
+.concept-one .business-path {
+  background:
+    linear-gradient(145deg, rgba(9, 15, 14, 0.82), rgba(46, 94, 90, 0.64)),
+    rgba(9, 15, 14, 0.76);
+}
+
+.concept-one .path-first {
+  order: -1;
+}
+
+.concept-one .section-about {
+  padding-top: 4rem;
+}
+
+/* Concept 2: Business Card Expanded */
+.concept-two .test-site-header {
+  color: var(--text);
+  background:
+    linear-gradient(180deg, rgba(255, 253, 249, 0.98), rgba(246, 241, 231, 0.96)),
+    var(--ivory);
+}
+
+.concept-two .test-site-header .brand-mark,
+.concept-two .test-site-header .nav-links a {
+  color: var(--text);
+}
+
+.concept-two .test-site-header .brand-tag {
+  color: var(--accent-deep);
+}
+
+.concept-two .test-site-header .nav-links a[aria-current="page"] {
+  color: var(--accent-deep);
+}
+
+.homepage-overview .site-navigation-shell .brand-mark,
+.homepage-overview .site-navigation-shell .nav-links a,
+.homepage-overview .site-navigation-shell .nav-links a[aria-current="page"] {
+  color: var(--white);
+}
+
+.homepage-overview .site-navigation-shell .brand-tag,
+.homepage-overview .site-navigation-shell .nav-links a:not([aria-current="page"]) {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.homepage-overview .site-navigation-shell .nav-cta {
+  border-color: rgba(142, 215, 208, 0.42);
+  background: linear-gradient(135deg, #327a76 0%, #245f5f 100%);
+  color: var(--white);
+}
+
+.concept-two .editorial-hero {
+  padding-top: 2.5rem;
+}
+
+.concept-two .editorial-panel {
+  position: relative;
+  padding: clamp(2rem, 7vw, 5.5rem) clamp(1.25rem, 6vw, 4.8rem);
+  overflow: hidden;
+  border-radius: clamp(1rem, 3vw, 2rem);
+  color: var(--white);
+  background:
+    radial-gradient(circle at 85% 15%, rgba(62, 140, 140, 0.28), transparent 26%),
+    linear-gradient(145deg, #0b100f, #162d2b);
+  box-shadow: 0 32px 80px rgba(8, 14, 13, 0.2);
+}
+
+.concept-two .editorial-panel::after {
+  content: "VTC";
+  position: absolute;
+  right: -0.06em;
+  bottom: -0.28em;
+  color: rgba(255, 255, 255, 0.035);
+  font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", serif;
+  font-size: clamp(9rem, 28vw, 20rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.concept-two .editorial-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.concept-two .editorial-panel h1 {
+  max-width: 11ch;
+  font-size: clamp(3.5rem, 10vw, 7.3rem);
+}
+
+.concept-two .editorial-service-line {
+  display: grid;
+  gap: 0.25rem;
+  margin: 1.6rem 0 2rem;
+  color: #8ed7d0;
+  font-size: clamp(1.15rem, 3.2vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.concept-two .editorial-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.concept-two .capability-ribbon {
+  padding: 1.25rem 0 3.6rem;
+}
+
+.concept-two .capability-ribbon .test-capability-card {
+  border-top: 4px solid var(--accent);
+  box-shadow: none;
+}
+
+.concept-two .audience-section {
+  background: #ebe4d7;
+}
+
+.concept-two .audience-section .test-path-card {
+  background: var(--paper);
+  color: var(--text);
+  box-shadow: var(--shadow-md);
+}
+
+.concept-two .audience-section .test-path-card::before {
+  width: 5px;
+}
+
+.concept-two .audience-section .test-path-card h2,
+.concept-two .audience-section .test-path-card h3 {
+  color: var(--text);
+}
+
+.concept-two .audience-section .test-path-card p {
+  color: var(--text-soft);
+}
+
+.concept-two .audience-section .audience-tag,
+.concept-two .audience-section .audience-meta {
+  color: var(--accent-deep);
+}
+
+.concept-two .signature-line {
+  margin: 1.25rem 0 0;
+  color: var(--accent-deep);
+  font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", serif;
+  font-size: 1.5rem;
+}
+
+.concept-two .about-side .signature-line {
+  margin: 0;
+  text-align: center;
+}
+
+/* Concept 3: CJ, Your Local Tech Guide */
+.concept-three .test-site-header {
+  color: var(--text);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(62, 140, 140, 0.1), transparent 22%),
+    linear-gradient(180deg, #fffdf9, var(--ivory));
+}
+
+.concept-three .test-site-header .brand-mark,
+.concept-three .test-site-header .nav-links a {
+  color: var(--text);
+}
+
+.concept-three .test-site-header .brand-tag,
+.concept-three .test-site-header .nav-links a[aria-current="page"] {
+  color: var(--accent-deep);
+}
+
+.concept-three .portrait-hero {
+  align-items: center;
+  padding-top: clamp(2.2rem, 6vw, 4.8rem);
+}
+
+.concept-three .portrait-copy {
+  max-width: 42rem;
+}
+
+.concept-three .portrait-copy .eyebrow {
+  color: var(--accent-deep);
+}
+
+.concept-three .portrait-copy h1 {
+  max-width: 12ch;
+  color: var(--text);
+  font-size: clamp(3rem, 7.5vw, 5.8rem);
+}
+
+.concept-three .portrait-copy .lead {
+  color: var(--text-soft);
+}
+
+.concept-three .portrait-copy .service-line li {
+  border-color: rgba(17, 21, 20, 0.14);
+  color: var(--accent-deep);
+  background: rgba(255, 255, 255, 0.54);
+}
+
+.concept-three .portrait-actions {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.concept-three .portrait-frame {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 31rem);
+  margin: 0;
+  padding: 0.65rem;
+  border: 1px solid rgba(17, 21, 20, 0.12);
+  border-radius: clamp(1rem, 4vw, 2rem);
+  background: var(--paper);
+  box-shadow: 0 30px 70px rgba(6, 11, 10, 0.16);
+}
+
+.concept-three .portrait-frame::before {
+  content: "";
+  position: absolute;
+  inset: 1.15rem -0.7rem -0.7rem 1.15rem;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--accent);
+  opacity: 0.22;
+}
+
+.concept-three .portrait-frame img {
+  width: 100%;
+  aspect-ratio: 4 / 4.35;
+  object-fit: cover;
+  object-position: 50% 8%;
+  border-radius: calc(clamp(1rem, 4vw, 2rem) - 0.35rem);
+}
+
+.concept-three .portrait-frame figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.85rem 0.4rem 0.2rem;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+.concept-three .portrait-frame figcaption strong {
+  color: var(--text);
+}
+
+.concept-three .guide-paths {
+  color: var(--white);
+  background:
+    radial-gradient(circle at 80% 10%, rgba(62, 140, 140, 0.18), transparent 24%),
+    var(--charcoal);
+}
+
+.concept-three .guide-paths .section-heading h2 {
+  color: var(--white);
+}
+
+.concept-three .guide-paths .section-copy {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.concept-three .guide-paths .test-path-card {
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.concept-three .guide-steps {
+  display: grid;
+  border-top: 1px solid rgba(17, 21, 20, 0.12);
+}
+
+.concept-three .guide-step {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1.35rem 0;
+  border-bottom: 1px solid rgba(17, 21, 20, 0.12);
+}
+
+.concept-three .guide-step p:last-child {
+  margin-bottom: 0;
+  color: var(--text-soft);
+}
+
+@media (min-width: 680px) {
+  .test-path-grid,
+  .test-capability-grid,
+  .test-principle-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .concept-two .test-capability-grid,
+  .concept-three .guide-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .concept-three .guide-step {
+    padding: 1.35rem;
+    border-right: 1px solid rgba(17, 21, 20, 0.12);
+  }
+
+  .concept-three .portrait-actions {
+    grid-template-columns: repeat(2, minmax(0, max-content));
+  }
+}
+
+@media (min-width: 820px) {
+  .concept-one .test-path-grid,
+  .concept-two .test-path-grid,
+  .concept-three .test-path-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .concept-one .test-path-card {
+    min-height: 23rem;
+  }
+
+  .test-principle-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .concept-three .portrait-hero {
+    grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.72fr);
+    gap: clamp(2.5rem, 6vw, 5.5rem);
+  }
+}
+
+@media (min-width: 1020px) {
+  .concept-one .test-hero {
+    padding-top: 5.4rem;
+  }
+
+  .concept-one .test-path-grid {
+    gap: 1.35rem;
+  }
+}
+
+@media (max-width: 819px) {
+  .test-site-header .nav {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .test-site-header .nav-links {
+    flex-wrap: wrap;
+  }
+
+  .test-site-header .nav-links a {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 520px) {
+  .preview-bar-inner {
+    align-items: flex-start;
+  }
+
+  .preview-label {
+    padding-top: 0.55rem;
+  }
+
+  .preview-label span {
+    display: none;
+  }
+
+  .test-site-header .nav-cta {
+    min-height: 2.65rem;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.86rem;
+  }
+
+  .test-hero h1,
+  .concept-two .editorial-panel h1,
+  .concept-three .portrait-copy h1 {
+    font-size: clamp(2.7rem, 14vw, 4.2rem);
+  }
+
+  .test-path-card {
+    min-height: 20rem;
+  }
+
+  .concept-two .audience-section .test-path-card {
+    min-height: 0;
+  }
+
+  .concept-two .editorial-actions,
+  .concept-three .portrait-actions {
+    display: grid;
+  }
+
+  .concept-two .editorial-actions .button,
+  .concept-three .portrait-actions .button {
+    width: 100%;
+  }
+
+  .concept-three .portrait-frame {
+    width: min(92%, 26rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homepage-overview *,
+  .homepage-overview *::before,
+  .homepage-overview *::after,
+  .test-homepage *,
+  .test-homepage *::before,
+  .test-homepage *::after {
+    scroll-behavior: auto !important;
+  }
+}

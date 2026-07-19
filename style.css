@@ -14,6 +14,14 @@
   --shadow-md: 0 18px 46px rgba(6, 11, 10, 0.1);
   --radius-lg: 1rem;
   --radius-md: 0.85rem;
+  --primary-header-display: "Big Caslon", "Book Antiqua", "Palatino Linotype", serif;
+  --primary-header-interface: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --primary-header-label-size: 0.875rem;
+  --primary-header-nav-size: 0.94rem;
+  --primary-header-title-size: clamp(2.8rem, 6vw, 4.5rem);
+  --primary-header-lead-size: 1.08rem;
+  --primary-header-card-padding: 1.2rem;
+  --primary-header-gap: 1rem;
 }
 
 *,
@@ -28,6 +36,7 @@ html {
 }
 
 body {
+  --hero-fade-color: 246 241 231;
   margin: 0;
   font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   background: var(--ivory);
@@ -35,6 +44,22 @@ body {
   line-height: 1.65;
   padding-bottom: 0;
   overflow-x: hidden;
+}
+
+.homepage-overview {
+  --hero-fade-color: 235 228 215;
+}
+
+.booking-page {
+  --hero-fade-color: 255 250 242;
+}
+
+.error-page {
+  --hero-fade-color: 19 24 22;
+}
+
+body:has(#main > .section-pricing) {
+  --hero-fade-color: 255 253 249;
 }
 
 img {
@@ -93,9 +118,126 @@ ul {
   display: none;
 }
 
+.primary-page-header::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      rgb(var(--hero-fade-color) / 0) calc(100% - 10rem),
+      rgb(var(--hero-fade-color) / 0.01) calc(100% - 7rem),
+      rgb(var(--hero-fade-color) / 0.035) calc(100% - 5rem),
+      rgb(var(--hero-fade-color) / 0.12) calc(100% - 3.5rem),
+      rgb(var(--hero-fade-color) / 0.3) calc(100% - 2.2rem),
+      rgb(var(--hero-fade-color) / 0.58) calc(100% - 1.1rem),
+      rgb(var(--hero-fade-color) / 0.84) calc(100% - 0.4rem),
+      rgb(var(--hero-fade-color)) 100%
+    ),
+    linear-gradient(90deg, rgba(8, 14, 13, 0.97) 0%, rgba(12, 18, 17, 0.91) 48%, rgba(24, 55, 53, 0.67) 100%),
+    url("vero-beach-hero.jpg"),
+    linear-gradient(180deg, #0d1110 0%, #111514 100%);
+  background-position: center top, center top, center center, center top;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-size: 100% 100%, 100% 100%, auto 100%, 100% 100%;
+}
+
+.primary-page-header > .wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.site-navigation-shell {
+  position: relative;
+  z-index: 5;
+  color: var(--white);
+  background:
+    radial-gradient(circle at 82% -90%, rgba(62, 140, 140, 0.3), transparent 42%),
+    #0d1211;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(6, 11, 10, 0.12);
+}
+
+.site-navigation-shell .topbar {
+  display: none;
+}
+
+.site-navigation-shell .brand-mark,
+.site-navigation-shell .nav-links a {
+  color: var(--white);
+}
+
+.site-navigation-shell .brand-tag,
+.site-navigation-shell .nav-links a:not([aria-current="page"]) {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.site-navigation-shell .nav-links {
+  gap: 0.55rem 0.7rem;
+}
+
+.site-navigation-shell .nav-links a {
+  position: relative;
+  min-height: 2.4rem;
+  padding: 0.3rem 0.12rem;
+  transition: color 0.2s ease;
+}
+
+.site-navigation-shell .nav-links a:hover {
+  color: var(--white);
+}
+
+.site-navigation-shell .nav-links a[aria-current="page"] {
+  color: var(--white);
+  font-weight: 700;
+}
+
+.site-navigation-shell .nav-links a[aria-current="page"]::before {
+  content: none;
+}
+
+.site-navigation-shell .nav-links a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  right: 0.1rem;
+  bottom: 0;
+  left: 0.1rem;
+  height: 2px;
+  border-radius: 999px;
+  background: #8ed7d0;
+}
+
+.site-navigation-shell .nav-cta {
+  border-color: rgba(142, 215, 208, 0.42);
+}
+
+.homepage-header {
+  background:
+    linear-gradient(90deg, rgba(8, 14, 13, 0.97) 0%, rgba(12, 18, 17, 0.91) 48%, rgba(24, 55, 53, 0.66) 100%),
+    url("vero-beach-hero.jpg"),
+    linear-gradient(180deg, #0d1110 0%, #111514 100%);
+  background-position: center top, center top, center top;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-size: 100% 100%, auto 1050px, 100% 100%;
+}
+
+.overview-hero {
+  padding-bottom: 3.75rem;
+}
+
+.overview-hero .hero-copy {
+  max-width: 52rem;
+}
+
+.overview-capability-strip .proof-card {
+  min-height: 100%;
+}
+
 .topbar {
-  border-bottom: 1px solid var(--line-light);
-  background: rgba(255, 255, 255, 0.04);
+  display: none;
 }
 
 .topbar-content {
@@ -189,6 +331,30 @@ h2 {
   white-space: nowrap;
 }
 
+.nav-menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid rgba(142, 215, 208, 0.42);
+  border-radius: 999px;
+  color: var(--white);
+  background: rgba(62, 140, 140, 0.14);
+  font: 700 0.92rem/1 var(--primary-header-interface);
+  cursor: pointer;
+}
+
+.nav-menu-toggle:hover,
+.nav-menu-toggle[aria-expanded="true"] {
+  background: rgba(62, 140, 140, 0.28);
+}
+
+.nav-menu-toggle:focus-visible {
+  outline: 3px solid rgba(142, 215, 208, 0.45);
+  outline-offset: 3px;
+}
+
 .nav-links a:hover,
 .footer-links a:hover {
   color: var(--white);
@@ -242,6 +408,33 @@ h2 {
 
   .brand-tag {
     display: none;
+  }
+
+  .site-navigation-shell .nav-links {
+    gap: 0.35rem 0.45rem;
+  }
+
+  .site-navigation-shell .nav-links a {
+    min-height: 2.35rem;
+    padding: 0.3rem 0.46rem;
+    font-size: 0.86rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .site-navigation-shell .nav-cta {
+    padding-inline: 0.7rem;
+    font-size: 0.86rem;
+  }
+
+  .site-navigation-shell .nav-links {
+    flex-wrap: nowrap;
+    gap: 0.25rem;
+  }
+
+  .site-navigation-shell .nav-links a {
+    padding-inline: 0.32rem;
+    white-space: nowrap;
   }
 }
 
@@ -409,26 +602,6 @@ h3 {
   color: rgba(255, 255, 255, 0.78);
 }
 
-.hero-helper {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.96rem;
-}
-
-.hero-helper a {
-  color: var(--white);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.15em;
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem 1.25rem;
-  align-items: center;
-  margin: 1.25rem 0 1.1rem;
-}
-
 .hero-benefits {
   list-style: none;
   padding: 0;
@@ -473,7 +646,7 @@ h3 {
 }
 
 .section-booking.scheduler {
-  padding: 3.5rem 0;
+  padding: 1.5rem 0 3.5rem;
   color: var(--text);
   background:
     linear-gradient(180deg, var(--ivory-soft) 0%, var(--ivory) 100%);
@@ -770,6 +943,14 @@ h3 {
   margin-bottom: 1.6rem;
 }
 
+.section-heading > h1,
+.section-heading > h2,
+.about-copy > h2:first-child,
+.contact-copy > h2:first-child,
+.scheduler-shell > h2:first-child {
+  margin-top: 0;
+}
+
 .section-heading-compact {
   margin-bottom: 1.25rem;
 }
@@ -823,6 +1004,29 @@ h3 {
 }
 
 .path-card p:last-child {
+  margin-bottom: 0;
+  color: var(--text-soft);
+}
+
+.capability-card-grid {
+  display: grid;
+  gap: 0.9rem;
+  margin-bottom: 1.15rem;
+}
+
+.capability-card {
+  min-height: 100%;
+  padding: 1.25rem;
+  border: 1px solid rgba(62, 140, 140, 0.18);
+  border-radius: var(--radius-md);
+  background: linear-gradient(145deg, rgba(62, 140, 140, 0.11), rgba(246, 241, 231, 0.55));
+}
+
+.capability-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.capability-card p {
   margin-bottom: 0;
   color: var(--text-soft);
 }
@@ -983,6 +1187,20 @@ h3 {
   font-size: 0.96rem;
 }
 
+.pricing-note-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1rem;
+  margin-top: 0.7rem;
+}
+
+.pricing-note-contact a {
+  color: var(--accent-deep);
+  font-weight: 700;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.18em;
+}
+
 .pricing-helper,
 .contact-support p {
   margin-bottom: 0;
@@ -1000,7 +1218,7 @@ h3 {
   margin-top: 1.5rem;
 }
 
-.pricing-card .button {
+.pricing-card .pricing-actions .button {
   margin-top: 0;
 }
 
@@ -1320,6 +1538,29 @@ h3 {
   color: #7fb0ff;
 }
 
+.footer-contact-links {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.footer-contact-links a {
+  width: fit-content;
+  color: var(--white);
+  font-weight: 700;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.18em;
+}
+
+.footer-contact-links span {
+  margin-right: 0.35rem;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .footer-links {
   display: grid;
   gap: 0.65rem;
@@ -1380,6 +1621,16 @@ h3 {
   color: var(--charcoal);
 }
 
+.mobile-dock-business {
+  grid-template-columns: minmax(0, 1.42fr) repeat(3, minmax(0, 0.8fr));
+  gap: 0.35rem;
+}
+
+.mobile-dock-business a {
+  padding-inline: 0.35rem;
+  font-size: 0.8rem;
+}
+
 a:focus-visible,
 summary:focus-visible {
   outline: 3px solid var(--accent);
@@ -1393,6 +1644,10 @@ summary:focus-visible {
   }
 
   .hero-benefits {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .capability-card-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1526,6 +1781,11 @@ summary:focus-visible {
     border-right: 0;
   }
 
+  .business-page .faq-list {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
   .visit-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1609,6 +1869,329 @@ summary:focus-visible {
 .booking-hero,
 .business-hero {
   padding-bottom: 3.75rem;
+}
+
+.business-hero {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* Shared typography and spacing for Home, Personal Tech Support, and Business Tech Support. */
+.primary-page-header {
+  background:
+    linear-gradient(90deg, rgba(8, 14, 13, 0.97) 0%, rgba(12, 18, 17, 0.91) 48%, rgba(24, 55, 53, 0.67) 100%),
+    url("vero-beach-hero.jpg"),
+    linear-gradient(180deg, #0d1110 0%, #111514 100%);
+  background-position: center top, center center, center top;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-size: 100% 100%, auto 100%, 100% 100%;
+}
+
+.primary-page-header .topbar-content,
+.primary-page-header .brand-tag,
+.primary-page-header .site-nav-links a,
+.primary-page-header .primary-page-hero,
+.primary-page-header .button,
+.primary-page-header .proof-card,
+.primary-page-header .hero-card {
+  font-family: var(--primary-header-interface);
+}
+
+.primary-page-header .topbar-content {
+  min-height: 2.75rem;
+  padding: 0.65rem 0;
+  font-size: var(--primary-header-label-size);
+  line-height: 1.35;
+}
+
+.primary-page-header .primary-site-nav {
+  padding: 1rem 0 0.9rem;
+}
+
+.primary-page-header .brand {
+  gap: 0.3rem;
+}
+
+.primary-page-header .brand-mark,
+.primary-page-header .primary-page-hero h1,
+.primary-page-header .proof-value,
+.primary-page-header .business-price {
+  font-family: var(--primary-header-display);
+}
+
+.primary-page-header .brand-mark {
+  font-size: clamp(1.9rem, 2.8vw, 2.25rem);
+  line-height: 1;
+}
+
+.primary-page-header .brand-tag {
+  font-size: var(--primary-header-label-size);
+  line-height: 1.25;
+}
+
+.primary-page-header .site-nav-links {
+  gap: 1.25rem;
+}
+
+.primary-page-header .site-nav-links a {
+  display: inline-grid;
+  place-items: center start;
+  min-height: 2.4rem;
+  padding: 0.3rem 0.12rem;
+  font-size: var(--primary-header-nav-size);
+  line-height: 1.2;
+}
+
+.primary-page-header .site-nav-links .nav-link-label,
+.primary-page-header .site-nav-links a::before,
+.primary-page-header .site-nav-links a[aria-current="page"]::before {
+  grid-area: 1 / 1;
+}
+
+.primary-page-header .site-nav-links a::before,
+.primary-page-header .site-nav-links a[aria-current="page"]::before {
+  content: attr(data-nav-label);
+  visibility: hidden;
+  font-weight: 700;
+}
+
+.primary-page-header .nav-cta {
+  min-height: 3rem;
+  padding: 0.8rem 1.2rem;
+  font-size: var(--primary-header-nav-size);
+  line-height: 1.2;
+}
+
+.primary-page-header .primary-page-hero {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 3rem;
+  padding: 1.5rem 0 3.75rem;
+}
+
+.primary-page-header .primary-page-hero .hero-copy {
+  width: 100%;
+  max-width: 52rem;
+}
+
+.primary-page-header .primary-page-hero .hero-intro {
+  margin-bottom: 0.9rem;
+  font-size: var(--primary-header-label-size);
+  line-height: 1.4;
+}
+
+.primary-page-header .primary-page-hero h1 {
+  max-width: 13ch;
+  margin: 0 0 1rem;
+  font-size: var(--primary-header-title-size);
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+
+.primary-page-header .primary-page-hero .lead {
+  max-width: 41rem;
+  margin-bottom: 0;
+  font-size: var(--primary-header-lead-size);
+  line-height: 1.65;
+}
+
+.primary-page-header .primary-page-hero .hero-benefits {
+  gap: 0.7rem 1.25rem;
+  padding-top: 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.primary-page-header .proof-strip {
+  gap: var(--primary-header-gap);
+  margin-top: -1.75rem;
+  padding-bottom: 1.25rem;
+}
+
+.primary-page-header .proof-card,
+.primary-page-header .hero-card {
+  padding: var(--primary-header-card-padding);
+}
+
+.primary-page-header .proof-card {
+  background-color: #0d1514;
+  backdrop-filter: none;
+}
+
+.primary-page-header .card-label {
+  margin-bottom: 0.7rem;
+  font-size: var(--primary-header-label-size);
+  line-height: 1.4;
+}
+
+.primary-page-header .proof-value {
+  margin-bottom: 0.55rem;
+  font-size: 1.55rem;
+  line-height: 1.05;
+}
+
+.primary-page-header .proof-card p:not(.card-label):not(.proof-value),
+.primary-page-header .hero-card p:not(.card-label):not(.business-price) {
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+@media (min-width: 820px) {
+  .primary-page-header .primary-site-nav {
+    display: grid;
+    grid-template-columns: minmax(12rem, 1fr) auto minmax(12rem, 1fr);
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .primary-page-header .brand {
+    grid-column: 1;
+    justify-self: start;
+    min-width: 0;
+  }
+
+  .primary-page-header .nav-cluster {
+    display: contents;
+  }
+
+  .primary-page-header .site-nav-links {
+    grid-column: 2;
+    justify-self: center;
+  }
+
+  .primary-page-header .nav-cta {
+    grid-column: 3;
+    justify-self: end;
+  }
+
+  .primary-page-header .primary-page-hero {
+    padding: 2rem 0 4rem;
+  }
+
+  .primary-page-header .primary-page-hero .hero-copy {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .primary-page-header .primary-page-hero.home-hero h1 {
+    max-width: 18ch;
+  }
+
+  .primary-page-header .primary-page-hero h1,
+  .primary-page-header .primary-page-hero .lead {
+    margin: 0;
+  }
+
+  .primary-page-header .primary-page-hero .hero-panel {
+    margin-top: 2.35rem;
+  }
+
+  .primary-page-header .proof-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .primary-page-header .proof-card {
+    height: 11.5rem;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 819px) {
+  .primary-page-header .primary-site-nav {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.8rem 1rem;
+    padding: 0.85rem 0;
+  }
+
+  .primary-page-header .brand {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 3rem;
+    justify-content: center;
+  }
+
+  .primary-page-header .nav-menu-toggle {
+    display: inline-flex;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .primary-page-header .nav-cluster {
+    display: none;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    padding: 0.35rem 0 0.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .primary-page-header .primary-site-nav.is-open .nav-cluster {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primary-page-header .site-nav-links {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .primary-page-header .site-nav-links a {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.85rem 0.1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .primary-page-header .site-nav-links a[aria-current="page"]::after {
+    right: auto;
+    bottom: 0.55rem;
+    left: 0.1rem;
+    width: 2.35rem;
+  }
+
+  .primary-page-header .nav-cta {
+    width: 100%;
+    margin-top: 0.45rem;
+  }
+
+  .primary-page-header .primary-page-hero {
+    gap: 1.6rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .primary-page-header .brand-mark {
+    font-size: 1.6rem;
+  }
+
+  .primary-page-header .brand-tag {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+  }
+
+  .primary-page-header .primary-site-nav.is-open .nav-cta {
+    display: inline-flex;
+  }
+
+  .primary-page-header .primary-page-hero {
+    padding: 1.35rem 0 3.35rem;
+  }
+
+  .primary-page-header .primary-page-hero h1 {
+    font-size: 2.65rem;
+  }
+
+  .primary-page-header .primary-page-hero .lead {
+    font-size: 1.02rem;
+  }
+
+  .primary-page-header .proof-card,
+  .primary-page-header .hero-card {
+    padding: 1rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
