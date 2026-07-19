@@ -61,6 +61,27 @@ const sharedHeroPages = [
   ...secondaryPages
 ];
 
+const mobileDockPages = [
+  ["Home", "index.html", "Choose Support", "#choose-path", false],
+  ["Personal Tech Support", "home-tech-help.html", "Book Tech Tune-Up", "/special", false],
+  ["Business Tech Support", "business-websites.html", "Book Consult", "/business-consult", false],
+  ["Business Tech Consult", "business-consult.html", "Book Consult", "#booking-embed", true],
+  ["Tech Tune-Up", "special.html", "Book Tech Tune-Up", "#booking-embed", true],
+  ["Legacy booking", "book.html", "Book Tech Tune-Up", "#booking-embed", true],
+  ["Digital Presence Checkup", "book-digital-presence-checkup.html", "Book Checkup", "#booking-embed", true],
+  ["404", "404.html", "Book Tech Tune-Up", "/special", false],
+  ["Tech Tips", "tech-tips.html", "Book Tech Tune-Up", "/special", false],
+  ["Workshops", "workshops.html", "Book Tech Tune-Up", "/special", false],
+  ["Scam Texts", "tips-scam-texts.html", "Book Tech Tune-Up", "/special", false],
+  ["iPhone Storage", "tips-iphone-storage.html", "Book Tech Tune-Up", "/special", false],
+  ["Photo Backup", "tips-photo-backup.html", "Book Tech Tune-Up", "/special", false],
+  ["When to Book Help", "tips-when-to-book-help.html", "Book Tech Tune-Up", "/special", false],
+  ["Senior Tech Safety", "tips-senior-tech-safety-checklist.html", "Book Tech Tune-Up", "/special", false],
+  ["Concept 1", "testhome1.html", "Choose Support", "#choose-path", false],
+  ["Concept 2", "testhome2.html", "Choose Support", "#choose-path", false],
+  ["Concept 3", "testhome3.html", "Choose Support", "#choose-path", false]
+];
+
 function captureErrors(page) {
   const consoleErrors = [];
   const pageErrors = [];
@@ -551,16 +572,16 @@ async function runBusinessWebsitesSmoke(page, viewportName, viewport) {
   const visibleConsultationLinks = page.locator('a[href="/business-consult"]:visible');
   expect(await visibleConsultationLinks.count()).toBeGreaterThan(0);
   expect(await consultationLinks.count()).toBeGreaterThan(1);
-  await expect(page.locator(".mobile-dock-business a")).toHaveText([
+  await expect(page.locator(".mobile-dock a")).toHaveText([
     "Book Consult",
     "Text",
     "Call",
     "Email"
   ]);
-  await expect(page.locator('.mobile-dock-business a[href^="sms:"]')).toHaveCount(1);
-  await expect(page.locator('.mobile-dock-business a[href^="tel:"]')).toHaveCount(1);
-  await expect(page.locator('.mobile-dock-business a[href="/business-consult"]')).toHaveCount(1);
-  await expect(page.locator('.mobile-dock-business a[href^="mailto:"]')).toHaveCount(1);
+  await expect(page.locator('.mobile-dock a[href^="sms:"]')).toHaveCount(1);
+  await expect(page.locator('.mobile-dock a[href^="tel:"]')).toHaveCount(1);
+  await expect(page.locator('.mobile-dock a[href="/business-consult"]')).toHaveCount(1);
+  await expect(page.locator('.mobile-dock a[href^="mailto:"]')).toHaveCount(1);
   await expect(page.locator('a[href="/book-digital-presence-checkup"]')).toHaveCount(0);
   await expect(page.locator('a[href^="https://app.acuityscheduling.com"]')).toHaveCount(0);
 
@@ -609,7 +630,7 @@ async function runBusinessConsultBookingSmoke(page, viewportName, viewport) {
   await expect(bookingFrame).not.toHaveAttribute("src", /appointmentType=(?:93474728|93634542)/);
   await expect(page.locator(".scheduler-fallback")).toContainText("Can't see the scheduler?");
   await expect(page.locator(".scheduler-loading")).toHaveAttribute("role", "status");
-  await expect(page.locator(".mobile-dock")).toHaveCount(0);
+  await expect(page.locator(".mobile-dock")).toHaveCount(1);
 
   await assertSchedulerLoaded(page);
   await assertNoOverflow(page);
@@ -645,7 +666,7 @@ async function runBookingPageSmoke(page, viewportName, viewport) {
   await expect(bookingFrame).not.toHaveAttribute("src", /calendarID=/);
   await expect(page.locator(".scheduler-fallback")).toContainText("Can't see the scheduler?");
   await expect(page.locator(".scheduler-loading")).toHaveAttribute("role", "status");
-  await expect(page.locator(".mobile-dock")).toHaveCount(0);
+  await expect(page.locator(".mobile-dock")).toHaveCount(1);
 
   await assertSchedulerLoaded(page);
 
@@ -683,7 +704,7 @@ async function runDigitalPresenceBookingSmoke(page, viewportName, viewport) {
   await expect(bookingFrame).toHaveAttribute("src", /appointmentType=93474728/);
   await expect(page.locator(".scheduler-fallback")).toContainText("Can't see the scheduler?");
   await expect(page.locator(".scheduler-loading")).toHaveAttribute("role", "status");
-  await expect(page.locator(".mobile-dock")).toHaveCount(0);
+  await expect(page.locator(".mobile-dock")).toHaveCount(1);
 
   await assertSchedulerLoaded(page);
 
@@ -723,7 +744,7 @@ async function runCurrentSpecialSmoke(page, viewportName, viewport) {
   await expect(bookingFrame).not.toHaveAttribute("src", /calendarID=/);
   await expect(page.locator(".scheduler-fallback")).toContainText("Can't see the scheduler?");
   await expect(page.locator(".scheduler-loading")).toHaveAttribute("role", "status");
-  await expect(page.locator(".mobile-dock")).toHaveCount(0);
+  await expect(page.locator(".mobile-dock")).toHaveCount(1);
 
   await assertSchedulerLoaded(page);
 
@@ -772,6 +793,54 @@ test("Business Tech Support page mobile smoke test", async ({ page }) => {
 
 test("Business Tech Support page small-phone navigation smoke test", async ({ page }) => {
   await runBusinessWebsitesSmoke(page, "small-phone", { width: 320, height: 568 });
+});
+
+test("every customer-facing page shares the four-action mobile dock", async ({ page }) => {
+  for (const [pageName, fileName, primaryLabel, primaryHref, hasScheduler] of mobileDockPages) {
+    await page.setViewportSize({ width: 390, height: 900 });
+    const pageUrl = pathToFileURL(path.join(siteRoot, fileName)).toString();
+    await page.goto(pageUrl, { waitUntil: "domcontentloaded" });
+
+    const dock = page.locator(".mobile-dock");
+    const actions = dock.locator("a");
+    await expect(dock, `${pageName} quick-action dock`).toHaveCount(1);
+    await expect(dock).toHaveAttribute("aria-label", "Quick actions");
+    await expect(actions).toHaveText([primaryLabel, "Text", "Call", "Email"]);
+    await expect(actions.first()).toHaveAttribute("href", primaryHref);
+    await expect(dock.locator('a[href="sms:+17725884324"]')).toHaveCount(1);
+    await expect(dock.locator('a[href="tel:+17725884324"]')).toHaveCount(1);
+    await expect(dock.locator('a[href^="mailto:cj@verotechcare.com"]')).toHaveCount(1);
+    await expect(dock).toHaveAttribute("aria-hidden", "true");
+    await expect(dock).toBeHidden();
+    await assertNoOverflow(page);
+
+    if (hasScheduler) {
+      await page.setViewportSize({ width: 320, height: 568 });
+      const revealPosition = await page.evaluate(() => {
+        const hero = document.querySelector("header .primary-page-hero");
+        const scheduler = document.querySelector(".scheduler-embed-shell");
+        const heroTop = hero.getBoundingClientRect().top + window.scrollY;
+        const schedulerTop = scheduler.getBoundingClientRect().top + window.scrollY;
+        const showAfter = Math.max(0, heroTop - window.innerHeight * 0.25);
+        return Math.max(showAfter + 1, Math.min(showAfter + 120, schedulerTop - window.innerHeight - 8));
+      });
+      await page.evaluate((position) => window.scrollTo(0, position), revealPosition);
+      await expect(dock, `${pageName} dock before scheduler`).toHaveClass(/is-visible/);
+      await expect(dock).toHaveAttribute("aria-hidden", "false");
+      await assertNoOverflow(page);
+
+      await page.locator(".scheduler-embed-shell").scrollIntoViewIfNeeded();
+      await expect(dock, `${pageName} dock over scheduler`).not.toHaveClass(/is-visible/);
+      await expect(dock).toHaveAttribute("aria-hidden", "true");
+      await expect(dock).toBeHidden();
+    } else {
+      await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+      await expect(dock, `${pageName} dock after page trigger`).toHaveClass(/is-visible/);
+      await expect(dock).toHaveAttribute("aria-hidden", "false");
+      await expect(dock).toBeVisible();
+      await assertNoOverflow(page);
+    }
+  }
 });
 
 test("primary beach headers share typography and spacing at every breakpoint", async ({ page }) => {

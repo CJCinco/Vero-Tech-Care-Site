@@ -79,7 +79,8 @@ These are invariants, not suggestions:
 | Secondary contact | Phone, text, and email remain visible but secondary to the page's primary conversion action. |
 | Claims | Only source-backed prices, proof, testimonials, service facts, and local facts. No invented reassurance, credentials, guarantees, or urgency. |
 | Private lanes | Internal packages, memberships, Remote Fix, monitoring, Digital Presence ladders, and the standalone Checkup remain private or direct-link-only unless CJ explicitly changes the public offer standard. |
-| Booking usability | Embedded schedulers must remain unobstructed on mobile. Do not place a sticky dock, floating CTA, or other fixed interface over scheduler controls. |
+| Mobile quick actions | Every customer-facing page uses one shared four-action mobile dock: one page-appropriate primary action followed by `Text`, `Call`, and `Email`. |
+| Booking usability | Embedded schedulers must remain unobstructed on mobile. The shared mobile dock may exist on booking pages, but it must automatically hide whenever scheduler controls are visible. |
 
 ## Change Classes And Override Gate
 
@@ -194,6 +195,7 @@ Hero action rows are intentionally absent from every site hero. Keep the shared 
 Default primary CTA:
 
 - `Book Tune-Up`
+- `Book Tech Tune-Up` in the compact mobile dock
 - `Book the Tech Tune-Up`
 - `Book Consult`
 
@@ -215,6 +217,15 @@ Avoid as primary CTA language unless explicitly requested:
 - `Email to book`
 - `Reach out to schedule`
 - vague CTAs like `Learn more` when a clearer action exists
+
+Mobile quick-action rules:
+
+- Show exactly four actions, in this order: the page-appropriate primary action, `Text`, `Call`, and `Email`.
+- Use `Choose Support` on the overview homepage and temporary homepage concepts, linking to their audience-path section.
+- Use `Book Tech Tune-Up` on Personal Tech Support, Tech Tips, Workshops, tip articles, the 404 page, and residential booking pages. Link to `/special`, or to the scheduler anchor when already on a residential booking page.
+- Use `Book Consult` on Business Tech Support and the Business Tech Consult page. Link to `/business-consult`, or to the scheduler anchor when already on that booking page.
+- Keep `Book Checkup` only on the no-indexed direct-referral Checkup page, linking to its scheduler anchor.
+- The dock appears only on mobile after the visitor reaches the page&rsquo;s main content. On any page with an embedded scheduler, hide it while the scheduler is visible so no booking controls are covered.
 
 ## Offer And Pricing Rules
 
@@ -328,7 +339,7 @@ Readability and spacing rules:
 - Generous whitespace should create calm hierarchy, not long empty runs or sparse sections. Remove repeated copy before adding more vertical space.
 - Keep proof, FAQ, contact, and footer sections compact enough to support the page's main path.
 - On desktop, do not leave a single offer card artificially narrow when the surrounding section has useful space.
-- Embedded booking controls must never sit beneath a fixed mobile dock or floating action bar.
+- Embedded booking controls must never sit beneath the fixed mobile dock; automatically hide the dock while the scheduler is visible.
 - Business-page headings should describe the customer outcome in natural language. Keep internal strategy terms and stacked slogan fragments out of public headings.
 
 Small spacing, consistency, wrapping, accessibility, and alignment improvements are acceptable when directly tied to the requested edit.

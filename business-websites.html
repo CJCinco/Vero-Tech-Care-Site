@@ -324,24 +324,5 @@
     </div>
   </footer>
 
-  <nav class="mobile-dock mobile-dock-business" aria-label="Quick actions">
-    <a href="/business-consult">Book Consult</a>
-    <a href="sms:+17725884324">Text</a>
-    <a href="tel:+17725884324">Call</a>
-    <a href="mailto:cj@verotechcare.com?subject=Business%20Tech%20Support%20Question">Email</a>
-  </nav>
-
-  <script>
-    const mobileDock = document.querySelector(".mobile-dock");
-    const updateMobileDock = () => {
-      if (!mobileDock) return;
-      const businessSupport = document.querySelector("#business-support");
-      const trigger = businessSupport ? businessSupport.offsetTop - window.innerHeight * 0.25 : 900;
-      mobileDock.classList.toggle("is-visible", window.scrollY > trigger);
-    };
-
-    updateMobileDock();
-    window.addEventListener("scroll", updateMobileDock, { passive: true });
-  </script>
 </body>
 </html>

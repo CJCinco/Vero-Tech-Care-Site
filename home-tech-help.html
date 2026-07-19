@@ -366,22 +366,5 @@
     </div>
   </footer>
 
-  <nav class="mobile-dock" aria-label="Quick actions">
-    <a href="/special">Book Tune-Up</a>
-    <a href="tel:+17725884324">Call</a>
-  </nav>
-
-  <script>
-    const mobileDock = document.querySelector(".mobile-dock");
-    const updateMobileDock = () => {
-      if (!mobileDock) return;
-      const services = document.querySelector("#services");
-      const trigger = services ? services.offsetTop - window.innerHeight * 0.25 : 1200;
-      mobileDock.classList.toggle("is-visible", window.scrollY > trigger);
-    };
-
-    updateMobileDock();
-    window.addEventListener("scroll", updateMobileDock, { passive: true });
-  </script>
 </body>
 </html>
