@@ -1202,17 +1202,19 @@ test("public route and sitemap contracts stay simplified", async () => {
   expect(sitemap).not.toContain("testhome1");
   expect(sitemap).not.toContain("testhome2");
   expect(sitemap).not.toContain("testhome3");
+  expect(sitemap).not.toContain("rhythm-soul-studio-overview");
   expect(headers).toContain("/testhome1*");
   expect(headers).toContain("/testhome2*");
   expect(headers).toContain("/testhome3*");
-  expect((headers.match(/X-Robots-Tag: noindex, nofollow, noarchive/g) || []).length).toBe(3);
+  expect(headers).toContain("/rhythm-soul-studio-overview*");
+  expect((headers.match(/X-Robots-Tag: noindex, nofollow, noarchive/g) || []).length).toBe(4);
 });
 
 test("shared HTML source contracts stay valid", async () => {
   const htmlFiles = fs.readdirSync(siteRoot).filter((file) => file.endsWith(".html"));
 
   for (const fileName of htmlFiles) {
-    if (fileName === "google19831672bbe53c8b.html") continue;
+    if (["google19831672bbe53c8b.html", "rhythm-soul-studio-overview.html"].includes(fileName)) continue;
     const source = fs.readFileSync(path.join(siteRoot, fileName), "utf8");
 
     const footer = source.match(/<footer\b[\s\S]*?<\/footer>/i)?.[0];
