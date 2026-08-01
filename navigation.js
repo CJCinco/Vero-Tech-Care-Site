@@ -104,6 +104,18 @@
       label: "Book Tech Tune-Up",
       href: "/special",
       trigger: "#next-workshop"
+    },
+    "smartphone-confidence": {
+      label: "Book Tech Tune-Up",
+      href: "/special",
+      trigger: "header .primary-page-hero",
+      emailSubject: "Smartphone Confidence Series Question"
+    },
+    "smartphone-confidence-basics": {
+      label: "Explore Series",
+      href: "/smartphone-confidence",
+      trigger: "#notes",
+      emailSubject: "Smartphone Confidence Series Question"
     }
   };
   const pageDock = {

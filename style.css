@@ -652,6 +652,11 @@ h3 {
     linear-gradient(180deg, var(--ivory-soft) 0%, var(--ivory) 100%);
 }
 
+.section.registration-section {
+  padding-top: 1.5rem;
+  scroll-margin-top: 4.75rem;
+}
+
 .scheduler-shell {
   padding: 1.45rem;
   border: 1px solid rgba(17, 21, 20, 0.1);
@@ -981,6 +986,11 @@ h3 {
 }
 
 .service-path-grid {
+  margin-bottom: 1.15rem;
+}
+
+.series-feature-card {
+  max-width: 42rem;
   margin-bottom: 1.15rem;
 }
 
@@ -1335,8 +1345,112 @@ h3 {
   margin-top: 0.55rem;
 }
 
+.audience-secondary-link {
+  margin: 1rem 0 0;
+  font-weight: 700;
+}
+
+.audience-secondary-link a,
+.resource-back-link a {
+  text-underline-offset: 0.18em;
+}
+
+.resource-back-link {
+  margin-bottom: 1.75rem;
+  font-weight: 700;
+}
+
+.practice-list {
+  padding: 1.15rem 1.15rem 1.15rem 2.6rem;
+  border: 1px solid rgba(62, 140, 140, 0.2);
+  border-radius: var(--radius-lg);
+  background: rgba(62, 140, 140, 0.07);
+}
+
+.resource-next-steps {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.class-summary {
+  display: grid;
+  gap: 1rem;
+}
+
+.class-summary p {
+  margin: 0;
+}
+
+.handout-resource {
+  margin-top: 2.5rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid rgba(62, 140, 140, 0.24);
+  border-radius: var(--radius-lg);
+  background: rgba(62, 140, 140, 0.07);
+}
+
+.handout-resource h2 {
+  margin-top: 0;
+}
+
+.handout-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.4rem 0 1.7rem;
+}
+
+.handout-preview {
+  margin: 0;
+}
+
+.handout-preview img {
+  display: block;
+  width: min(100%, 42rem);
+  height: auto;
+  margin-inline: auto;
+  border: 1px solid rgba(17, 17, 17, 0.16);
+  border-radius: 0.4rem;
+  background: #fff;
+  box-shadow: 0 16px 36px rgba(17, 17, 17, 0.12);
+}
+
+.handout-preview figcaption {
+  max-width: 42rem;
+  margin: 0.85rem auto 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
 .section-faq .section-heading {
   margin-bottom: 1.5rem;
+}
+
+@media print {
+  .workshop-resource-page .site-header,
+  .workshop-resource-page .site-footer,
+  .workshop-resource-page .mobile-dock,
+  .workshop-resource-page .resource-next-steps,
+  .workshop-resource-page .resource-back-link,
+  .workshop-resource-page .handout-actions,
+  .workshop-resource-page .handout-preview {
+    display: none !important;
+  }
+
+  .workshop-resource-page {
+    color: #111;
+    background: #fff;
+  }
+
+  .workshop-resource-page .section {
+    padding: 0;
+  }
+
+  .workshop-resource-page .article-content {
+    max-width: none;
+  }
 }
 
 .faq-list {

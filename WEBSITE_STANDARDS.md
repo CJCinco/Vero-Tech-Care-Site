@@ -1,7 +1,7 @@
 # Vero Tech Care Website Standards
 
 Status: binding website editing contract
-Last reviewed: 2026-07-19
+Last reviewed: 2026-07-30
 
 Purpose: AI-facing standards for editing the Vero Tech Care website without drifting from the brand, offer model, booking flow, or current site structure.
 
@@ -154,10 +154,28 @@ Use each page for its job. Do not make every page carry the whole business.
 - `business-consult.html`: public free 15-minute Business Tech Consult booking page at `/business-consult`, using Acuity appointment type `91121958`
 - `book-digital-presence-checkup.html`: no-indexed direct booking page for standalone Digital Presence Checkup referrals; not a primary public path
 - `tech-tips.html` and tip articles: helpful local education with a light path back to the Tech Tune-Up or contact
-- `workshops.html`: workshop trust and community proof with a path back to the Tech Tune-Up
+- `workshops.html`: workshop trust and community proof, a visible route into the Smartphone Confidence Series, and a path back to the Tech Tune-Up
+- `smartphone-confidence.html`: evergreen Smartphone Confidence Series hub and permanent public-flyer destination; introduce all three parts without publishing unconfirmed dates, locations, registration details, or unavailable resources
+- `smartphone-confidence-basics.html`: accessible Part 1 class recap with a downloadable PDF handout and full-page image, plus light routes back to the series, a Google review, and one-on-one help
 - `404.html`: recover visitors and route them to booking or contact
 
 When adding or revising copy, decide which page owns that message. Link to the owning page instead of repeating the same explanation everywhere.
+
+### Workshop Resource Architecture
+
+The Smartphone Confidence Series uses a hybrid structure:
+
+- `/smartphone-confidence` is the stable series hub and the destination encoded in public series flyers.
+- Each class receives one short, stable resource URL only when its reviewed notes are ready. Part 1 uses `/smartphone-confidence-basics`.
+- Class-slide QR codes should point directly to that class resource page, while the page itself always links back to the series hub.
+- Unconfirmed class dates, locations, registration terms, donations, and availability stay off the public pages.
+- Unreleased parts may appear on the hub as plain `Coming next` cards without dead links.
+- Each class resource page should summarize the workshop in one or two plain-language paragraphs rather than repeating the lesson step by step.
+- The detailed teaching material belongs in a reviewed handout offered both as a downloadable PDF and a visible full-page image that can be saved from a phone.
+- Resource pages and handouts should be readable without an account or download gate and written for older or less-confident smartphone users.
+- Google review requests are secondary end-of-class actions, never the only way to continue.
+- Booking, contact, and upcoming-class questions remain visible but secondary to the educational content.
+- Use stable first-party URLs in printed QR codes. Add campaign tracking at the redirect or analytics layer rather than printing fragile tracked URLs.
 
 ### Root Homepage Section Ownership
 
@@ -165,7 +183,7 @@ Each root homepage section has one job:
 
 - hero: inclusive positioning and equal Home/Business actions, using the same image-backed base layout as the dedicated pages
 - capability strip: three dark glass cards within the image-backed header, with one concise explanation for each capability theme; no package or pricing ladder
-- audience paths: one Personal Tech Support card and one Business Tech Support card with equal visual prominence
+- audience paths: one Personal Tech Support card and one Business Tech Support card with equal visual prominence; the Home and Family card may include one quiet text link to the Smartphone Confidence Series without becoming a third audience path
 - owner introduction: personal trust, working style, and what it feels like to receive help; no service catalog
 - contact: repeat the two audience routes and keep phone, text, and email secondary
 - footer: compact navigation, contact facts, and real social links
@@ -223,6 +241,8 @@ Mobile quick-action rules:
 - Show exactly four actions, in this order: the page-appropriate primary action, `Text`, `Call`, and `Email`.
 - Use `Choose Support` on the overview homepage and temporary homepage concepts, linking to their audience-path section.
 - Use `Book Tech Tune-Up` on Personal Tech Support, Tech Tips, Workshops, tip articles, the 404 page, and residential booking pages. Link to `/special`, or to the scheduler anchor when already on a residential booking page.
+- Use `Book Tech Tune-Up` on the Smartphone Confidence Series hub, linking to `/special`.
+- Use `Explore Series` on Smartphone Confidence class resource pages, linking to `/smartphone-confidence`.
 - Use `Book Consult` on Business Tech Support and the Business Tech Consult page. Link to `/business-consult`, or to the scheduler anchor when already on that booking page.
 - Keep `Book Checkup` only on the no-indexed direct-referral Checkup page, linking to its scheduler anchor.
 - The dock appears only on mobile after the visitor reaches the page&rsquo;s main content. On any page with an embedded scheduler, hide it while the scheduler is visible so no booking controls are covered.

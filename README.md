@@ -24,6 +24,8 @@ Every customer-facing page also uses the shared four-action mobile dock generate
 
 Primary public residential navigation now exposes only the verified Tech Tune-Up appointment path. The no-indexed standalone Checkup referral page remains direct-access, and Acuity's public appointment-type catalog still needs a coordinated live review so legacy residential package types do not conflict with the simplified website.
 
+The Smartphone Confidence Series uses a hybrid resource structure. `smartphone-confidence.html` serves the evergreen `/smartphone-confidence` hub and permanent public-flyer destination. It publishes only confirmed public details and keeps questions secondary to the series information. `smartphone-confidence-basics.html` serves the short Part 1 recap at `/smartphone-confidence-basics`, with its detailed take-home material available as both `smartphone-confidence-basics-handout.pdf` and `smartphone-confidence-basics-handout.png`. The hub can introduce unreleased resources without dead links; each future class should receive its own stable resource route only when its notes and handout are approved.
+
 ## Codex Website Workflow
 
 Use this workflow when Codex makes website changes.

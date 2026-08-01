@@ -43,6 +43,8 @@ const secondaryPages = [
   ["404", "404.html"],
   ["tech-tips", "tech-tips.html"],
   ["workshops", "workshops.html"],
+  ["smartphone-confidence", "smartphone-confidence.html"],
+  ["smartphone-confidence-basics", "smartphone-confidence-basics.html"],
   ["tips-scam-texts", "tips-scam-texts.html"],
   ["tips-iphone-storage", "tips-iphone-storage.html"],
   ["tips-photo-backup", "tips-photo-backup.html"],
@@ -72,6 +74,8 @@ const mobileDockPages = [
   ["404", "404.html", "Book Tech Tune-Up", "/special", false],
   ["Tech Tips", "tech-tips.html", "Book Tech Tune-Up", "/special", false],
   ["Workshops", "workshops.html", "Book Tech Tune-Up", "/special", false],
+  ["Smartphone Confidence", "smartphone-confidence.html", "Book Tech Tune-Up", "/special", false],
+  ["Smartphone Basics", "smartphone-confidence-basics.html", "Explore Series", "/smartphone-confidence", false],
   ["Scam Texts", "tips-scam-texts.html", "Book Tech Tune-Up", "/special", false],
   ["iPhone Storage", "tips-iphone-storage.html", "Book Tech Tune-Up", "/special", false],
   ["Photo Backup", "tips-photo-backup.html", "Book Tech Tune-Up", "/special", false],
@@ -843,6 +847,79 @@ test("every customer-facing page shares the four-action mobile dock", async ({ p
   }
 });
 
+test("Smartphone Confidence workflow stays discoverable, fact-backed, and low friction", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+
+  await page.goto(pathToFileURL(path.join(siteRoot, "index.html")).toString(), {
+    waitUntil: "domcontentloaded"
+  });
+  await expect(page.locator('#choose-path a[href="/smartphone-confidence"]')).toHaveText(
+    "Explore community smartphone workshops"
+  );
+
+  await page.goto(pathToFileURL(path.join(siteRoot, "workshops.html")).toString(), {
+    waitUntil: "domcontentloaded"
+  });
+  await expect(page.locator('main a[href="/smartphone-confidence"]')).toHaveText(
+    "Explore Smartphone Confidence"
+  );
+  const workshopNavigation = page.locator(".primary-site-nav");
+  await expect(workshopNavigation).not.toHaveClass(/is-open/);
+  await page.locator(".nav-menu-toggle").click();
+  await expect(workshopNavigation).toHaveClass(/is-open/);
+  await expect(page.locator("#primary-nav-links")).toBeVisible();
+
+  await page.goto(pathToFileURL(path.join(siteRoot, "smartphone-confidence.html")).toString(), {
+    waitUntil: "domcontentloaded"
+  });
+  await expect(page.locator("h1")).toHaveText("Smartphone Confidence Series.");
+  await expect(page.locator('#series-parts a[href="/smartphone-confidence-basics"]')).toHaveCount(1);
+  await expect(page.locator("#series-parts .path-card")).toHaveCount(3);
+  await expect(page.locator("#series-parts")).toContainText("August 30, 2026");
+  await expect(page.locator("#series-parts")).toContainText("September 20, 2026");
+  await expect(page.locator("#series-parts")).toContainText("Date TBD");
+  await expect(page.locator("#series-parts")).toContainText("Unity Spiritual Center of Vero Beach");
+  await expect(page.locator("main")).not.toContainText(/(?:11:30|chapel|sanctuary|donation|register)/i);
+  await expect(page.locator('header a[href="#series-parts"]')).toHaveText("Series Details");
+  await expect(page.locator('#series-parts a[href^="mailto:cj@verotechcare.com"]')).toHaveText("Ask a Question");
+
+  await page.goto(pathToFileURL(path.join(siteRoot, "smartphone-confidence-basics.html")).toString(), {
+    waitUntil: "domcontentloaded"
+  });
+  await expect(page.locator("h1")).toHaveText("Smartphone Basics.");
+  await expect(page.locator("#notes h2").first()).toHaveText("Part 1: Getting Comfortable");
+  await expect(page.locator("#notes .class-summary > p")).toHaveCount(2);
+  await expect(page.locator('#notes a[href="smartphone-confidence-basics-handout.pdf"]')).toHaveAttribute(
+    "download",
+    ""
+  );
+  await expect(page.locator('#notes a[href="smartphone-confidence-basics-handout.png"]')).toHaveCount(0);
+  const handoutPreview = page.locator(
+    '#notes img[src="smartphone-confidence-basics-handout.png"]'
+  );
+  await handoutPreview.scrollIntoViewIfNeeded();
+  await expect(handoutPreview).toHaveAttribute("width", "1700");
+  await expect(handoutPreview).toHaveAttribute("height", "2200");
+  await expect
+    .poll(() => handoutPreview.evaluate((image) => image.naturalWidth))
+    .toBeGreaterThan(0);
+  const noteHeadings = await page.locator("#notes h2").allTextContents();
+  expect(noteHeadings.some((heading) => /^\d+\./.test(heading.trim()))).toBe(false);
+  await expect(page.locator('.resource-next-steps a[href="https://g.page/r/CWFhUlhmySkxEAE/review"]')).toHaveText(
+    "Leave a Google Review"
+  );
+  await expect(page.locator('.resource-next-steps a[href="/special"]')).toHaveText(
+    "Book the Tech Tune-Up"
+  );
+  await assertNoOverflow(page);
+
+  await page.emulateMedia({ media: "print" });
+  await expect(page.locator(".site-header")).toBeHidden();
+  await expect(page.locator(".site-footer")).toBeHidden();
+  await expect(page.locator(".resource-next-steps")).toBeHidden();
+  await expect(page.locator("#notes h2").first()).toBeVisible();
+});
+
 test("primary beach headers share typography and spacing at every breakpoint", async ({ page }) => {
   const viewports = [
     ["desktop", { width: 1440, height: 1100 }],
@@ -1165,6 +1242,16 @@ test("all internal page links and fragments resolve", async () => {
       const resolved = new URL(href, `https://verotechcare.com${currentRoute}`);
       const routeFiles = new Map();
       const normalizedPath = resolved.pathname.replace(/^\//, "").replace(/\/$/, "");
+      const extension = path.extname(normalizedPath);
+
+      if (extension && extension !== ".html") {
+        expect(
+          fs.existsSync(path.join(siteRoot, normalizedPath)),
+          `${fileName}: ${href}`
+        ).toBe(true);
+        continue;
+      }
+
       const targetFile = resolved.pathname === "/"
         ? "index.html"
         : routeFiles.get(resolved.pathname)
@@ -1196,6 +1283,8 @@ test("public route and sitemap contracts stay simplified", async () => {
   expect(sitemap).toContain("https://verotechcare.com/business-websites");
   expect(sitemap).toContain("https://verotechcare.com/business-consult");
   expect(sitemap).toContain("https://verotechcare.com/home-tech-help");
+  expect(sitemap).toContain("https://verotechcare.com/smartphone-confidence");
+  expect(sitemap).toContain("https://verotechcare.com/smartphone-confidence-basics");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/book</loc>");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/book-digital-presence-checkup</loc>");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/digital-presence-management</loc>");
