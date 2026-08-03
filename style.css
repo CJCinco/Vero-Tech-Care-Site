@@ -1018,6 +1018,47 @@ h3 {
   color: var(--text-soft);
 }
 
+.series-registration-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 100%;
+}
+
+.series-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 1.1rem;
+}
+
+.series-card-actions .button {
+  width: 100%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.series-resource-link {
+  color: var(--accent-deep);
+  font-weight: 700;
+  text-underline-offset: 0.2em;
+}
+
+.path-card p.series-registration-status {
+  margin-top: auto;
+  padding-top: 1.1rem;
+  color: var(--accent-deep);
+  font-weight: 700;
+}
+
+.service-scope-panel p a {
+  color: inherit;
+  font-weight: 700;
+}
+
 .capability-card-grid {
   display: grid;
   gap: 0.9rem;

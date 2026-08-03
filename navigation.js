@@ -106,8 +106,8 @@
       trigger: "#next-workshop"
     },
     "smartphone-confidence": {
-      label: "Book Tech Tune-Up",
-      href: "/special",
+      label: "Choose a Class",
+      href: "#series-parts",
       trigger: "header .primary-page-hero",
       emailSubject: "Smartphone Confidence Series Question"
     },

@@ -1,7 +1,7 @@
 # Vero Tech Care Website Standards
 
 Status: binding website editing contract
-Last reviewed: 2026-07-30
+Last reviewed: 2026-08-02
 
 Purpose: AI-facing standards for editing the Vero Tech Care website without drifting from the brand, offer model, booking flow, or current site structure.
 
@@ -155,7 +155,7 @@ Use each page for its job. Do not make every page carry the whole business.
 - `book-digital-presence-checkup.html`: no-indexed direct booking page for standalone Digital Presence Checkup referrals; not a primary public path
 - `tech-tips.html` and tip articles: helpful local education with a light path back to the Tech Tune-Up or contact
 - `workshops.html`: workshop trust and community proof, a visible route into the Smartphone Confidence Series, and a path back to the Tech Tune-Up
-- `smartphone-confidence.html`: evergreen Smartphone Confidence Series hub and permanent public-flyer destination; introduce all three parts without publishing unconfirmed dates, locations, registration details, or unavailable resources
+- `smartphone-confidence.html`: evergreen Smartphone Confidence Series hub and permanent public-flyer destination; publish verified per-part Acuity registration links for available classes, keep unavailable parts clearly labeled without dead links, and omit unconfirmed details
 - `smartphone-confidence-basics.html`: accessible Part 1 class recap with a downloadable PDF handout and full-page image, plus light routes back to the series, a Google review, and one-on-one help
 - `404.html`: recover visitors and route them to booking or contact
 
@@ -166,15 +166,20 @@ When adding or revising copy, decide which page owns that message. Link to the o
 The Smartphone Confidence Series uses a hybrid structure:
 
 - `/smartphone-confidence` is the stable series hub and the destination encoded in public series flyers.
+- Available classes register separately through verified class-specific Acuity direct links on their hub cards; do not place a general workshop embed on the hub or route visitors through Acuity's full appointment catalog.
+- Part 1 uses Acuity appointment type `96581893`, and Part 2 uses Acuity appointment type `96621892`. Registration links open in the current tab so the browser Back action returns visitors to the hub.
+- Registration is free. A suggested `$20` donation may be given at the workshop but is not required and is not collected through Acuity.
+- The registration form requires an email address for class logistics; phone remains optional.
+- Publish a class date, time, location, registration link, or availability state only after it is verified. The current confirmed classes are Part 1 on August 30, 2026 at 11:30 AM and Part 2 on September 20, 2026 at 11:30 AM at Unity Spiritual Center of Vero Beach.
 - Each class receives one short, stable resource URL only when its reviewed notes are ready. Part 1 uses `/smartphone-confidence-basics`.
 - Class-slide QR codes should point directly to that class resource page, while the page itself always links back to the series hub.
-- Unconfirmed class dates, locations, registration terms, donations, and availability stay off the public pages.
-- Unreleased parts may appear on the hub as plain `Coming next` cards without dead links.
+- Unconfirmed class dates, locations, registration terms, donations, and availability stay off public pages.
+- Unreleased parts may appear on the hub as plain unavailable-status cards without dead links or disabled controls.
 - Each class resource page should summarize the workshop in one or two plain-language paragraphs rather than repeating the lesson step by step.
 - The detailed teaching material belongs in a reviewed handout offered both as a downloadable PDF and a visible full-page image that can be saved from a phone.
 - Resource pages and handouts should be readable without an account or download gate and written for older or less-confident smartphone users.
 - Google review requests are secondary end-of-class actions, never the only way to continue.
-- Booking, contact, and upcoming-class questions remain visible but secondary to the educational content.
+- Registration is the hub's primary action. On class resource pages, booking, contact, and upcoming-class questions remain visible but secondary to the educational content.
 - Use stable first-party URLs in printed QR codes. Add campaign tracking at the redirect or analytics layer rather than printing fragile tracked URLs.
 
 ### Root Homepage Section Ownership
@@ -241,7 +246,7 @@ Mobile quick-action rules:
 - Show exactly four actions, in this order: the page-appropriate primary action, `Text`, `Call`, and `Email`.
 - Use `Choose Support` on the overview homepage and temporary homepage concepts, linking to their audience-path section.
 - Use `Book Tech Tune-Up` on Personal Tech Support, Tech Tips, Workshops, tip articles, the 404 page, and residential booking pages. Link to `/special`, or to the scheduler anchor when already on a residential booking page.
-- Use `Book Tech Tune-Up` on the Smartphone Confidence Series hub, linking to `/special`.
+- Use `Choose a Class` on the Smartphone Confidence Series hub, linking to `#series-parts`.
 - Use `Explore Series` on Smartphone Confidence class resource pages, linking to `/smartphone-confidence`.
 - Use `Book Consult` on Business Tech Support and the Business Tech Consult page. Link to `/business-consult`, or to the scheduler anchor when already on that booking page.
 - Keep `Book Checkup` only on the no-indexed direct-referral Checkup page, linking to its scheduler anchor.

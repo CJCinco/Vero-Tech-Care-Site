@@ -74,7 +74,7 @@ const mobileDockPages = [
   ["404", "404.html", "Book Tech Tune-Up", "/special", false],
   ["Tech Tips", "tech-tips.html", "Book Tech Tune-Up", "/special", false],
   ["Workshops", "workshops.html", "Book Tech Tune-Up", "/special", false],
-  ["Smartphone Confidence", "smartphone-confidence.html", "Book Tech Tune-Up", "/special", false],
+  ["Smartphone Confidence", "smartphone-confidence.html", "Choose a Class", "#series-parts", false],
   ["Smartphone Basics", "smartphone-confidence-basics.html", "Explore Series", "/smartphone-confidence", false],
   ["Scam Texts", "tips-scam-texts.html", "Book Tech Tune-Up", "/special", false],
   ["iPhone Storage", "tips-iphone-storage.html", "Book Tech Tune-Up", "/special", false],
@@ -873,14 +873,45 @@ test("Smartphone Confidence workflow stays discoverable, fact-backed, and low fr
     waitUntil: "domcontentloaded"
   });
   await expect(page.locator("h1")).toHaveText("Smartphone Confidence Series.");
-  await expect(page.locator('#series-parts a[href="/smartphone-confidence-basics"]')).toHaveCount(1);
+  await expect(page.locator('#series-parts a[href="/smartphone-confidence-basics"]')).toHaveText(
+    "View Part 1 Notes"
+  );
   await expect(page.locator("#series-parts .path-card")).toHaveCount(3);
+  await expect(page.locator("#parts-title")).toHaveText("Choose the class you want to join.");
   await expect(page.locator("#series-parts")).toContainText("August 30, 2026");
   await expect(page.locator("#series-parts")).toContainText("September 20, 2026");
+  await expect(page.locator("#series-parts")).toContainText("11:30 AM");
   await expect(page.locator("#series-parts")).toContainText("Date TBD");
   await expect(page.locator("#series-parts")).toContainText("Unity Spiritual Center of Vero Beach");
-  await expect(page.locator("main")).not.toContainText(/(?:11:30|chapel|sanctuary|donation|register)/i);
-  await expect(page.locator('header a[href="#series-parts"]')).toHaveText("Series Details");
+  await expect(page.locator("#series-parts")).toContainText("Registration is free");
+  await expect(page.locator("#series-parts")).toContainText("$20 donation");
+  await expect(page.locator("main")).not.toContainText(/(?:chapel|sanctuary)/i);
+
+  const part1Registration = page.locator(
+    '#series-parts a[data-series-registration="part-1"]'
+  );
+  const part2Registration = page.locator(
+    '#series-parts a[data-series-registration="part-2"]'
+  );
+  await expect(part1Registration).toHaveText("Save My Seat — Part 1");
+  await expect(part1Registration).toHaveAttribute(
+    "href",
+    "https://app.acuityscheduling.com/schedule.php?owner=38883336&appointmentType=96581893"
+  );
+  await expect(part2Registration).toHaveText("Save My Seat — Part 2");
+  await expect(part2Registration).toHaveAttribute(
+    "href",
+    "https://app.acuityscheduling.com/schedule.php?owner=38883336&appointmentType=96621892"
+  );
+  await expect(part1Registration).not.toHaveAttribute("target", "_blank");
+  await expect(part2Registration).not.toHaveAttribute("target", "_blank");
+  await expect(page.locator('#series-parts [aria-labelledby="part-3-title"] a')).toHaveCount(0);
+  await expect(
+    page.locator('#series-parts [aria-labelledby="part-3-title"] .series-registration-status')
+  ).toHaveText("Registration opens when the date is confirmed.");
+  await expect(page.locator(".scheduler-embed-shell")).toHaveCount(0);
+  await expect(page.locator('header a[href="#series-parts"]')).toHaveText("Choose a Class");
+  await expect(page.locator('.mobile-dock a[href="#series-parts"]')).toHaveText("Choose a Class");
   await expect(page.locator('#series-parts a[href^="mailto:cj@verotechcare.com"]')).toHaveText("Ask a Question");
 
   await page.goto(pathToFileURL(path.join(siteRoot, "smartphone-confidence-basics.html")).toString(), {
