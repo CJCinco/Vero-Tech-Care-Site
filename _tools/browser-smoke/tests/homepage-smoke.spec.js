@@ -45,6 +45,8 @@ const secondaryPages = [
   ["workshops", "workshops.html"],
   ["smartphone-confidence", "smartphone-confidence.html"],
   ["smartphone-confidence-basics", "smartphone-confidence-basics.html"],
+  ["ai-for-everyday-life", "ai-for-everyday-life.html"],
+  ["phone-clean-up-speed-up", "phone-clean-up-speed-up.html"],
   ["tips-scam-texts", "tips-scam-texts.html"],
   ["tips-iphone-storage", "tips-iphone-storage.html"],
   ["tips-photo-backup", "tips-photo-backup.html"],
@@ -76,6 +78,8 @@ const mobileDockPages = [
   ["Workshops", "workshops.html", "Book Tech Tune-Up", "/special", false],
   ["Smartphone Confidence", "smartphone-confidence.html", "Choose a Class", "#series-parts", false],
   ["Smartphone Basics", "smartphone-confidence-basics.html", "Explore Series", "/smartphone-confidence", false],
+  ["AI for Everyday Life", "ai-for-everyday-life.html", "View Part 1", "#series-parts", false],
+  ["Phone Clean Up", "phone-clean-up-speed-up.html", "Workshop Details", "#workshop-details", false],
   ["Scam Texts", "tips-scam-texts.html", "Book Tech Tune-Up", "/special", false],
   ["iPhone Storage", "tips-iphone-storage.html", "Book Tech Tune-Up", "/special", false],
   ["Photo Backup", "tips-photo-backup.html", "Book Tech Tune-Up", "/special", false],
@@ -951,6 +955,47 @@ test("Smartphone Confidence workflow stays discoverable, fact-backed, and low fr
   await expect(page.locator("#notes h2").first()).toBeVisible();
 });
 
+test("additional workshop routes stay factual and fail closed", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+
+  await page.goto(pathToFileURL(path.join(siteRoot, "workshops.html")).toString(), {
+    waitUntil: "domcontentloaded"
+  });
+  await expect(page.locator('main a[href="/ai-for-everyday-life"]')).toHaveCount(2);
+  await expect(page.locator('main a[href="/phone-clean-up-speed-up"]')).toHaveText(
+    "Phone Clean Up & Speed Up"
+  );
+
+  await page.goto(pathToFileURL(path.join(siteRoot, "ai-for-everyday-life.html")).toString(), {
+    waitUntil: "domcontentloaded"
+  });
+  await expect(page.locator("h1")).toHaveText("AI for Everyday Life Series.");
+  await expect(page.locator("#series-parts .path-card")).toHaveCount(3);
+  await expect(page.locator("#series-parts")).toContainText("April 19, 2026");
+  await expect(page.locator("#series-parts")).toContainText("11:45 AM");
+  await expect(page.locator("#series-parts")).toContainText("Unity Spiritual Center of Vero Beach");
+  await expect(page.locator("#series-parts")).toContainText("No current registration is open");
+  await expect(page.locator("#series-parts")).not.toContainText(/Spot AI Scams|Health Questions/i);
+  await expect(page.locator('#series-parts a[href*="acuityscheduling"]')).toHaveCount(0);
+  await expect(page.locator('#series-parts [aria-labelledby="ai-part-2-title"] a')).toHaveCount(0);
+  await expect(page.locator('#series-parts [aria-labelledby="ai-part-3-title"] a')).toHaveCount(0);
+  await expect(page.locator('header a[href="#series-parts"]')).toHaveText("View Part 1");
+  await expect(page.locator('.mobile-dock a[href="#series-parts"]')).toHaveText("View Part 1");
+  await assertNoOverflow(page);
+
+  await page.goto(pathToFileURL(path.join(siteRoot, "phone-clean-up-speed-up.html")).toString(), {
+    waitUntil: "domcontentloaded"
+  });
+  await expect(page.locator("h1")).toHaveText("Phone Clean Up & Speed Up.");
+  await expect(page.locator("#workshop-details")).toContainText("February 22, 2026");
+  await expect(page.locator("#workshop-details")).toContainText("Unity Spiritual Center of Vero Beach");
+  await expect(page.locator("#workshop-details")).toContainText("no current registration is open");
+  await expect(page.locator('main a[href*="acuityscheduling"]')).toHaveCount(0);
+  await expect(page.locator('header a[href="#workshop-details"]')).toHaveText("Workshop Details");
+  await expect(page.locator('.mobile-dock a[href="#workshop-details"]')).toHaveText("Workshop Details");
+  await assertNoOverflow(page);
+});
+
 test("primary beach headers share typography and spacing at every breakpoint", async ({ page }) => {
   const viewports = [
     ["desktop", { width: 1440, height: 1100 }],
@@ -1316,6 +1361,8 @@ test("public route and sitemap contracts stay simplified", async () => {
   expect(sitemap).toContain("https://verotechcare.com/home-tech-help");
   expect(sitemap).toContain("https://verotechcare.com/smartphone-confidence");
   expect(sitemap).toContain("https://verotechcare.com/smartphone-confidence-basics");
+  expect(sitemap).toContain("https://verotechcare.com/ai-for-everyday-life");
+  expect(sitemap).toContain("https://verotechcare.com/phone-clean-up-speed-up");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/book</loc>");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/book-digital-presence-checkup</loc>");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/digital-presence-management</loc>");

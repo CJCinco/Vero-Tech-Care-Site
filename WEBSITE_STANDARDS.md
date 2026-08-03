@@ -157,6 +157,8 @@ Use each page for its job. Do not make every page carry the whole business.
 - `workshops.html`: workshop trust and community proof, a visible route into the Smartphone Confidence Series, and a path back to the Tech Tune-Up
 - `smartphone-confidence.html`: evergreen Smartphone Confidence Series hub and permanent public-flyer destination; publish verified per-part Acuity registration links for available classes, keep unavailable parts clearly labeled without dead links, and omit unconfirmed details
 - `smartphone-confidence-basics.html`: accessible Part 1 class recap with a downloadable PDF handout and full-page image, plus light routes back to the series, a Google review, and one-on-one help
+- `ai-for-everyday-life.html`: evergreen AI for Everyday Life Series hub and stable QR destination; present the completed first workshop factually, keep later parts as neutral forthcoming placeholders, and publish no registration path until a future event is approved
+- `phone-clean-up-speed-up.html`: individual historical event page for the completed February 22, 2026 workshop; do not turn it into a series hub or imply that registration is open
 - `404.html`: recover visitors and route them to booking or contact
 
 When adding or revising copy, decide which page owns that message. Link to the owning page instead of repeating the same explanation everywhere.
@@ -181,6 +183,13 @@ The Smartphone Confidence Series uses a hybrid structure:
 - Google review requests are secondary end-of-class actions, never the only way to continue.
 - Registration is the hub's primary action. On class resource pages, booking, contact, and upcoming-class questions remain visible but secondary to the educational content.
 - Use stable first-party URLs in printed QR codes. Add campaign tracking at the redirect or analytics layer rather than printing fragile tracked URLs.
+
+Other workshop routes follow the same source and QR safeguards without copying the Smartphone Confidence registration model where it does not fit:
+
+- `/ai-for-everyday-life` is the stable AI series overview and QR destination. Part 1 may use the completed April 19, 2026 workshop facts. Parts 2 and 3 remain plain forthcoming placeholders until CJ approves their titles, order, logistics, availability, and registration destinations.
+- `/phone-clean-up-speed-up` is one individual historical event page, not a hub. Its QR may route to that exact page, but the page and flyer must not imply a new session or open registration.
+- An individual future workshop receives its own route, flyer QR, and verified registration CTA only after its title, date, time, venue, terms, capacity, and destination are approved.
+- If no verified registration destination exists, use a plain status or workshop-question contact path. Never substitute the general Acuity catalog, a disabled button, or another workshop's registration link.
 
 ### Root Homepage Section Ownership
 
@@ -248,6 +257,8 @@ Mobile quick-action rules:
 - Use `Book Tech Tune-Up` on Personal Tech Support, Tech Tips, Workshops, tip articles, the 404 page, and residential booking pages. Link to `/special`, or to the scheduler anchor when already on a residential booking page.
 - Use `Choose a Class` on the Smartphone Confidence Series hub, linking to `#series-parts`.
 - Use `Explore Series` on Smartphone Confidence class resource pages, linking to `/smartphone-confidence`.
+- Use `View Part 1` on the AI for Everyday Life hub, linking to `#series-parts`, while no future AI registration is verified.
+- Use `Workshop Details` on the historical Phone Clean Up event page, linking to `#workshop-details`.
 - Use `Book Consult` on Business Tech Support and the Business Tech Consult page. Link to `/business-consult`, or to the scheduler anchor when already on that booking page.
 - Keep `Book Checkup` only on the no-indexed direct-referral Checkup page, linking to its scheduler anchor.
 - The dock appears only on mobile after the visitor reaches the page&rsquo;s main content. On any page with an embedded scheduler, hide it while the scheduler is visible so no booking controls are covered.

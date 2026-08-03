@@ -116,6 +116,30 @@
       href: "/smartphone-confidence",
       trigger: "#notes",
       emailSubject: "Smartphone Confidence Series Question"
+    },
+    "ai-for-everyday-life": {
+      label: "View Part 1",
+      href: "#series-parts",
+      trigger: "header .primary-page-hero",
+      emailSubject: "AI Workshop Question"
+    },
+    "phone-clean-up-speed-up": {
+      label: "Workshop Details",
+      href: "#workshop-details",
+      trigger: "header .primary-page-hero",
+      emailSubject: "Phone Workshop Question"
+    },
+    "phone-clean-up-speed-up-workshop": {
+      label: "Ask About a Future Session",
+      href: "#interest",
+      trigger: "header .primary-page-hero",
+      emailSubject: "Future Phone Clean Up & Speed Up Workshop"
+    },
+    "ai-for-everyday-life-workshop": {
+      label: "Ask About a Future Session",
+      href: "#interest",
+      trigger: "header .primary-page-hero",
+      emailSubject: "Future AI for Everyday Life Workshop"
     }
   };
   const pageDock = {
