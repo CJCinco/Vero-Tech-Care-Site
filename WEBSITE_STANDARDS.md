@@ -159,6 +159,8 @@ Use each page for its job. Do not make every page carry the whole business.
 - `smartphone-confidence-basics.html`: accessible Part 1 class recap with a downloadable PDF handout and full-page image, plus light routes back to the series, a Google review, and one-on-one help
 - `ai-for-everyday-life.html`: evergreen AI for Everyday Life Series hub and stable QR destination; present the completed first workshop factually, keep later parts as neutral forthcoming placeholders, and publish no registration path until a future event is approved
 - `phone-clean-up-speed-up.html`: individual historical event page for the completed February 22, 2026 workshop; do not turn it into a series hub or imply that registration is open
+- `ai-for-everyday-life-workshop.html`: evergreen, date-and-location-agnostic overview for a future AI for Everyday Life workshop; keep it interest-only until an actual event has a verified direct booking destination
+- `phone-clean-up-speed-up-workshop.html`: evergreen, date-and-location-agnostic overview for a future Phone Clean Up & Speed Up workshop; keep it interest-only until an actual event has a verified direct booking destination
 - `404.html`: recover visitors and route them to booking or contact
 
 When adding or revising copy, decide which page owns that message. Link to the owning page instead of repeating the same explanation everywhere.
@@ -188,7 +190,9 @@ Other workshop routes follow the same source and QR safeguards without copying t
 
 - `/ai-for-everyday-life` is the stable AI series overview and QR destination. Part 1 may use the completed April 19, 2026 workshop facts. Parts 2 and 3 remain plain forthcoming placeholders until CJ approves their titles, order, logistics, availability, and registration destinations.
 - `/phone-clean-up-speed-up` is one individual historical event page, not a hub. Its QR may route to that exact page, but the page and flyer must not imply a new session or open registration.
-- An individual future workshop receives its own route, flyer QR, and verified registration CTA only after its title, date, time, venue, terms, capacity, and destination are approved.
+- `/ai-for-everyday-life-workshop` and `/phone-clean-up-speed-up-workshop` are evergreen workshop overviews and interest surfaces. They are not canonical destinations for an actual event flyer.
+- An individual future event receives its own verified booking instance and registration CTA only after its title, date, time, venue, terms, capacity, and destination are approved.
+- Each actual event flyer uses its own unique QR that routes directly to that event's verified booking instance. Until that verified destination exists, the evergreen workshop overview remains interest-only and must not claim that registration is open.
 - If no verified registration destination exists, use a plain status or workshop-question contact path. Never substitute the general Acuity catalog, a disabled button, or another workshop's registration link.
 
 ### Root Homepage Section Ownership

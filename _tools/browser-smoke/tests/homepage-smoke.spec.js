@@ -46,7 +46,9 @@ const secondaryPages = [
   ["smartphone-confidence", "smartphone-confidence.html"],
   ["smartphone-confidence-basics", "smartphone-confidence-basics.html"],
   ["ai-for-everyday-life", "ai-for-everyday-life.html"],
+  ["ai-for-everyday-life-workshop", "ai-for-everyday-life-workshop.html"],
   ["phone-clean-up-speed-up", "phone-clean-up-speed-up.html"],
+  ["phone-clean-up-speed-up-workshop", "phone-clean-up-speed-up-workshop.html"],
   ["tips-scam-texts", "tips-scam-texts.html"],
   ["tips-iphone-storage", "tips-iphone-storage.html"],
   ["tips-photo-backup", "tips-photo-backup.html"],
@@ -79,7 +81,9 @@ const mobileDockPages = [
   ["Smartphone Confidence", "smartphone-confidence.html", "Choose a Class", "#series-parts", false],
   ["Smartphone Basics", "smartphone-confidence-basics.html", "Explore Series", "/smartphone-confidence", false],
   ["AI for Everyday Life", "ai-for-everyday-life.html", "View Part 1", "#series-parts", false],
+  ["Future AI Workshop", "ai-for-everyday-life-workshop.html", "Ask About a Future Session", "#interest", false],
   ["Phone Clean Up", "phone-clean-up-speed-up.html", "Workshop Details", "#workshop-details", false],
+  ["Future Phone Workshop", "phone-clean-up-speed-up-workshop.html", "Ask About a Future Session", "#interest", false],
   ["Scam Texts", "tips-scam-texts.html", "Book Tech Tune-Up", "/special", false],
   ["iPhone Storage", "tips-iphone-storage.html", "Book Tech Tune-Up", "/special", false],
   ["Photo Backup", "tips-photo-backup.html", "Book Tech Tune-Up", "/special", false],
@@ -965,6 +969,12 @@ test("additional workshop routes stay factual and fail closed", async ({ page })
   await expect(page.locator('main a[href="/phone-clean-up-speed-up"]')).toHaveText(
     "Phone Clean Up & Speed Up"
   );
+  await expect(page.locator('main a[href="/ai-for-everyday-life-workshop"]')).toHaveText(
+    "AI for Everyday Life"
+  );
+  await expect(page.locator('main a[href="/phone-clean-up-speed-up-workshop"]')).toHaveText(
+    "Phone Clean Up & Speed Up"
+  );
 
   await page.goto(pathToFileURL(path.join(siteRoot, "ai-for-everyday-life.html")).toString(), {
     waitUntil: "domcontentloaded"
@@ -994,6 +1004,25 @@ test("additional workshop routes stay factual and fail closed", async ({ page })
   await expect(page.locator('header a[href="#workshop-details"]')).toHaveText("Workshop Details");
   await expect(page.locator('.mobile-dock a[href="#workshop-details"]')).toHaveText("Workshop Details");
   await assertNoOverflow(page);
+
+  for (const [fileName, historicalHref] of [
+    ["ai-for-everyday-life-workshop.html", "/ai-for-everyday-life"],
+    ["phone-clean-up-speed-up-workshop.html", "/phone-clean-up-speed-up"]
+  ]) {
+    await page.goto(pathToFileURL(path.join(siteRoot, fileName)).toString(), {
+      waitUntil: "domcontentloaded"
+    });
+    await expect(page.locator('[data-workshop-registration-state="interest-only"]')).toHaveCount(1);
+    await expect(page.locator('[data-workshop-registration-state="interest-only"]')).toHaveAttribute(
+      "href",
+      /^mailto:cj@verotechcare\.com/
+    );
+    await expect(page.locator('main a[href*="acuityscheduling"]')).toHaveCount(0);
+    await expect(page.locator(`main a[href="${historicalHref}"]`)).toHaveCount(1);
+    await expect(page.locator("main")).not.toContainText(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}, 20\d{2}\b/);
+    await expect(page.locator("main")).not.toContainText("Unity Spiritual Center");
+    await assertNoOverflow(page);
+  }
 });
 
 test("primary beach headers share typography and spacing at every breakpoint", async ({ page }) => {
@@ -1362,7 +1391,9 @@ test("public route and sitemap contracts stay simplified", async () => {
   expect(sitemap).toContain("https://verotechcare.com/smartphone-confidence");
   expect(sitemap).toContain("https://verotechcare.com/smartphone-confidence-basics");
   expect(sitemap).toContain("https://verotechcare.com/ai-for-everyday-life");
+  expect(sitemap).toContain("https://verotechcare.com/ai-for-everyday-life-workshop");
   expect(sitemap).toContain("https://verotechcare.com/phone-clean-up-speed-up");
+  expect(sitemap).toContain("https://verotechcare.com/phone-clean-up-speed-up-workshop");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/book</loc>");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/book-digital-presence-checkup</loc>");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/digital-presence-management</loc>");
