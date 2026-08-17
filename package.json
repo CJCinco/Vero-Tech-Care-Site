@@ -1,0 +1,18 @@
+{
+  "name": "vero-tech-care-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node _tools/build-site.mjs",
+    "dev": "npm run build && wrangler pages dev dist --persist-to .wrangler/state",
+    "db:migrate:local": "wrangler d1 migrations apply CHECKINS_DB --local --persist-to .wrangler/state",
+    "test": "npm run test:checkin && npm run test:smoke",
+    "test:checkin": "node --test _tools/checkin-tests/*.test.mjs",
+    "test:smoke": "npm --prefix _tools/browser-smoke run test:smoke",
+    "checkin:import": "node _tools/import-workshop-checkins.mjs",
+    "checkin:purge": "node _tools/import-workshop-checkins.mjs --purge-eligible"
+  },
+  "devDependencies": {
+    "wrangler": "4.123.0"
+  }
+}

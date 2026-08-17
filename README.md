@@ -32,6 +32,12 @@ The AI for Everyday Life Series uses a fail-closed informational structure. `ai-
 
 Two dormant evergreen workshop overviews are ready for future use: `ai-for-everyday-life-workshop.html` at `/ai-for-everyday-life-workshop` and `phone-clean-up-speed-up-workshop.html` at `/phone-clean-up-speed-up-workshop`. They stay date-and-location-agnostic and interest-only until CJ approves an actual event and its verified direct booking destination. These evergreen URLs are discovery surfaces, not canonical flyer QR destinations. Each actual event flyer should use its own unique QR that routes directly to that event's verified booking instance.
 
+`workshop-check-in.html` serves the direct-only, no-indexed in-person attendance kiosk at `/workshop-check-in`. `workshop-check-in-setup.html` is the CJ-only activation surface at `/workshop-check-in-setup`. Neither route belongs in navigation or the sitemap. Advance registration remains in Acuity; the kiosk records in-person attendance and optional contact details in Cloudflare D1. D1 is temporary operational custody, while the verified event CSV in the exact workshop packet's `6 Sign Up Sheet/` folder is the durable AOS record.
+
+At the end of a workshop, close the event before importing. Run `npm run checkin:import -- --event <approved-event-code>` from this repo. The importer pulls one frozen protected snapshot, merges it by immutable receipt without removing prior AOS rows, atomically verifies the CSV, and records server-side proof that the durable AOS copy matches D1. Thirty days after that proof, `npm run checkin:purge -- --event <approved-event-code>` can remove the temporary D1 rows; it fails closed if the roster changed, custody was not proved, or the waiting period is incomplete. Run the eligible cleanup during the monthly website check so verified attendee contact data does not remain in D1 indefinitely.
+
+The site now builds through the root `npm run build` command into the allowlisted `dist/` directory. Cloudflare Pages deploys `dist/`, while root-level `functions/` supplies the narrowly routed workshop API. Governance files, tests, migrations, local configuration, and attendee exports must never enter the public build.
+
 ## Codex Website Workflow
 
 Use this workflow when Codex makes website changes.
@@ -40,6 +46,7 @@ Use this workflow when Codex makes website changes.
 - Read `AGENTS.md`, then `WEBSITE_STANDARDS.md`, before the README and target files.
 - Classify the task and preserve the locked baseline unless CJ explicitly approves a standards-level change.
 - Keep browser smoke test tooling in `_tools/browser-smoke/`.
+- Keep workshop-check-in implementation tests, the protected AOS importer, and the allowlisted build helper in `_tools/`.
 - Before publishing-level changes, run `npm run test:smoke` from `_tools/browser-smoke/` after confirming the tests match current intentional site copy.
 - Do not commit, push, deploy, publish, merge, create branches, or open pull requests without explicit CJ approval.
 - GitHub CLI is optional. Local Git credentials and the GitHub connector are enough when CJ explicitly asks for GitHub work.

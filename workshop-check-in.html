@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <meta name="referrer" content="no-referrer" />
+  <title>Workshop Check-In | Vero Tech Care</title>
+  <meta name="theme-color" content="#111514" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="workshop-check-in.css" />
+  <script src="workshop-check-in.js" defer></script>
+</head>
+<body class="checkin-page">
+  <main class="checkin-shell" aria-labelledby="page-title">
+    <header class="checkin-header">
+      <p class="checkin-brand">Vero Tech Care</p>
+      <h1 id="page-title">Workshop Check-In</h1>
+      <p class="checkin-intro">Please enter your information below.</p>
+    </header>
+
+    <section id="loading-panel" class="checkin-card checkin-state-card" aria-live="polite">
+      <h2>Getting the check-in ready…</h2>
+      <p>This should take just a moment.</p>
+    </section>
+
+    <section id="inactive-panel" class="checkin-card checkin-state-card" hidden>
+      <h2>This iPad is not ready yet.</h2>
+      <p>Please ask CJ to open the workshop check-in.</p>
+    </section>
+
+    <section id="form-panel" class="checkin-card" hidden>
+      <div class="event-heading">
+        <h2 id="event-title"></h2>
+        <p id="event-details"></p>
+      </div>
+
+      <form id="checkin-form" novalidate autocomplete="off">
+        <div id="error-summary" class="error-summary" role="alert" tabindex="-1" hidden>
+          <p>Please check the information below:</p>
+          <ul id="error-list"></ul>
+        </div>
+
+        <div class="form-field">
+          <label for="full-name">Full name</label>
+          <input
+            id="full-name"
+            name="fullName"
+            type="text"
+            maxlength="120"
+            autocapitalize="words"
+            autocomplete="off"
+            required
+          />
+          <p id="full-name-error" class="field-error" hidden></p>
+        </div>
+
+        <div class="form-field">
+          <label for="email">Email <span>(optional)</span></label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            maxlength="254"
+            inputmode="email"
+            autocapitalize="none"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <p id="email-error" class="field-error" hidden></p>
+          <p class="consent-note">
+            Email is optional. If you share it, Vero Tech Care may send workshop follow-up and occasional tech tips. You can unsubscribe anytime.
+          </p>
+        </div>
+
+        <div class="form-field">
+          <label for="phone">Phone <span>(optional)</span></label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            maxlength="40"
+            inputmode="tel"
+            autocomplete="off"
+          />
+          <p id="phone-error" class="field-error" hidden></p>
+        </div>
+
+        <button id="submit-button" class="checkin-primary-action" type="submit">Sign me in</button>
+        <p id="submission-status" class="submission-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="success-panel" class="checkin-card checkin-success" hidden tabindex="-1">
+      <p class="success-mark" aria-hidden="true">✓</p>
+      <h2>Your check-in was saved.</h2>
+      <p>Please pass the iPad to the next person.</p>
+      <button id="next-person-button" class="checkin-primary-action" type="button">Next person</button>
+      <p id="reset-status" class="reset-status" aria-live="polite"></p>
+    </section>
+  </main>
+</body>
+</html>

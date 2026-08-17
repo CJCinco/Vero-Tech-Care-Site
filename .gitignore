@@ -1,5 +1,15 @@
 .DS_Store
 node_modules/
+dist/
+.wrangler/
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+.vtc-checkin-import.json
+*Digital Check-Ins.csv
+*Digital Check-Ins.csv.tmp-*
+coverage/
 test-results/
 playwright-report/
 _tools/**/node_modules/

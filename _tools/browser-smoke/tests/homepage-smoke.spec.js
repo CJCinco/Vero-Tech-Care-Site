@@ -4,6 +4,10 @@ const path = require("path");
 const { pathToFileURL } = require("url");
 
 const siteRoot = path.resolve(__dirname, "../../..");
+const operationalHtmlFiles = new Set([
+  "workshop-check-in.html",
+  "workshop-check-in-setup.html"
+]);
 
 const homepageUrl = pathToFileURL(
   path.resolve(__dirname, "../../../index.html")
@@ -1275,6 +1279,8 @@ test("public route and sitemap contracts stay simplified", async () => {
   expect(redirects).toContain("/testhome3 / 301");
   expect(redirects).toContain("/rhythm-soul-studio-overview.html https://rhythmandsoulvero.com/ 301");
   expect(redirects).toContain("/rhythm-soul-studio-overview https://rhythmandsoulvero.com/ 301");
+  expect(redirects).toContain("/workshop-check-in.html /workshop-check-in 301");
+  expect(redirects).toContain("/workshop-check-in-setup.html /workshop-check-in-setup 301");
   expect(redirects).not.toContain("/business-websites /digital-presence-management.html 200");
   expect(sitemap).toContain("https://verotechcare.com/special");
   expect(sitemap).toContain("https://verotechcare.com/business-websites");
@@ -1293,10 +1299,49 @@ test("public route and sitemap contracts stay simplified", async () => {
   expect(sitemap).not.toContain("testhome2");
   expect(sitemap).not.toContain("testhome3");
   expect(sitemap).not.toContain("rhythm-soul-studio-overview");
+  expect(sitemap).not.toContain("workshop-check-in");
   expect(headers).not.toContain("/testhome1*");
   expect(headers).not.toContain("/testhome2*");
   expect(headers).not.toContain("/testhome3*");
   expect(headers).not.toContain("/rhythm-soul-studio-overview*");
+  expect(headers).toContain("/workshop-check-in");
+  expect(headers).toContain("X-Robots-Tag: noindex, nofollow, noarchive");
+  expect(headers).toContain("Cache-Control: no-store, max-age=0");
+});
+
+test("direct-only workshop check-in pages stay private, minimal, and senior-friendly", async () => {
+  const checkin = fs.readFileSync(path.join(siteRoot, "workshop-check-in.html"), "utf8");
+  const setup = fs.readFileSync(path.join(siteRoot, "workshop-check-in-setup.html"), "utf8");
+  const stylesheet = fs.readFileSync(path.join(siteRoot, "workshop-check-in.css"), "utf8");
+  const sitemap = fs.readFileSync(path.join(siteRoot, "sitemap.xml"), "utf8");
+  const navigation = fs.readFileSync(path.join(siteRoot, "navigation.js"), "utf8");
+
+  for (const [fileName, source] of [
+    ["workshop-check-in.html", checkin],
+    ["workshop-check-in-setup.html", setup]
+  ]) {
+    expect(source, `${fileName} should be no-indexed`).toContain(
+      '<meta name="robots" content="noindex, nofollow, noarchive" />'
+    );
+    expect(source, `${fileName} should not use public navigation`).not.toMatch(/<nav\b/i);
+    expect(source, `${fileName} should not use the public footer`).not.toMatch(/<footer\b/i);
+    expect(source, `${fileName} should not use inline styles`).not.toMatch(/\sstyle=/i);
+  }
+
+  expect(checkin).toContain('<label for="full-name">Full name</label>');
+  expect(checkin).toContain('Email <span>(optional)</span>');
+  expect(checkin).toContain('Phone <span>(optional)</span>');
+  expect(checkin).toContain('type="submit">Sign me in</button>');
+  expect(checkin).toContain(
+    "Email is optional. If you share it, Vero Tech Care may send workshop follow-up and occasional tech tips. You can unsubscribe anytime."
+  );
+  expect(checkin).not.toMatch(/localStorage/i);
+  expect(setup).toContain('type="password"');
+  expect(sitemap).not.toContain("workshop-check-in");
+  expect(navigation).not.toContain("workshop-check-in");
+  expect(stylesheet).toMatch(/font-size:\s*18px;/i);
+  expect(stylesheet).toMatch(/min-height:\s*58px;/i);
+  expect(stylesheet).toMatch(/outline:\s*3px solid/i);
 });
 
 test("shared HTML source contracts stay valid", async () => {
@@ -1304,6 +1349,7 @@ test("shared HTML source contracts stay valid", async () => {
 
   for (const fileName of htmlFiles) {
     if (fileName === "google19831672bbe53c8b.html") continue;
+    if (operationalHtmlFiles.has(fileName)) continue;
     const source = fs.readFileSync(path.join(siteRoot, fileName), "utf8");
 
     const footer = source.match(/<footer\b[\s\S]*?<\/footer>/i)?.[0];

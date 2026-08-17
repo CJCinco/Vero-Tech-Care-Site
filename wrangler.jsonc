@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "vero-tech-care-site",
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2026-08-17",
+  "d1_databases": [
+    {
+      "binding": "CHECKINS_DB",
+      "database_name": "vtc-workshop-checkins-production",
+      "database_id": "a6b77d88-3b72-4c43-b9e5-bb015ac5bac4",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "env": {
+    "preview": {
+      "d1_databases": [
+        {
+          "binding": "CHECKINS_DB",
+          "database_name": "vtc-workshop-checkins-preview",
+          "database_id": "7db190b9-b394-474e-8509-c4580dfe125d",
+          "migrations_dir": "migrations"
+        }
+      ]
+    }
+  }
+}

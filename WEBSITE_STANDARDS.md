@@ -142,9 +142,31 @@ Use each page for its job. Do not make every page carry the whole business.
 - `phone-clean-up-speed-up.html`: individual historical event page for the completed February 22, 2026 workshop; do not turn it into a series hub or imply that registration is open
 - `ai-for-everyday-life-workshop.html`: evergreen, date-and-location-agnostic overview for a future AI for Everyday Life workshop; keep it interest-only until an actual event has a verified direct booking destination
 - `phone-clean-up-speed-up-workshop.html`: evergreen, date-and-location-agnostic overview for a future Phone Clean Up & Speed Up workshop; keep it interest-only until an actual event has a verified direct booking destination
+- `workshop-check-in.html`: direct-only, no-indexed in-person attendance kiosk; use one distraction-free form with required full name, optional email, optional phone, the exact approved email disclosure, confirmed-save feedback, and automatic reset; omit it from navigation and the sitemap
+- `workshop-check-in-setup.html`: direct-only, no-indexed CJ setup surface for opening or closing one named workshop and activating one kiosk session; never expose the setup code, attendee data, export controls, or an attendee list
 - `404.html`: recover visitors and route them to booking or contact
 
 When adding or revising copy, decide which page owns that message. Link to the owning page instead of repeating the same explanation everywhere.
+
+### Direct-Only Workshop Check-In Exception
+
+The two workshop check-in routes are operational tools, not customer-facing discovery or conversion pages. They are the explicit exception to the shared hero, footer, navigation, mobile dock, metadata, and three-card requirements. Preserve the VTC palette, typography, calm voice, large touch targets, and senior-friendly readability without adding public-site navigation or booking actions.
+
+The kiosk contract is locked:
+
+- Acuity continues to own advance registration. The kiosk records arrival attendance and optional contact information without creating an Acuity booking.
+- Full name is required. Email and phone are optional. Phone does not grant SMS-marketing permission.
+- The email disclosure must appear exactly: `Email is optional. If you share it, Vero Tech Care may send workshop follow-up and occasional tech tips. You can unsubscribe anytime.`
+- A signed, expiring, secure kiosk session binds the iPad to one open server-side event and its current activation generation. Reopening an event rotates that generation so old iPad sessions cannot revive. Attendee submissions do not choose or send a trusted event destination.
+- Show success only after a confirmed database write or an idempotent receipt recovery. Preserve all visible fields on an uncertain or failed request.
+- Bind every idempotency key to its normalized submitted fields. A repeated key with different fields must fail with a conflict and never confirm the earlier attendee's receipt.
+- Clear attendee fields immediately after confirmation. Show no prior record, attendee list, search, edit, delete, or export control on either iPad page.
+- Store no attendee contact information in browser storage, URLs, application logs, Git, Linear, or public build artifacts.
+- Cloudflare D1 is temporary operational custody. Import only after the event is closed, require one stable count/final-sequence snapshot, and merge immutable receipts into the event's exact AOS `6 Sign Up Sheet/` folder through a local static allowlist; cloud data never supplies a filesystem path and a later export must never remove a prior AOS row.
+- After the atomic AOS readback, record a server-verified receipt digest. D1 deletion is permitted only after 30 days, only for a closed roster that still matches that custody proof, and only through the protected cleanup path.
+- Both pages and every API response use `no-store`; both pages are `noindex, nofollow, noarchive` and not frameable.
+- Keep local, preview, and production databases and secrets separate. Preview uses fake attendees only.
+- Keep the Numbers workbook available as the offline fallback.
 
 ### Workshop Resource Architecture
 
@@ -416,6 +438,8 @@ Local SEO should support clear service relevance, Vero Beach and Indian River Co
 ## Technical Standards
 
 This site is a static HTML/CSS site with repeated headers, footers, mobile docks, and Acuity embeds.
+
+Cloudflare Pages builds the public static allowlist into `dist/`. Pages Functions remain in root-level `functions/` and may run only on the explicitly included API routes in `_routes.json`. Never publish repository governance, migration SQL, tests, local database state, secrets, attendee exports, or AOS paths as static assets.
 
 When editing:
 
