@@ -27,12 +27,6 @@ const currentSpecialUrl = pathToFileURL(
   path.resolve(__dirname, "../../../special.html")
 ).toString();
 
-const homepageConcepts = [
-  ["testhome1", "Concept 1", "testhome1.html"],
-  ["testhome2", "Concept 2", "testhome2.html"],
-  ["testhome3", "Concept 3", "testhome3.html"]
-];
-
 const primaryHeaderPages = [
   ["Home", homepageUrl],
   ["Personal Tech Support", homeTechHelpUrl],
@@ -88,10 +82,7 @@ const mobileDockPages = [
   ["iPhone Storage", "tips-iphone-storage.html", "Book Tech Tune-Up", "/special", false],
   ["Photo Backup", "tips-photo-backup.html", "Book Tech Tune-Up", "/special", false],
   ["When to Book Help", "tips-when-to-book-help.html", "Book Tech Tune-Up", "/special", false],
-  ["Senior Tech Safety", "tips-senior-tech-safety-checklist.html", "Book Tech Tune-Up", "/special", false],
-  ["Concept 1", "testhome1.html", "Choose Support", "#choose-path", false],
-  ["Concept 2", "testhome2.html", "Choose Support", "#choose-path", false],
-  ["Concept 3", "testhome3.html", "Choose Support", "#choose-path", false]
+  ["Senior Tech Safety", "tips-senior-tech-safety-checklist.html", "Book Tech Tune-Up", "/special", false]
 ];
 
 function captureErrors(page) {
@@ -237,78 +228,6 @@ async function runSecondaryPageQuality(page, pageName, fileName, viewportName, v
   });
 
   expect(quality.heroOpacity).toBe(1);
-  expect(quality.brokenImages).toEqual([]);
-  expect(quality.clippedText).toEqual([]);
-  expect(quality.duplicateIds).toEqual([]);
-  expect(quality.scrollWidth).toBeLessThanOrEqual(quality.viewportWidth + 1);
-
-  await page.screenshot({
-    path: `test-results/screenshots/${pageName}-${viewportName}.png`,
-    fullPage: true
-  });
-
-  expect(pageErrors).toEqual([]);
-  expect(consoleErrors).toEqual([]);
-}
-
-async function runHomepageConceptQuality(page, pageName, conceptLabel, fileName, viewportName, viewport) {
-  const { consoleErrors, pageErrors } = captureErrors(page);
-  const pageUrl = pathToFileURL(path.join(siteRoot, fileName)).toString();
-
-  await page.setViewportSize(viewport);
-  await page.goto(pageUrl, { waitUntil: "load" });
-
-  await expect(page).toHaveTitle(new RegExp(`${conceptLabel}.*Vero Tech Care`));
-  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
-    "content",
-    "noindex,nofollow,noarchive"
-  );
-  await expect(page.locator("h1")).toHaveCount(1);
-  await expect(page.locator("h1")).toBeVisible();
-  await expect(page.locator("header")).toHaveCount(1);
-  await expect(page.locator("main")).toHaveCount(1);
-  await expect(page.locator("footer")).toHaveCount(1);
-  await expect(page.locator(".preview-switcher a")).toHaveCount(3);
-  await expect(page.locator('.preview-switcher a[aria-current="page"]')).toHaveCount(1);
-  await expect(page.locator("body")).toContainText("Tech Support");
-  await expect(page.locator("body")).toContainText("Digital Setup");
-  await expect(page.locator("body")).toContainText("Online Presence");
-  await expect(page.locator("#choose-path")).toBeVisible();
-  await expect(page.locator('#choose-path a[href="/home-tech-help"]')).toHaveCount(1);
-  await expect(page.locator('#choose-path a[href="/business-websites"]')).toHaveCount(1);
-
-  await page.locator("footer").scrollIntoViewIfNeeded();
-  await page.waitForFunction(() =>
-    [...document.images].every((image) => image.complete && image.naturalWidth > 0)
-  );
-  await page.evaluate(() => window.scrollTo(0, 0));
-
-  const quality = await page.evaluate(() => {
-    const viewportWidth = document.documentElement.clientWidth;
-    const ids = [...document.querySelectorAll("[id]")].map((element) => element.id);
-    const duplicateIds = ids.filter((id, index) => ids.indexOf(id) !== index);
-    const brokenImages = [...document.images]
-      .filter((image) => !image.complete || image.naturalWidth === 0)
-      .map((image) => image.getAttribute("src"));
-    const clippedText = [...document.querySelectorAll("h1, h2, h3, p, li, a, figcaption")]
-      .filter((element) => {
-        const style = getComputedStyle(element);
-        if (style.display === "none" || style.visibility === "hidden") return false;
-        const rect = element.getBoundingClientRect();
-        return rect.width > 0 && (rect.left < -1 || rect.right > viewportWidth + 1);
-      })
-      .slice(0, 10)
-      .map((element) => element.textContent.trim().slice(0, 80));
-
-    return {
-      brokenImages,
-      clippedText,
-      duplicateIds,
-      scrollWidth: document.documentElement.scrollWidth,
-      viewportWidth
-    };
-  });
-
   expect(quality.brokenImages).toEqual([]);
   expect(quality.clippedText).toEqual([]);
   expect(quality.duplicateIds).toEqual([]);
@@ -1269,41 +1188,6 @@ test("Tech Tune-Up Visit booking page mobile smoke test", async ({ page }) => {
   await runCurrentSpecialSmoke(page, "mobile", { width: 390, height: 900 });
 });
 
-for (const [pageName, conceptLabel, fileName] of homepageConcepts) {
-  test(`${conceptLabel} desktop visual quality`, async ({ page }) => {
-    await runHomepageConceptQuality(
-      page,
-      pageName,
-      conceptLabel,
-      fileName,
-      "desktop",
-      { width: 1440, height: 1100 }
-    );
-  });
-
-  test(`${conceptLabel} mobile visual quality`, async ({ page }) => {
-    await runHomepageConceptQuality(
-      page,
-      pageName,
-      conceptLabel,
-      fileName,
-      "mobile",
-      { width: 390, height: 900 }
-    );
-  });
-
-  test(`${conceptLabel} small-phone visual quality`, async ({ page }) => {
-    await runHomepageConceptQuality(
-      page,
-      pageName,
-      conceptLabel,
-      fileName,
-      "small-phone",
-      { width: 320, height: 568 }
-    );
-  });
-}
-
 for (const [pageName, fileName] of secondaryPages) {
   test(`${pageName} desktop visual quality`, async ({ page }) => {
     await runSecondaryPageQuality(
@@ -1383,6 +1267,14 @@ test("public route and sitemap contracts stay simplified", async () => {
 
   expect(redirects).toContain("/book /special 301");
   expect(redirects).toContain("/digital-presence-management /business-websites 301");
+  expect(redirects).toContain("/testhome1.html / 301");
+  expect(redirects).toContain("/testhome1 / 301");
+  expect(redirects).toContain("/testhome2.html / 301");
+  expect(redirects).toContain("/testhome2 / 301");
+  expect(redirects).toContain("/testhome3.html / 301");
+  expect(redirects).toContain("/testhome3 / 301");
+  expect(redirects).toContain("/rhythm-soul-studio-overview.html https://rhythmandsoulvero.com/ 301");
+  expect(redirects).toContain("/rhythm-soul-studio-overview https://rhythmandsoulvero.com/ 301");
   expect(redirects).not.toContain("/business-websites /digital-presence-management.html 200");
   expect(sitemap).toContain("https://verotechcare.com/special");
   expect(sitemap).toContain("https://verotechcare.com/business-websites");
@@ -1401,18 +1293,17 @@ test("public route and sitemap contracts stay simplified", async () => {
   expect(sitemap).not.toContain("testhome2");
   expect(sitemap).not.toContain("testhome3");
   expect(sitemap).not.toContain("rhythm-soul-studio-overview");
-  expect(headers).toContain("/testhome1*");
-  expect(headers).toContain("/testhome2*");
-  expect(headers).toContain("/testhome3*");
-  expect(headers).toContain("/rhythm-soul-studio-overview*");
-  expect((headers.match(/X-Robots-Tag: noindex, nofollow, noarchive/g) || []).length).toBe(4);
+  expect(headers).not.toContain("/testhome1*");
+  expect(headers).not.toContain("/testhome2*");
+  expect(headers).not.toContain("/testhome3*");
+  expect(headers).not.toContain("/rhythm-soul-studio-overview*");
 });
 
 test("shared HTML source contracts stay valid", async () => {
   const htmlFiles = fs.readdirSync(siteRoot).filter((file) => file.endsWith(".html"));
 
   for (const fileName of htmlFiles) {
-    if (["google19831672bbe53c8b.html", "rhythm-soul-studio-overview.html"].includes(fileName)) continue;
+    if (fileName === "google19831672bbe53c8b.html") continue;
     const source = fs.readFileSync(path.join(siteRoot, fileName), "utf8");
 
     const footer = source.match(/<footer\b[\s\S]*?<\/footer>/i)?.[0];
@@ -1442,30 +1333,28 @@ test("shared HTML source contracts stay valid", async () => {
     );
 
     expect(source, `${fileName} should not use inline layout styles`).not.toMatch(/\sstyle=/i);
-    if (!fileName.startsWith("testhome")) {
-      expect(source, `${fileName} should use one clear heading instead of an eyebrow-title stack`).not.toMatch(
-        /class="[^"]*\beyebrow\b[^"]*"/i
-      );
+    expect(source, `${fileName} should use one clear heading instead of an eyebrow-title stack`).not.toMatch(
+      /class="[^"]*\beyebrow\b[^"]*"/i
+    );
 
-      const sharedHeader = source.match(/<header\b[^>]*\bprimary-page-header\b[\s\S]*?<\/header>/i)?.[0];
-      expect(sharedHeader, `${fileName} should use the shared image-backed hero header`).toBeTruthy();
-      expect(sharedHeader, `${fileName} should use one shared hero`).toMatch(
-        /<section\b[^>]*\bprimary-page-hero\b/i
-      );
-      expect(sharedHeader, `${fileName} should not include a hero action row`).not.toMatch(
-        /<div class="hero-actions[^"]*"/i
-      );
+    const sharedHeader = source.match(/<header\b[^>]*\bprimary-page-header\b[\s\S]*?<\/header>/i)?.[0];
+    expect(sharedHeader, `${fileName} should use the shared image-backed hero header`).toBeTruthy();
+    expect(sharedHeader, `${fileName} should use one shared hero`).toMatch(
+      /<section\b[^>]*\bprimary-page-hero\b/i
+    );
+    expect(sharedHeader, `${fileName} should not include a hero action row`).not.toMatch(
+      /<div class="hero-actions[^"]*"/i
+    );
 
-      const heroCards = sharedHeader.match(/<section class="proof-strip[\s\S]*?<\/section>/i)?.[0];
-      expect(heroCards, `${fileName} should include the shared hero card strip`).toBeTruthy();
-      expect(
-        (heroCards.match(/<article class="proof-card\b/gi) || []).length,
-        `${fileName} should use exactly three hero cards`
-      ).toBe(3);
-      expect(heroCards, `${fileName} hero cards should not use eyebrow labels`).not.toMatch(
-        /\bcard-label\b/i
-      );
-    }
+    const heroCards = sharedHeader.match(/<section class="proof-strip[\s\S]*?<\/section>/i)?.[0];
+    expect(heroCards, `${fileName} should include the shared hero card strip`).toBeTruthy();
+    expect(
+      (heroCards.match(/<article class="proof-card\b/gi) || []).length,
+      `${fileName} should use exactly three hero cards`
+    ).toBe(3);
+    expect(heroCards, `${fileName} hero cards should not use eyebrow labels`).not.toMatch(
+      /\bcard-label\b/i
+    );
     expect(source, `${fileName} should not publish legacy residential packages or prices`).not.toMatch(
       /(?:Whole-Home Tech Reset|New Device Done Right|Photo (?:&|&amp;) Memory Safety Package|Scam Safety (?:&|&amp;) Account Security Visit|Life Story \/ Tribute Video|Remote Fix Session|Tech Care Check-In|Tech Care Plus|Family Tech Care|\$(?:125|225|325|350|495|750)\b|\$\d+\s+per month)/i
     );

@@ -1,7 +1,7 @@
 # Vero Tech Care Website Standards
 
 Status: binding website editing contract
-Last reviewed: 2026-08-02
+Last reviewed: 2026-08-17
 
 Purpose: AI-facing standards for editing the Vero Tech Care website without drifting from the brand, offer model, booking flow, or current site structure.
 
@@ -94,25 +94,6 @@ Default edit radius is the named page, its necessary shared CSS, and its contrac
 
 Broad requests such as “improve,” “modernize,” “make it convert,” “make it more human,” or “clean it up” are not Class C approval. They authorize the strongest compliant Class A or Class B improvement.
 
-### Approved Homepage Preview Exception — 2026-07-18
-
-CJ explicitly approved a direct-link homepage experiment before changing the production root:
-
-- `testhome1.html` at `/testhome1`
-- `testhome2.html` at `/testhome2`
-- `testhome3.html` at `/testhome3`
-
-These three pages may test different section orders and balanced Home/Business layouts while keeping the existing palette, typography, source-backed facts, public offers, and destination routes. Their shared umbrella language is `Tech Support`, `Digital Setup`, and `Online Presence`; these are capability themes, not three new public packages.
-
-Preview rules:
-
-- keep `index.html` unchanged as the current residential homepage until CJ selects a concept
-- give Personal Tech Support and Business Tech Support equal prominence on each preview
-- route Personal Tech Support to the current residential homepage `/` during review and Business Tech Support to `/business-websites`
-- keep the previews out of public navigation, the sitemap, and search indexing
-- label them as direct-link previews and provide a compact concept switcher for CJ's review
-- do not treat any preview structure or copy as the new production standard until CJ explicitly selects it
-
 ### Selected Homepage Direction — 2026-07-18
 
 CJ selected Concept 2, `Business Card Expanded`, as the new root homepage direction.
@@ -122,7 +103,7 @@ CJ selected Concept 2, `Business Card Expanded`, as the new root homepage direct
 - `/business-websites` remains the dedicated Business Tech Support route until a separate route change is explicitly approved.
 - The root gives Personal Tech Support and Business Tech Support equal prominence and uses `Tech Support`, `Digital Setup`, and `Online Presence` as capability themes, not new packages.
 - The root navigation has no fourth CTA. The two equal audience cards below the hero route directly to Personal Tech Support and Business Tech Support; audience-specific conversion actions live within the dedicated residential and business pages.
-- The temporary concept files remain no-indexed and outside public navigation and the sitemap until they are intentionally retired.
+- The three temporary concept pages are retired. `/testhome1`, `/testhome2`, and `/testhome3`, including their `.html` forms, redirect to `/`.
 - Navigation, metadata, structured data, sitemap, tests, and internal Personal Tech Support links must reflect this routing model together.
 
 ## Primary Conversion Paths
@@ -257,7 +238,7 @@ Avoid as primary CTA language unless explicitly requested:
 Mobile quick-action rules:
 
 - Show exactly four actions, in this order: the page-appropriate primary action, `Text`, `Call`, and `Email`.
-- Use `Choose Support` on the overview homepage and temporary homepage concepts, linking to their audience-path section.
+- Use `Choose Support` on the overview homepage, linking to its audience-path section.
 - Use `Book Tech Tune-Up` on Personal Tech Support, Tech Tips, Workshops, tip articles, the 404 page, and residential booking pages. Link to `/special`, or to the scheduler anchor when already on a residential booking page.
 - Use `Choose a Class` on the Smartphone Confidence Series hub, linking to `#series-parts`.
 - Use `Explore Series` on Smartphone Confidence class resource pages, linking to `/smartphone-confidence`.

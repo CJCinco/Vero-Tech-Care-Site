@@ -16,7 +16,9 @@ Current business page: `business-websites.html` serves the public `/business-web
 
 `business-consult.html` serves the public `/business-consult` route and embeds the free 15-minute Business Tech Consult, Acuity appointment type `91121958`. All public `Book Consult` actions route there. `book-digital-presence-checkup.html` remains available for direct standalone-checkup referrals, but it is no-indexed, omitted from the sitemap, and is not the primary public business path.
 
-CJ selected homepage Concept 2, `Business Card Expanded`, on 2026-07-18. The local root now serves the inclusive Vero Tech Care overview, while `home-tech-help.html` serves the dedicated `/home-tech-help` Personal Tech Support route and `business-websites.html` serves the `/business-websites` Business Tech Support route. The direct-link concept pages at `/testhome1`, `/testhome2`, and `/testhome3` remain temporary, no-indexed comparison pages omitted from public navigation and the sitemap until they are intentionally retired.
+CJ selected homepage Concept 2, `Business Card Expanded`, on 2026-07-18. The local root now serves the inclusive Vero Tech Care overview, while `home-tech-help.html` serves the dedicated `/home-tech-help` Personal Tech Support route and `business-websites.html` serves the `/business-websites` Business Tech Support route. The retired `/testhome1`, `/testhome2`, and `/testhome3` comparison routes, including their `.html` forms, redirect to `/`. `homepage-tests.css` remains production-owned because `index.html` still imports it.
+
+The retired local Rhythm & Soul studio-overview route and its `.html` form redirect to the canonical client website at `https://rhythmandsoulvero.com/`; its copied photo bundle is no longer part of this site.
 
 As of 2026-07-19, every customer-facing page uses the selected root homepage hero as its shared template: one image-backed title, lead, and action area followed by three equal cards without small eyebrow labels. The page-specific copy and CTA may change, but the desktop footprint and content zones remain aligned.
 

@@ -47,21 +47,6 @@
       href: "#choose-path",
       trigger: "#choose-path"
     },
-    testhome1: {
-      label: "Choose Support",
-      href: "#choose-path",
-      trigger: "#choose-path"
-    },
-    testhome2: {
-      label: "Choose Support",
-      href: "#choose-path",
-      trigger: "#choose-path"
-    },
-    testhome3: {
-      label: "Choose Support",
-      href: "#choose-path",
-      trigger: "#choose-path"
-    },
     "home-tech-help": {
       label: "Book Tech Tune-Up",
       href: "/special",
