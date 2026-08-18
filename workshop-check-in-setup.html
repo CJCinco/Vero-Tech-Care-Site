@@ -9,8 +9,8 @@
   <meta name="theme-color" content="#111514" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-  <link rel="stylesheet" href="workshop-check-in.css?v=20260818-ipad-feedback" />
-  <script src="workshop-check-in-setup.js?v=20260818-ipad-feedback" defer></script>
+  <link rel="stylesheet" href="workshop-check-in.css?v=20260818-workshop-picker" />
+  <script src="workshop-check-in-setup.js?v=20260818-workshop-picker" defer></script>
 </head>
 <body class="checkin-page setup-page">
   <main class="checkin-shell" aria-labelledby="page-title">
@@ -23,28 +23,23 @@
     <section class="checkin-card">
       <form id="setup-form" novalidate autocomplete="off" aria-busy="true">
         <div class="form-field">
-          <label for="event-title">Workshop title</label>
-          <input
-            id="event-title"
-            type="text"
-            value="Smartphone Confidence, Part 1: Smartphone Basics"
-            maxlength="140"
-            autocomplete="off"
+          <label for="workshop-choice">Choose a workshop</label>
+          <select
+            id="workshop-choice"
+            aria-describedby="workshop-help workshop-selection"
             required
-          />
-        </div>
-
-        <div class="form-field">
-          <label for="event-details">Date, time, and location</label>
-          <input
-            id="event-details"
-            type="text"
-            value="August 30, 2026 at 11:30 AM · Unity Spiritual Center"
-            maxlength="220"
-            autocomplete="off"
-            required
-          />
-          <p class="field-help">Write the date as Month Day, Year, followed by the time and location.</p>
+            disabled
+          >
+            <option value="">Choose a workshop…</option>
+          </select>
+          <p id="workshop-help" class="field-help">
+            Only workshops ready for secure sign-in and protected filing appear here.
+          </p>
+          <div id="workshop-selection" class="workshop-selection" aria-live="polite" hidden>
+            <p class="workshop-selection-label">Selected workshop</p>
+            <p id="workshop-selection-title" class="workshop-selection-title"></p>
+            <p id="workshop-selection-details" class="workshop-selection-details"></p>
+          </div>
         </div>
 
         <div class="form-field">
@@ -76,7 +71,10 @@
           aria-atomic="true"
           data-state="working"
           tabindex="-1"
-        >Loading secure setup…</p>
+        >Loading approved workshops…</p>
+        <button id="catalog-retry" class="checkin-secondary-button catalog-retry" type="button" hidden>
+          Try loading workshops again
+        </button>
         <noscript>
           <p class="field-error">JavaScript must be enabled before this iPad can open workshop check-in.</p>
         </noscript>
@@ -91,7 +89,7 @@
       hidden
     >
       <p class="success-mark" aria-hidden="true">&#10003;</p>
-      <h2 id="setup-success-title">The workshop is open.</h2>
+      <h2 id="setup-success-title">Workshop open</h2>
       <p id="setup-success-copy">This iPad is ready for attendee check-in.</p>
       <a id="open-checkin-link" class="checkin-primary-action checkin-link-action" href="/workshop-check-in">
         Open check-in screen

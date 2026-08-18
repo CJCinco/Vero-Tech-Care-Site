@@ -34,6 +34,45 @@ const currentSpecialUrl = pathToFileURL(
 const checkinSetupUrl = pathToFileURL(
   path.resolve(__dirname, "../../../check-in.html")
 ).toString();
+const setupCatalogPayload = {
+  ok: true,
+  workshops: [
+    {
+      key: "smartphone-part-1-2026-08-30",
+      label: "Aug 30, 2026 · 11:30 AM · Unity Spiritual Center — Smartphone Confidence, Part 1",
+      title: "Smartphone Confidence, Part 1: Smartphone Basics",
+      details: "August 30, 2026 at 11:30 AM · Unity Spiritual Center"
+    }
+  ]
+};
+const secondWorkshopFixture = {
+  key: "smartphone-part-2-2026-09-20",
+  label: "Sep 20, 2026 · 11:30 AM · Unity Spiritual Center — Smartphone Confidence, Part 2",
+  title: "Smartphone Confidence, Part 2: Smartphone Made Easier",
+  details: "September 20, 2026 at 11:30 AM · Unity Spiritual Center"
+};
+
+async function installSetupCatalog(page, payload = setupCatalogPayload) {
+  await page.addInitScript((catalogPayload) => {
+    const nativeFetch = window.fetch.bind(window);
+    window.__setupActivationFetch = null;
+    window.__setupCatalogPayload = catalogPayload;
+    window.fetch = (resource, options) => {
+      if (String(resource).endsWith("/api/workshop-check-in/catalog")) {
+        return Promise.resolve(
+          new Response(JSON.stringify(window.__setupCatalogPayload), {
+            status: 200,
+            headers: { "Content-Type": "application/json" }
+          })
+        );
+      }
+      if (window.__setupActivationFetch) {
+        return window.__setupActivationFetch(resource, options);
+      }
+      return nativeFetch(resource, options);
+    };
+  }, payload);
+}
 
 const primaryHeaderPages = [
   ["Home", homepageUrl],
@@ -1322,6 +1361,10 @@ test("direct-only workshop check-in pages stay private, minimal, and senior-frie
   const setup = fs.readFileSync(path.join(siteRoot, "check-in.html"), "utf8");
   const legacySetup = fs.readFileSync(path.join(siteRoot, "workshop-check-in-setup.html"), "utf8");
   const setupScript = fs.readFileSync(path.join(siteRoot, "workshop-check-in-setup.js"), "utf8");
+  const workshopCatalog = fs.readFileSync(
+    path.join(siteRoot, "functions/_lib/workshop-catalog.js"),
+    "utf8"
+  );
   const stylesheet = fs.readFileSync(path.join(siteRoot, "workshop-check-in.css"), "utf8");
   const headers = fs.readFileSync(path.join(siteRoot, "_headers"), "utf8");
   const sitemap = fs.readFileSync(path.join(siteRoot, "sitemap.xml"), "utf8");
@@ -1353,19 +1396,30 @@ test("direct-only workshop check-in pages stay private, minimal, and senior-frie
   expect(setup).toContain('id="setup-password"');
   expect(setup).not.toContain('name="setupPassword"');
   expect(setup).not.toContain('id="event-id"');
+  expect(setup).not.toContain('id="event-title"');
+  expect(setup).not.toContain('id="event-details"');
   expect(setup).not.toContain("Workshop code");
   expect(setup).not.toMatch(/id="setup-password"[\s\S]*?\svalue=/i);
+  expect(setup).toContain('<label for="workshop-choice">Choose a workshop</label>');
+  expect(setup).toMatch(/id="workshop-choice"[\s\S]*?required[\s\S]*?disabled/);
   expect(setup).toContain('id="open-button" class="checkin-primary-action" type="button"');
-  expect(setup).toContain("Loading secure setup…");
+  expect(setup).toContain("Loading approved workshops…");
+  expect(setup).toContain('id="catalog-retry"');
   expect(setup).toContain("JavaScript must be enabled before this iPad can open workshop check-in.");
-  expect(setup).toContain('workshop-check-in.css?v=20260818-ipad-feedback');
-  expect(setup).toContain('workshop-check-in-setup.js?v=20260818-ipad-feedback');
+  expect(setup).toContain('workshop-check-in.css?v=20260818-workshop-picker');
+  expect(setup).toContain('workshop-check-in-setup.js?v=20260818-workshop-picker');
   expect(setup).toContain('id="setup-status"');
   expect(setup).toContain('aria-atomic="true"');
   expect(setup).toContain('id="setup-success"');
   expect(setup).toContain('tabindex="-1"');
   expect(setupScript).not.toContain("?.");
   expect(setupScript).toContain('typeof AbortController === "undefined"');
+  expect(setupScript).toContain('fetchWithTimeout("/api/workshop-check-in/catalog"');
+  expect(setupScript).toContain("workshopKey: workshop.key");
+  expect(setupScript).not.toContain("eventPayload");
+  expect(workshopCatalog).toContain('key: "smartphone-part-1-2026-08-30"');
+  expect(workshopCatalog).not.toMatch(/destination|CHECKIN_|\/Users\//);
+  expect(workshopCatalog).not.toMatch(/"(?:email|phone|fullName|attendees?|receiptId)"\s*:/i);
   expect(setup).toBe(legacySetup);
   expect(sitemap).not.toContain("workshop-check-in");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/check-in</loc>");
@@ -1399,12 +1453,13 @@ test("direct-only workshop check-in pages stay private, minimal, and senior-frie
 test("workshop setup makes confirmed success unmistakable on an iPad-sized screen", async ({ page }) => {
   const { consoleErrors, pageErrors } = captureErrors(page);
   await page.setViewportSize({ width: 1080, height: 810 });
+  await installSetupCatalog(page);
   await page.goto(checkinSetupUrl, { waitUntil: "domcontentloaded" });
   await page.evaluate(() => {
     window.__setupFetchCalls = 0;
     window.__resolveSetupFetch = null;
     window.__setupRequest = null;
-    window.fetch = (resource, options) => {
+    window.__setupActivationFetch = (resource, options) => {
       window.__setupFetchCalls += 1;
       window.__setupRequest = {
         resource,
@@ -1420,7 +1475,12 @@ test("workshop setup makes confirmed success unmistakable on an iPad-sized scree
             new Response(
               JSON.stringify({
                 ok: true,
-                event: { id: "smartphone-confidence-part-1-2026-08-30", status: "open" }
+                event: {
+                  id: "smartphone-confidence-part-1-2026-08-30",
+                  title: "Smartphone Confidence, Part 1: Smartphone Basics",
+                  details: "August 30, 2026 at 11:30 AM · Unity Spiritual Center",
+                  status: "open"
+                }
               }),
               { status: 200, headers: { "Content-Type": "application/json" } }
             )
@@ -1430,7 +1490,21 @@ test("workshop setup makes confirmed success unmistakable on an iPad-sized scree
   });
 
   const password = page.getByLabel("Setup password");
+  const workshop = page.getByLabel("Choose a workshop");
   const openButton = page.locator("#open-button");
+  await expect(workshop).toBeEnabled();
+  await expect(workshop).toHaveValue("");
+  await expect(openButton).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Close this workshop" })).toBeDisabled();
+  await workshop.selectOption("smartphone-part-1-2026-08-30");
+  await expect(openButton).toBeEnabled();
+  await expect(page.locator("#workshop-selection")).toBeVisible();
+  await expect(page.locator("#workshop-selection-title")).toHaveText(
+    "Smartphone Confidence, Part 1: Smartphone Basics"
+  );
+  await expect(page.locator("#workshop-selection-details")).toHaveText(
+    "August 30, 2026 at 11:30 AM · Unity Spiritual Center"
+  );
   await password.fill("fake-test-password");
   await openButton.click();
   await expect(openButton).toBeDisabled();
@@ -1446,7 +1520,9 @@ test("workshop setup makes confirmed success unmistakable on an iPad-sized scree
   const success = page.locator("#setup-success");
   await expect(success).toBeVisible();
   await expect(success).toBeFocused();
-  await expect(success).toContainText("The workshop is open.");
+  await expect(success).toContainText("Workshop open");
+  await expect(success).toContainText("Smartphone Confidence, Part 1: Smartphone Basics");
+  await expect(success).toContainText("August 30, 2026 at 11:30 AM · Unity Spiritual Center");
   await expect(page.locator("#setup-status")).toHaveAttribute("data-state", "success");
   await expect(password).toHaveValue("");
   await page.waitForTimeout(300);
@@ -1471,14 +1547,15 @@ test("workshop setup makes confirmed success unmistakable on an iPad-sized scree
     body: {
       action: "open",
       setupPassword: "fake-test-password",
-      event: {
-        title: "Smartphone Confidence, Part 1: Smartphone Basics",
-        details: "August 30, 2026 at 11:30 AM · Unity Spiritual Center"
-      }
+      workshopKey: "smartphone-part-1-2026-08-30"
     }
   });
   expect(result.top).toBeGreaterThanOrEqual(0);
   expect(result.bottom).toBeLessThanOrEqual(result.viewportHeight + 1);
+  await workshop.selectOption("");
+  await expect(success).toBeHidden();
+  await expect(openButton).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Close this workshop" })).toBeDisabled();
   expect(pageErrors).toEqual([]);
   expect(consoleErrors).toEqual([]);
 });
@@ -1486,9 +1563,10 @@ test("workshop setup makes confirmed success unmistakable on an iPad-sized scree
 test("workshop setup preserves the password and focuses an unmistakable failure", async ({ page }) => {
   const { consoleErrors, pageErrors } = captureErrors(page);
   await page.setViewportSize({ width: 1080, height: 810 });
+  await installSetupCatalog(page);
   await page.goto(checkinSetupUrl, { waitUntil: "domcontentloaded" });
   await page.evaluate(() => {
-    window.fetch = async () =>
+    window.__setupActivationFetch = async () =>
       new Response(
         JSON.stringify({
           ok: false,
@@ -1500,6 +1578,7 @@ test("workshop setup preserves the password and focuses an unmistakable failure"
   });
 
   const password = page.getByLabel("Setup password");
+  await page.getByLabel("Choose a workshop").selectOption("smartphone-part-1-2026-08-30");
   await password.fill("fake-test-password");
   await page.getByRole("button", { name: "Open and activate this iPad" }).click();
 
@@ -1523,24 +1602,74 @@ test("workshop setup preserves the password and focuses an unmistakable failure"
   expect(consoleErrors).toEqual([]);
 });
 
+test("workshop setup rejects a mismatched success response without clearing anything", async ({ page }) => {
+  const { consoleErrors, pageErrors } = captureErrors(page);
+  await page.setViewportSize({ width: 1080, height: 810 });
+  await installSetupCatalog(page);
+  await page.goto(checkinSetupUrl, { waitUntil: "domcontentloaded" });
+  await page.evaluate(() => {
+    window.__setupActivationFetch = async () =>
+      new Response(
+        JSON.stringify({
+          ok: true,
+          event: {
+            id: "wrong-workshop-2026-08-30",
+            title: "Wrong workshop",
+            details: "August 30, 2026 at 11:30 AM · Somewhere else",
+            status: "open"
+          }
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+  });
+
+  const workshop = page.getByLabel("Choose a workshop");
+  const password = page.getByLabel("Setup password");
+  await workshop.selectOption("smartphone-part-1-2026-08-30");
+  await password.fill("fake-test-password");
+  await page.getByRole("button", { name: "Open and activate this iPad" }).click();
+
+  const status = page.locator("#setup-status");
+  await expect(status).toHaveAttribute("data-state", "error");
+  await expect(status).toBeFocused();
+  await expect(status).toContainText("response could not be verified");
+  await expect(status).toContainText("Nothing was cleared");
+  await expect(workshop).toHaveValue("smartphone-part-1-2026-08-30");
+  await expect(password).toHaveValue("fake-test-password");
+  await expect(page.locator("#setup-success")).toBeHidden();
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+});
+
 test("workshop setup keeps validation and network failures visible without clearing fields", async ({ page }) => {
   const { consoleErrors, pageErrors } = captureErrors(page);
   await page.setViewportSize({ width: 1080, height: 810 });
+  await installSetupCatalog(page);
   await page.goto(checkinSetupUrl, { waitUntil: "domcontentloaded" });
   await page.evaluate(() => {
     window.__setupFetchCalls = 0;
-    window.fetch = async () => {
+    window.__setupActivationFetch = async () => {
       window.__setupFetchCalls += 1;
       throw new TypeError("Simulated offline state");
     };
   });
 
-  const title = page.getByLabel("Workshop title");
-  const details = page.getByLabel("Date, time, and location");
+  const workshop = page.getByLabel("Choose a workshop");
   const password = page.getByLabel("Setup password");
   const openButton = page.getByRole("button", { name: "Open and activate this iPad" });
   const status = page.locator("#setup-status");
 
+  await password.fill("fake-test-password");
+  await page.locator("#setup-form").evaluate((form) =>
+    form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }))
+  );
+  await expect(status).toHaveAttribute("data-state", "error");
+  await expect(status).toBeFocused();
+  await expect(status).toContainText("Choose the workshop");
+  await expect(workshop).toHaveAttribute("aria-invalid", "true");
+  await expect.poll(() => page.evaluate(() => window.__setupFetchCalls)).toBe(0);
+
+  await workshop.selectOption("smartphone-part-1-2026-08-30");
   await password.fill("short");
   await openButton.click();
   await expect(status).toHaveAttribute("data-state", "error");
@@ -1553,12 +1682,231 @@ test("workshop setup keeps validation and network failures visible without clear
   await openButton.click();
   await expect(status).toContainText("could not reach Vero Tech Care");
   await expect(status).toContainText("Nothing was cleared.");
-  await expect(title).toHaveValue("Smartphone Confidence, Part 1: Smartphone Basics");
-  await expect(details).toHaveValue("August 30, 2026 at 11:30 AM · Unity Spiritual Center");
+  await expect(workshop).toHaveValue("smartphone-part-1-2026-08-30");
+  await expect(page.locator("#workshop-selection-title")).toHaveText(
+    "Smartphone Confidence, Part 1: Smartphone Basics"
+  );
+  await expect(page.locator("#workshop-selection-details")).toHaveText(
+    "August 30, 2026 at 11:30 AM · Unity Spiritual Center"
+  );
   await expect(password).toHaveValue("fake-test-password");
   await expect(openButton).toBeEnabled();
   await expect(page.locator("#setup-success")).toBeHidden();
   await expect.poll(() => page.evaluate(() => window.__setupFetchCalls)).toBe(1);
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+});
+
+test("workshop setup keeps controls closed when the approved catalog cannot be verified", async ({ page }) => {
+  const { consoleErrors, pageErrors } = captureErrors(page);
+  await page.setViewportSize({ width: 1080, height: 810 });
+  await installSetupCatalog(page, { ok: false, workshops: [] });
+  await page.goto(checkinSetupUrl, { waitUntil: "domcontentloaded" });
+
+  const status = page.locator("#setup-status");
+  await expect(status).toHaveAttribute("data-state", "error");
+  await expect(status).toHaveAttribute("role", "alert");
+  await expect(status).toBeFocused();
+  await expect(status).toContainText("approved workshop list could not load");
+  await expect(status).toContainText("Nothing was opened");
+  await expect(page.getByLabel("Choose a workshop")).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Open and activate this iPad" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Close this workshop" })).toBeDisabled();
+  await expect(page.locator("#setup-form")).toHaveAttribute("aria-busy", "false");
+
+  const retry = page.getByRole("button", { name: "Try loading workshops again" });
+  await expect(retry).toBeVisible();
+  await page.evaluate((payload) => {
+    window.__setupCatalogPayload = payload;
+  }, setupCatalogPayload);
+  await retry.click();
+  await expect(page.getByLabel("Choose a workshop")).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Open and activate this iPad" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Close this workshop" })).toBeDisabled();
+  await expect(page.locator("#setup-form")).toHaveAttribute("aria-busy", "false");
+  await expect(status).toContainText("Choose a workshop to begin");
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+});
+
+test("workshop setup explains when no approved workshops are ready", async ({ page }) => {
+  const { consoleErrors, pageErrors } = captureErrors(page);
+  await page.setViewportSize({ width: 1080, height: 810 });
+  await installSetupCatalog(page, { ok: true, workshops: [] });
+  await page.goto(checkinSetupUrl, { waitUntil: "domcontentloaded" });
+
+  const status = page.locator("#setup-status");
+  await expect(status).toContainText("No workshops are ready yet");
+  await expect(status).toContainText("Ask Codex to add the workshop, then try again");
+  await expect(status).toHaveAttribute("role", "status");
+  await expect(page.locator("#setup-form")).toHaveAttribute("aria-busy", "false");
+  await expect(page.getByLabel("Choose a workshop")).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Open and activate this iPad" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Close this workshop" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Try loading workshops again" })).toBeVisible();
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+});
+
+test("workshop setup keeps a multi-workshop selection and close target aligned", async ({ page }) => {
+  const { consoleErrors, pageErrors } = captureErrors(page);
+  await page.setViewportSize({ width: 1080, height: 810 });
+  await installSetupCatalog(page, {
+    ok: true,
+    workshops: [...setupCatalogPayload.workshops, secondWorkshopFixture]
+  });
+  await page.goto(checkinSetupUrl, { waitUntil: "domcontentloaded" });
+  await page.evaluate(() => {
+    window.__setupRequest = null;
+    window.__setupActivationFetch = async (resource, options) => {
+      window.__setupRequest = {
+        resource,
+        method: options.method,
+        body: JSON.parse(options.body)
+      };
+      return new Response(
+        JSON.stringify({
+          ok: false,
+          code: "ANOTHER_WORKSHOP_OPEN",
+          message:
+            "Smartphone Confidence, Part 1: Smartphone Basics is still open. Close it before using another workshop."
+        }),
+        { status: 409, headers: { "Content-Type": "application/json" } }
+      );
+    };
+  });
+
+  const options = await page.locator("#workshop-choice option").allTextContents();
+  expect(new Set(options).size).toBe(options.length);
+  const workshop = page.getByLabel("Choose a workshop");
+  await workshop.selectOption(secondWorkshopFixture.key);
+  await expect(page.locator("#workshop-selection-title")).toHaveText(secondWorkshopFixture.title);
+  await expect(page.locator("#workshop-selection-details")).toHaveText(secondWorkshopFixture.details);
+  const password = page.getByLabel("Setup password");
+  await password.fill("fake-test-password");
+
+  page.once("dialog", async (dialog) => {
+    expect(dialog.message()).toContain(secondWorkshopFixture.title);
+    expect(dialog.message()).toContain(secondWorkshopFixture.details);
+    await dialog.accept();
+  });
+  await page.getByRole("button", { name: "Close this workshop" }).click();
+
+  const status = page.locator("#setup-status");
+  await expect(status).toHaveAttribute("data-state", "error");
+  await expect(status).toBeFocused();
+  await expect(status).toContainText("Part 1: Smartphone Basics is still open");
+  await expect(workshop).toHaveValue(secondWorkshopFixture.key);
+  await expect(password).toHaveValue("fake-test-password");
+  await expect(page.locator("#setup-success")).toBeHidden();
+  expect(await page.evaluate(() => window.__setupRequest)).toEqual({
+    resource: "/api/workshop-check-in/activate",
+    method: "POST",
+    body: {
+      action: "close",
+      setupPassword: "fake-test-password",
+      workshopKey: secondWorkshopFixture.key
+    }
+  });
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+});
+
+test("workshop setup sends no request when the named close confirmation is canceled", async ({ page }) => {
+  const { consoleErrors, pageErrors } = captureErrors(page);
+  await page.setViewportSize({ width: 1080, height: 810 });
+  await installSetupCatalog(page);
+  await page.goto(checkinSetupUrl, { waitUntil: "domcontentloaded" });
+  await page.evaluate(() => {
+    window.__setupFetchCalls = 0;
+    window.__setupActivationFetch = async () => {
+      window.__setupFetchCalls += 1;
+      throw new Error("A canceled close must not call the API.");
+    };
+  });
+
+  const workshop = page.getByLabel("Choose a workshop");
+  const password = page.getByLabel("Setup password");
+  await workshop.selectOption("smartphone-part-1-2026-08-30");
+  await password.fill("fake-test-password");
+  page.once("dialog", (dialog) => dialog.dismiss());
+  await page.getByRole("button", { name: "Close this workshop" }).click();
+
+  await expect(page.locator("#setup-status")).toContainText(
+    "Nothing changed. No close request was sent."
+  );
+  await expect(workshop).toHaveValue("smartphone-part-1-2026-08-30");
+  await expect(password).toHaveValue("fake-test-password");
+  await expect(page.locator("#setup-success")).toBeHidden();
+  expect(await page.evaluate(() => window.__setupFetchCalls)).toBe(0);
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+});
+
+test("workshop setup closes the selected workshop and shows the protected import next step", async ({ page }) => {
+  const { consoleErrors, pageErrors } = captureErrors(page);
+  await page.setViewportSize({ width: 1080, height: 810 });
+  await installSetupCatalog(page);
+  await page.goto(checkinSetupUrl, { waitUntil: "domcontentloaded" });
+  await page.evaluate(() => {
+    window.__setupRequest = null;
+    window.__setupActivationFetch = async (resource, options) => {
+      window.__setupRequest = {
+        resource,
+        method: options.method,
+        body: JSON.parse(options.body)
+      };
+      return new Response(
+        JSON.stringify({
+          ok: true,
+          event: {
+            id: "smartphone-confidence-part-1-2026-08-30",
+            title: "Smartphone Confidence, Part 1: Smartphone Basics",
+            details: "August 30, 2026 at 11:30 AM · Unity Spiritual Center",
+            status: "closed"
+          }
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    };
+  });
+
+  await page.getByLabel("Choose a workshop").selectOption("smartphone-part-1-2026-08-30");
+  const password = page.getByLabel("Setup password");
+  await password.fill("fake-test-password");
+  page.once("dialog", async (dialog) => {
+    expect(dialog.message()).toContain("Close this workshop?");
+    expect(dialog.message()).toContain("Smartphone Confidence, Part 1: Smartphone Basics");
+    expect(dialog.message()).toContain("August 30, 2026 at 11:30 AM · Unity Spiritual Center");
+    await dialog.accept();
+  });
+  await page.getByRole("button", { name: "Close this workshop" }).click();
+
+  const success = page.locator("#setup-success");
+  await expect(success).toBeVisible();
+  await expect(success).toBeFocused();
+  await expect(success).toContainText("Workshop closed");
+  await expect(success).toContainText("Smartphone Confidence, Part 1: Smartphone Basics");
+  await expect(success).toContainText("August 30, 2026 at 11:30 AM · Unity Spiritual Center");
+  await expect(success).toContainText("ask Codex to import this workshop");
+  await expect(page.locator("#open-checkin-link")).toBeHidden();
+  await expect(password).toHaveValue("");
+  expect(await page.evaluate(() => window.__setupRequest)).toEqual({
+    resource: "/api/workshop-check-in/activate",
+    method: "POST",
+    body: {
+      action: "close",
+      setupPassword: "fake-test-password",
+      workshopKey: "smartphone-part-1-2026-08-30"
+    }
+  });
+  await page.waitForTimeout(300);
+  const bounds = await success.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    return { top: rect.top, bottom: rect.bottom, viewportHeight: window.innerHeight };
+  });
+  expect(bounds.top).toBeGreaterThanOrEqual(0);
+  expect(bounds.bottom).toBeLessThanOrEqual(bounds.viewportHeight + 1);
   expect(pageErrors).toEqual([]);
   expect(consoleErrors).toEqual([]);
 });
@@ -1570,8 +1918,9 @@ test("workshop setup cannot serialize a password when its script is unavailable"
 
   const password = page.getByLabel("Setup password");
   await password.fill("fake-test-password");
+  await expect(page.getByLabel("Choose a workshop")).toBeDisabled();
   await expect(page.getByRole("button", { name: "Open and activate this iPad" })).toBeDisabled();
-  await expect(page.locator("#setup-status")).toContainText("Loading secure setup…");
+  await expect(page.locator("#setup-status")).toContainText("Loading approved workshops…");
 
   const serializedFields = await page.locator("#setup-form").evaluate((form) =>
     [...new FormData(form).entries()]

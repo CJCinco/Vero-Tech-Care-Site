@@ -42,7 +42,8 @@ body {
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -135,7 +136,8 @@ input {
   font-weight: 500;
 }
 
-.form-field input {
+.form-field input,
+.form-field select {
   width: 100%;
   min-height: 58px;
   padding: 0.78rem 0.9rem;
@@ -147,14 +149,60 @@ input {
 }
 
 .form-field input:focus,
+.form-field select:focus,
 button:focus-visible,
 a:focus-visible {
   outline: 3px solid #0b6f71;
   outline-offset: 3px;
 }
 
-.form-field input[aria-invalid="true"] {
+.form-field input[aria-invalid="true"],
+.form-field select[aria-invalid="true"] {
   border-color: var(--danger);
+}
+
+.form-field select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 3rem;
+  background:
+    linear-gradient(45deg, transparent 50%, var(--accent-deep) 50%) calc(100% - 1.2rem) 50% / 0.55rem 0.55rem no-repeat,
+    linear-gradient(135deg, var(--accent-deep) 50%, transparent 50%) calc(100% - 0.65rem) 50% / 0.55rem 0.55rem no-repeat,
+    #fff;
+}
+
+.form-field select:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+.workshop-selection {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-left: 5px solid var(--accent-deep);
+  border-radius: 0.75rem;
+  background: var(--ivory);
+}
+
+.workshop-selection p {
+  margin: 0;
+}
+
+.workshop-selection-label {
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.workshop-selection-title {
+  margin-top: 0.3rem !important;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.workshop-selection-details {
+  margin-top: 0.35rem !important;
+  color: var(--text-soft);
 }
 
 .field-error {
@@ -320,6 +368,10 @@ a:focus-visible {
 
 .setup-actions .checkin-primary-action {
   margin-top: 0;
+}
+
+.catalog-retry {
+  margin-top: 0.8rem;
 }
 
 .setup-success {

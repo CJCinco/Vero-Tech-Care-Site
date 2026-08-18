@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
+import { existsSync, lstatSync, readFileSync, realpathSync } from "node:fs";
+import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 import {
   csvLine,
@@ -7,6 +10,14 @@ import {
   mergeCsvSnapshot,
   safeCsvCell
 } from "../checkin-import-lib.mjs";
+import {
+  publicWorkshopCatalog,
+  resolveWorkshopSelection,
+  workshopCatalogAudit
+} from "../../functions/_lib/workshop-catalog.js";
+
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const localImportConfigPath = path.join(repoRoot, ".vtc-checkin-import.json");
 
 test("CSV output quotes values and neutralizes spreadsheet formulas", () => {
   assert.equal(safeCsvCell("CJ Watson"), '"CJ Watson"');
@@ -21,6 +32,43 @@ test("AOS path validation accepts only descendants of the approved root", () => 
   assert.equal(isPathInside("/a/workshops", "/a/workshops"), false);
   assert.equal(isPathInside("/a/workshops", "/a/private"), false);
   assert.equal(isPathInside("/a/workshops", "/a/workshops-other/event"), false);
+});
+
+test("every selectable workshop has a real protected import destination", () => {
+  assert.equal(
+    existsSync(localImportConfigPath),
+    true,
+    "The private local import mapping is required before testing or releasing a selectable workshop."
+  );
+  const config = JSON.parse(readFileSync(localImportConfigPath, "utf8"));
+  const allowedRoot = realpathSync(config.allowedRoot);
+
+  for (const workshop of publicWorkshopCatalog()) {
+    const event = resolveWorkshopSelection({ workshopKey: workshop.key });
+    const eventConfig = config.events && config.events[event.id];
+    assert.ok(eventConfig, "Selectable workshop is missing from the local import allowlist.");
+    const configuredDestination = lstatSync(eventConfig.destinationDirectory);
+    assert.equal(configuredDestination.isSymbolicLink(), false);
+    assert.equal(configuredDestination.isDirectory(), true);
+    const destination = realpathSync(eventConfig.destinationDirectory);
+    assert.equal(isPathInside(allowedRoot, destination), true);
+    assert.match(path.basename(destination), /^6 Sign Up Sheet$/);
+    assert.match(eventConfig.fileName, /\.csv$/);
+  }
+});
+
+test("every selectable workshop is backed by approved public source facts", () => {
+  for (const workshop of workshopCatalogAudit()) {
+    const publicSourcePath = path.join(repoRoot, workshop.publicSource);
+    assert.equal(existsSync(publicSourcePath), true, "Catalog public source is missing.");
+    const publicSource = readFileSync(publicSourcePath, "utf8");
+    for (const evidence of workshop.publicEvidence) {
+      assert.ok(
+        publicSource.includes(evidence),
+        `Catalog fact is not present in ${workshop.publicSource}: ${evidence}`
+      );
+    }
+  }
 });
 
 test("AOS merge preserves prior receipts when a later remote snapshot is empty", () => {

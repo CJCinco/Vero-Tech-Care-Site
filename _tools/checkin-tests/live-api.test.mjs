@@ -6,7 +6,17 @@ const baseUrl = process.env.CHECKIN_BASE_URL;
 const setupPassword = process.env.CHECKIN_SETUP_PASSWORD;
 const adminToken = process.env.CHECKIN_ADMIN_TOKEN;
 const exportToken = process.env.CHECKIN_EXPORT_TOKEN;
-const integrationReady = Boolean(baseUrl && setupPassword && adminToken && exportToken);
+const localIntegrationHost = (() => {
+  try {
+    const hostname = new URL(baseUrl).hostname;
+    return hostname === "127.0.0.1" || hostname === "localhost";
+  } catch {
+    return false;
+  }
+})();
+const integrationReady = Boolean(
+  localIntegrationHost && setupPassword && adminToken && exportToken
+);
 
 async function jsonFetch(pathname, options = {}) {
   const response = await fetch(new URL(pathname, baseUrl), options);
@@ -16,13 +26,36 @@ async function jsonFetch(pathname, options = {}) {
 
 test("live Pages Function and D1 check-in contract", { skip: !integrationReady }, async () => {
   const origin = new URL(baseUrl).origin;
-  const runId = Date.now();
-  const eventId = `vtc-system-test-${runId}-2026-08-18`;
+  const eventId = "smartphone-confidence-part-1-2026-08-30";
+  const workshopKey = "smartphone-part-1-2026-08-30";
   const event = {
-    title: `VTC System Test ${runId}`,
-    details: "August 18, 2026 · Fake data only"
+    title: "Smartphone Confidence, Part 1: Smartphone Basics",
+    details: "August 30, 2026 at 11:30 AM · Unity Spiritual Center"
   };
   const jsonHeaders = { "Content-Type": "application/json", Origin: origin };
+
+  const catalog = await jsonFetch("/api/workshop-check-in/catalog");
+  assert.equal(catalog.response.status, 200);
+  assert.match(catalog.response.headers.get("cache-control") || "", /no-store/);
+  assert.deepEqual(catalog.body.workshops, [
+    {
+      key: workshopKey,
+      label: "Aug 30, 2026 · 11:30 AM · Unity Spiritual Center — Smartphone Confidence, Part 1",
+      ...event
+    }
+  ]);
+  assert.doesNotMatch(JSON.stringify(catalog.body), /eventId|destination|CHECKIN_|\/Users\//);
+
+  const freshState = await jsonFetch(
+    `/api/workshop-check-in/export?event=${encodeURIComponent(eventId)}`,
+    { headers: { Authorization: `Bearer ${exportToken}` } }
+  );
+  assert.equal(
+    freshState.response.status,
+    404,
+    "The local contract requires a fresh disposable D1 state directory."
+  );
+  assert.equal(freshState.body.code, "EVENT_NOT_FOUND");
 
   const unauthorized = await jsonFetch("/api/workshop-check-in/status");
   assert.equal(unauthorized.response.status, 401);
@@ -31,14 +64,22 @@ test("live Pages Function and D1 check-in contract", { skip: !integrationReady }
   const wrongOrigin = await jsonFetch("/api/workshop-check-in/activate", {
     method: "POST",
     headers: { "Content-Type": "application/json", Origin: "https://example.com" },
-    body: JSON.stringify({ action: "open", setupPassword, event })
+    body: JSON.stringify({ action: "open", setupPassword, workshopKey })
   });
   assert.equal(wrongOrigin.response.status, 403);
+
+  const unknownWorkshop = await jsonFetch("/api/workshop-check-in/activate", {
+    method: "POST",
+    headers: jsonHeaders,
+    body: JSON.stringify({ action: "open", setupPassword, workshopKey: "not-approved" })
+  });
+  assert.equal(unknownWorkshop.response.status, 400);
+  assert.equal(unknownWorkshop.body.code, "UNKNOWN_WORKSHOP");
 
   const activation = await jsonFetch("/api/workshop-check-in/activate", {
     method: "POST",
     headers: jsonHeaders,
-    body: JSON.stringify({ action: "open", setupPassword, event })
+    body: JSON.stringify({ action: "open", setupPassword, workshopKey })
   });
   assert.equal(activation.response.status, 200);
   assert.equal(activation.body.event.id, eventId);
@@ -139,7 +180,7 @@ test("live Pages Function and D1 check-in contract", { skip: !integrationReady }
   const closed = await jsonFetch("/api/workshop-check-in/activate", {
     method: "POST",
     headers: jsonHeaders,
-    body: JSON.stringify({ action: "close", setupPassword, event })
+    body: JSON.stringify({ action: "close", setupPassword, workshopKey })
   });
   assert.equal(closed.response.status, 200);
 
@@ -187,7 +228,7 @@ test("live Pages Function and D1 check-in contract", { skip: !integrationReady }
   const reopened = await jsonFetch("/api/workshop-check-in/activate", {
     method: "POST",
     headers: jsonHeaders,
-    body: JSON.stringify({ action: "open", setupPassword, event })
+    body: JSON.stringify({ action: "open", setupPassword, workshopKey })
   });
   assert.equal(reopened.response.status, 200);
   const newCookie = reopened.response.headers.get("set-cookie");
@@ -205,7 +246,7 @@ test("live Pages Function and D1 check-in contract", { skip: !integrationReady }
   const reclosed = await jsonFetch("/api/workshop-check-in/activate", {
     method: "POST",
     headers: jsonHeaders,
-    body: JSON.stringify({ action: "close", setupPassword, event })
+    body: JSON.stringify({ action: "close", setupPassword, workshopKey })
   });
   assert.equal(reclosed.response.status, 200);
 
