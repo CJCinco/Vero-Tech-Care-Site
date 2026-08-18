@@ -254,6 +254,38 @@ a:focus-visible {
   color: var(--danger);
 }
 
+.setup-page .submission-status:not(:empty) {
+  min-height: 0;
+  padding: 0.85rem 1rem;
+  border: 2px solid var(--accent-deep);
+  border-radius: 0.75rem;
+  color: var(--text);
+  background: var(--ivory);
+  text-align: left;
+}
+
+.setup-page .submission-status[data-state="working"] {
+  border-color: var(--accent-deep);
+}
+
+.setup-page .submission-status[data-state="success"] {
+  border-color: var(--accent-deep);
+  color: #184f50;
+  background: #eef8f6;
+}
+
+.setup-page .submission-status[data-state="error"] {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: #fff5f5;
+}
+
+.setup-page .submission-status:focus,
+.setup-page .setup-success:focus {
+  outline: 3px solid #0b6f71;
+  outline-offset: 3px;
+}
+
 .success-mark {
   display: grid;
   width: 76px;
@@ -292,6 +324,7 @@ a:focus-visible {
 
 .setup-success {
   margin-top: 1rem;
+  scroll-margin-block: 1rem;
 }
 
 @media (min-width: 700px) {

@@ -11,6 +11,14 @@ module.exports = defineConfig({
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] }
+    },
+    {
+      name: "webkit-ipad-checkin",
+      grep: /direct-only workshop check-in|workshop setup/,
+      use: {
+        ...devices["iPad (gen 7) landscape"],
+        browserName: "webkit"
+      }
     }
   ]
 });

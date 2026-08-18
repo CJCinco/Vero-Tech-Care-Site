@@ -3,6 +3,15 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Cache-Control: public, max-age=0, must-revalidate
 
+/workshop-check-in.css
+  Cache-Control: no-store, max-age=0
+
+/workshop-check-in.js
+  Cache-Control: no-store, max-age=0
+
+/workshop-check-in-setup.js
+  Cache-Control: no-store, max-age=0
+
 /workshop-check-in
   Cache-Control: no-store, max-age=0
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'

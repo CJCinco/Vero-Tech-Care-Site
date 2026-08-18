@@ -31,6 +31,9 @@ const digitalPresenceBookingPageUrl = pathToFileURL(
 const currentSpecialUrl = pathToFileURL(
   path.resolve(__dirname, "../../../special.html")
 ).toString();
+const checkinSetupUrl = pathToFileURL(
+  path.resolve(__dirname, "../../../check-in.html")
+).toString();
 
 const primaryHeaderPages = [
   ["Home", homepageUrl],
@@ -1318,7 +1321,9 @@ test("direct-only workshop check-in pages stay private, minimal, and senior-frie
   const checkin = fs.readFileSync(path.join(siteRoot, "workshop-check-in.html"), "utf8");
   const setup = fs.readFileSync(path.join(siteRoot, "check-in.html"), "utf8");
   const legacySetup = fs.readFileSync(path.join(siteRoot, "workshop-check-in-setup.html"), "utf8");
+  const setupScript = fs.readFileSync(path.join(siteRoot, "workshop-check-in-setup.js"), "utf8");
   const stylesheet = fs.readFileSync(path.join(siteRoot, "workshop-check-in.css"), "utf8");
+  const headers = fs.readFileSync(path.join(siteRoot, "_headers"), "utf8");
   const sitemap = fs.readFileSync(path.join(siteRoot, "sitemap.xml"), "utf8");
   const navigation = fs.readFileSync(path.join(siteRoot, "navigation.js"), "utf8");
   const routes = JSON.parse(fs.readFileSync(path.join(siteRoot, "_routes.json"), "utf8"));
@@ -1346,9 +1351,21 @@ test("direct-only workshop check-in pages stay private, minimal, and senior-frie
   expect(checkin).not.toMatch(/localStorage/i);
   expect(setup).toContain('type="password"');
   expect(setup).toContain('id="setup-password"');
+  expect(setup).not.toContain('name="setupPassword"');
   expect(setup).not.toContain('id="event-id"');
   expect(setup).not.toContain("Workshop code");
   expect(setup).not.toMatch(/id="setup-password"[\s\S]*?\svalue=/i);
+  expect(setup).toContain('id="open-button" class="checkin-primary-action" type="button"');
+  expect(setup).toContain("Loading secure setup…");
+  expect(setup).toContain("JavaScript must be enabled before this iPad can open workshop check-in.");
+  expect(setup).toContain('workshop-check-in.css?v=20260818-ipad-feedback');
+  expect(setup).toContain('workshop-check-in-setup.js?v=20260818-ipad-feedback');
+  expect(setup).toContain('id="setup-status"');
+  expect(setup).toContain('aria-atomic="true"');
+  expect(setup).toContain('id="setup-success"');
+  expect(setup).toContain('tabindex="-1"');
+  expect(setupScript).not.toContain("?.");
+  expect(setupScript).toContain('typeof AbortController === "undefined"');
   expect(setup).toBe(legacySetup);
   expect(sitemap).not.toContain("workshop-check-in");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/check-in</loc>");
@@ -1367,9 +1384,202 @@ test("direct-only workshop check-in pages stay private, minimal, and senior-frie
   }
   expect(middleware).toContain('return new Response("Not found.\\n"');
   expect(middleware).toContain('"Cache-Control": "no-store, max-age=0"');
+  for (const operationalAsset of [
+    "/workshop-check-in.css",
+    "/workshop-check-in.js",
+    "/workshop-check-in-setup.js"
+  ]) {
+    expect(headers).toContain(`${operationalAsset}\n  Cache-Control: no-store, max-age=0`);
+  }
   expect(stylesheet).toMatch(/font-size:\s*18px;/i);
   expect(stylesheet).toMatch(/min-height:\s*58px;/i);
   expect(stylesheet).toMatch(/outline:\s*3px solid/i);
+});
+
+test("workshop setup makes confirmed success unmistakable on an iPad-sized screen", async ({ page }) => {
+  const { consoleErrors, pageErrors } = captureErrors(page);
+  await page.setViewportSize({ width: 1080, height: 810 });
+  await page.goto(checkinSetupUrl, { waitUntil: "domcontentloaded" });
+  await page.evaluate(() => {
+    window.__setupFetchCalls = 0;
+    window.__resolveSetupFetch = null;
+    window.__setupRequest = null;
+    window.fetch = (resource, options) => {
+      window.__setupFetchCalls += 1;
+      window.__setupRequest = {
+        resource,
+        method: options.method,
+        cache: options.cache,
+        credentials: options.credentials,
+        headers: options.headers,
+        body: JSON.parse(options.body)
+      };
+      return new Promise((resolve) => {
+        window.__resolveSetupFetch = () =>
+          resolve(
+            new Response(
+              JSON.stringify({
+                ok: true,
+                event: { id: "smartphone-confidence-part-1-2026-08-30", status: "open" }
+              }),
+              { status: 200, headers: { "Content-Type": "application/json" } }
+            )
+          );
+      });
+    };
+  });
+
+  const password = page.getByLabel("Setup password");
+  const openButton = page.locator("#open-button");
+  await password.fill("fake-test-password");
+  await openButton.click();
+  await expect(openButton).toBeDisabled();
+  await expect(openButton).toHaveText("Opening workshop…");
+  await page.locator("#setup-form").evaluate((form) =>
+    form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }))
+  );
+  await expect(password).toHaveValue("fake-test-password");
+  await expect(page.locator("#setup-success")).toBeHidden();
+  await expect.poll(() => page.evaluate(() => window.__setupFetchCalls)).toBe(1);
+  await page.evaluate(() => window.__resolveSetupFetch());
+
+  const success = page.locator("#setup-success");
+  await expect(success).toBeVisible();
+  await expect(success).toBeFocused();
+  await expect(success).toContainText("The workshop is open.");
+  await expect(page.locator("#setup-status")).toHaveAttribute("data-state", "success");
+  await expect(password).toHaveValue("");
+  await page.waitForTimeout(300);
+
+  const result = await page.evaluate(() => {
+    const rect = document.querySelector("#setup-success").getBoundingClientRect();
+    return {
+      calls: window.__setupFetchCalls,
+      request: window.__setupRequest,
+      top: rect.top,
+      bottom: rect.bottom,
+      viewportHeight: window.innerHeight
+    };
+  });
+  expect(result.calls).toBe(1);
+  expect(result.request).toEqual({
+    resource: "/api/workshop-check-in/activate",
+    method: "POST",
+    cache: "no-store",
+    credentials: "same-origin",
+    headers: { "Content-Type": "application/json" },
+    body: {
+      action: "open",
+      setupPassword: "fake-test-password",
+      event: {
+        title: "Smartphone Confidence, Part 1: Smartphone Basics",
+        details: "August 30, 2026 at 11:30 AM · Unity Spiritual Center"
+      }
+    }
+  });
+  expect(result.top).toBeGreaterThanOrEqual(0);
+  expect(result.bottom).toBeLessThanOrEqual(result.viewportHeight + 1);
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+});
+
+test("workshop setup preserves the password and focuses an unmistakable failure", async ({ page }) => {
+  const { consoleErrors, pageErrors } = captureErrors(page);
+  await page.setViewportSize({ width: 1080, height: 810 });
+  await page.goto(checkinSetupUrl, { waitUntil: "domcontentloaded" });
+  await page.evaluate(() => {
+    window.fetch = async () =>
+      new Response(
+        JSON.stringify({
+          ok: false,
+          code: "ACCESS_DENIED",
+          message: "The setup password was not accepted."
+        }),
+        { status: 403, headers: { "Content-Type": "application/json" } }
+      );
+  });
+
+  const password = page.getByLabel("Setup password");
+  await password.fill("fake-test-password");
+  await page.getByRole("button", { name: "Open and activate this iPad" }).click();
+
+  const status = page.locator("#setup-status");
+  await expect(status).toHaveAttribute("data-state", "error");
+  await expect(status).toHaveAttribute("role", "alert");
+  await expect(status).toHaveAttribute("aria-live", "assertive");
+  await expect(status).toBeFocused();
+  await expect(status).toContainText("The setup password was not accepted.");
+  await expect(status).toContainText("Nothing was cleared.");
+  await expect(password).toHaveValue("fake-test-password");
+  await expect(page.locator("#setup-success")).toBeHidden();
+
+  const result = await status.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    return { top: rect.top, bottom: rect.bottom, viewportHeight: window.innerHeight };
+  });
+  expect(result.top).toBeGreaterThanOrEqual(0);
+  expect(result.bottom).toBeLessThanOrEqual(result.viewportHeight + 1);
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+});
+
+test("workshop setup keeps validation and network failures visible without clearing fields", async ({ page }) => {
+  const { consoleErrors, pageErrors } = captureErrors(page);
+  await page.setViewportSize({ width: 1080, height: 810 });
+  await page.goto(checkinSetupUrl, { waitUntil: "domcontentloaded" });
+  await page.evaluate(() => {
+    window.__setupFetchCalls = 0;
+    window.fetch = async () => {
+      window.__setupFetchCalls += 1;
+      throw new TypeError("Simulated offline state");
+    };
+  });
+
+  const title = page.getByLabel("Workshop title");
+  const details = page.getByLabel("Date, time, and location");
+  const password = page.getByLabel("Setup password");
+  const openButton = page.getByRole("button", { name: "Open and activate this iPad" });
+  const status = page.locator("#setup-status");
+
+  await password.fill("short");
+  await openButton.click();
+  await expect(status).toHaveAttribute("data-state", "error");
+  await expect(status).toBeFocused();
+  await expect(status).toContainText("at least 10 characters");
+  await expect(password).toHaveValue("short");
+  await expect.poll(() => page.evaluate(() => window.__setupFetchCalls)).toBe(0);
+
+  await password.fill("fake-test-password");
+  await openButton.click();
+  await expect(status).toContainText("could not reach Vero Tech Care");
+  await expect(status).toContainText("Nothing was cleared.");
+  await expect(title).toHaveValue("Smartphone Confidence, Part 1: Smartphone Basics");
+  await expect(details).toHaveValue("August 30, 2026 at 11:30 AM · Unity Spiritual Center");
+  await expect(password).toHaveValue("fake-test-password");
+  await expect(openButton).toBeEnabled();
+  await expect(page.locator("#setup-success")).toBeHidden();
+  await expect.poll(() => page.evaluate(() => window.__setupFetchCalls)).toBe(1);
+  expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+});
+
+test("workshop setup cannot serialize a password when its script is unavailable", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(checkinSetupUrl, { waitUntil: "domcontentloaded" });
+
+  const password = page.getByLabel("Setup password");
+  await password.fill("fake-test-password");
+  await expect(page.getByRole("button", { name: "Open and activate this iPad" })).toBeDisabled();
+  await expect(page.locator("#setup-status")).toContainText("Loading secure setup…");
+
+  const serializedFields = await page.locator("#setup-form").evaluate((form) =>
+    [...new FormData(form).entries()]
+  );
+  expect(serializedFields).toEqual([]);
+  expect(page.url()).not.toContain("fake-test-password");
+  expect(page.url()).not.toContain("setupPassword=");
+  await context.close();
 });
 
 test("shared HTML source contracts stay valid", async () => {

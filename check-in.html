@@ -9,8 +9,8 @@
   <meta name="theme-color" content="#111514" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-  <link rel="stylesheet" href="workshop-check-in.css" />
-  <script src="workshop-check-in-setup.js" defer></script>
+  <link rel="stylesheet" href="workshop-check-in.css?v=20260818-ipad-feedback" />
+  <script src="workshop-check-in-setup.js?v=20260818-ipad-feedback" defer></script>
 </head>
 <body class="checkin-page setup-page">
   <main class="checkin-shell" aria-labelledby="page-title">
@@ -21,12 +21,11 @@
     </header>
 
     <section class="checkin-card">
-      <form id="setup-form" novalidate autocomplete="off">
+      <form id="setup-form" novalidate autocomplete="off" aria-busy="true">
         <div class="form-field">
           <label for="event-title">Workshop title</label>
           <input
             id="event-title"
-            name="eventTitle"
             type="text"
             value="Smartphone Confidence, Part 1: Smartphone Basics"
             maxlength="140"
@@ -39,7 +38,6 @@
           <label for="event-details">Date, time, and location</label>
           <input
             id="event-details"
-            name="eventDetails"
             type="text"
             value="August 30, 2026 at 11:30 AM · Unity Spiritual Center"
             maxlength="220"
@@ -53,7 +51,6 @@
           <label for="setup-password">Setup password</label>
           <input
             id="setup-password"
-            name="setupPassword"
             type="password"
             minlength="10"
             autocomplete="current-password"
@@ -63,19 +60,37 @@
         </div>
 
         <div class="setup-actions">
-          <button id="open-button" class="checkin-primary-action" type="submit" data-action="open">
+          <button id="open-button" class="checkin-primary-action" type="button" data-action="open" disabled>
             Open and activate this iPad
           </button>
-          <button id="close-button" class="checkin-secondary-button" type="button" data-action="close">
+          <button id="close-button" class="checkin-secondary-button" type="button" data-action="close" disabled>
             Close this workshop
           </button>
         </div>
 
-        <p id="setup-status" class="submission-status" role="status" aria-live="polite"></p>
+        <p
+          id="setup-status"
+          class="submission-status"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          data-state="working"
+          tabindex="-1"
+        >Loading secure setup…</p>
+        <noscript>
+          <p class="field-error">JavaScript must be enabled before this iPad can open workshop check-in.</p>
+        </noscript>
       </form>
     </section>
 
-    <section id="setup-success" class="checkin-card setup-success" hidden>
+    <section
+      id="setup-success"
+      class="checkin-card setup-success"
+      tabindex="-1"
+      aria-labelledby="setup-success-title"
+      hidden
+    >
+      <p class="success-mark" aria-hidden="true">&#10003;</p>
       <h2 id="setup-success-title">The workshop is open.</h2>
       <p id="setup-success-copy">This iPad is ready for attendee check-in.</p>
       <a id="open-checkin-link" class="checkin-primary-action checkin-link-action" href="/workshop-check-in">

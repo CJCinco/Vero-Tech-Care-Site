@@ -42,6 +42,7 @@ test("live Pages Function and D1 check-in contract", { skip: !integrationReady }
   });
   assert.equal(activation.response.status, 200);
   assert.equal(activation.body.event.id, eventId);
+  assert.match(activation.response.headers.get("cache-control") || "", /no-store/);
   const cookie = activation.response.headers.get("set-cookie");
   assert.match(cookie, /__Host-vtc-workshop-kiosk=/);
   assert.match(cookie, /HttpOnly/);
@@ -118,6 +119,22 @@ test("live Pages Function and D1 check-in contract", { skip: !integrationReady }
     `/api/workshop-check-in/export?event=${encodeURIComponent(eventId)}`
   );
   assert.equal(deniedExport.response.status, 403);
+
+  const setupPasswordDeniedExport = await jsonFetch(
+    `/api/workshop-check-in/export?event=${encodeURIComponent(eventId)}`,
+    { headers: { Authorization: `Bearer ${setupPassword}` } }
+  );
+  assert.equal(setupPasswordDeniedExport.response.status, 403);
+
+  const setupPasswordDeniedArchive = await jsonFetch("/api/workshop-check-in/archive", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${setupPassword}`
+    },
+    body: JSON.stringify({ action: "verify", eventId })
+  });
+  assert.equal(setupPasswordDeniedArchive.response.status, 403);
 
   const closed = await jsonFetch("/api/workshop-check-in/activate", {
     method: "POST",
