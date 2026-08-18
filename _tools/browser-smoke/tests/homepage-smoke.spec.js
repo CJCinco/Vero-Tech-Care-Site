@@ -1315,6 +1315,8 @@ test("direct-only workshop check-in pages stay private, minimal, and senior-frie
   const stylesheet = fs.readFileSync(path.join(siteRoot, "workshop-check-in.css"), "utf8");
   const sitemap = fs.readFileSync(path.join(siteRoot, "sitemap.xml"), "utf8");
   const navigation = fs.readFileSync(path.join(siteRoot, "navigation.js"), "utf8");
+  const routes = JSON.parse(fs.readFileSync(path.join(siteRoot, "_routes.json"), "utf8"));
+  const middleware = fs.readFileSync(path.join(siteRoot, "functions/_middleware.js"), "utf8");
 
   for (const [fileName, source] of [
     ["workshop-check-in.html", checkin],
@@ -1339,6 +1341,19 @@ test("direct-only workshop check-in pages stay private, minimal, and senior-frie
   expect(setup).toContain('type="password"');
   expect(sitemap).not.toContain("workshop-check-in");
   expect(navigation).not.toContain("workshop-check-in");
+  expect(routes.include).toContain("/api/workshop-check-in/*");
+  for (const privateRoute of [
+    "/README.md",
+    "/WEBSITE_STANDARDS.md",
+    "/AGENTS.md",
+    "/_tools/*",
+    "/functions/*",
+    "/migrations/*"
+  ]) {
+    expect(routes.include).toContain(privateRoute);
+  }
+  expect(middleware).toContain('return new Response("Not found.\\n"');
+  expect(middleware).toContain('"Cache-Control": "no-store, max-age=0"');
   expect(stylesheet).toMatch(/font-size:\s*18px;/i);
   expect(stylesheet).toMatch(/min-height:\s*58px;/i);
   expect(stylesheet).toMatch(/outline:\s*3px solid/i);

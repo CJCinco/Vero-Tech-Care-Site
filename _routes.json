@@ -1,5 +1,20 @@
 {
   "version": 1,
-  "include": ["/api/workshop-check-in/*"],
+  "include": [
+    "/api/workshop-check-in/*",
+    "/README.md",
+    "/WEBSITE_STANDARDS.md",
+    "/AGENTS.md",
+    "/package.json",
+    "/package-lock.json",
+    "/wrangler.jsonc",
+    "/_tools/*",
+    "/functions/*",
+    "/migrations/*",
+    "/node_modules/*",
+    "/dist/*",
+    "/test-results/*",
+    "/playwright-report/*"
+  ],
   "exclude": []
 }

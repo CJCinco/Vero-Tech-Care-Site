@@ -36,7 +36,7 @@ Two dormant evergreen workshop overviews are ready for future use: `ai-for-every
 
 At the end of a workshop, close the event before importing. Run `npm run checkin:import -- --event <approved-event-code>` from this repo. The importer pulls one frozen protected snapshot, merges it by immutable receipt without removing prior AOS rows, atomically verifies the CSV, and records server-side proof that the durable AOS copy matches D1. Thirty days after that proof, `npm run checkin:purge -- --event <approved-event-code>` can remove the temporary D1 rows; it fails closed if the roster changed, custody was not proved, or the waiting period is incomplete. Run the eligible cleanup during the monthly website check so verified attendee contact data does not remain in D1 indefinitely.
 
-The site now builds through the root `npm run build` command into the allowlisted `dist/` directory. Cloudflare Pages deploys `dist/`, while root-level `functions/` supplies the narrowly routed workshop API. Governance files, tests, migrations, local configuration, and attendee exports must never enter the public build.
+The site now builds through the root `npm run build` command into the allowlisted `dist/` directory. Cloudflare Pages deploys `dist/`, while root-level `functions/` supplies the narrowly routed workshop API. Governance files, tests, migrations, local configuration, and attendee exports must never enter the public build. The Functions route gate also forces legacy internal-document and tooling URLs to a no-store 404 so files cached from the retired root-publishing configuration cannot remain public.
 
 ## Codex Website Workflow
 
