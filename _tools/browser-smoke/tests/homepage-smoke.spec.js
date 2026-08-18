@@ -5,6 +5,7 @@ const { pathToFileURL } = require("url");
 
 const siteRoot = path.resolve(__dirname, "../../..");
 const operationalHtmlFiles = new Set([
+  "check-in.html",
   "workshop-check-in.html",
   "workshop-check-in-setup.html"
 ]);
@@ -1280,7 +1281,9 @@ test("public route and sitemap contracts stay simplified", async () => {
   expect(redirects).toContain("/rhythm-soul-studio-overview.html https://rhythmandsoulvero.com/ 301");
   expect(redirects).toContain("/rhythm-soul-studio-overview https://rhythmandsoulvero.com/ 301");
   expect(redirects).toContain("/workshop-check-in.html /workshop-check-in 301");
-  expect(redirects).toContain("/workshop-check-in-setup.html /workshop-check-in-setup 301");
+  expect(redirects).toContain("/check-in.html /check-in 301");
+  expect(redirects).toContain("/workshop-check-in-setup.html /check-in 301");
+  expect(redirects).toContain("/workshop-check-in-setup /check-in 301");
   expect(redirects).not.toContain("/business-websites /digital-presence-management.html 200");
   expect(sitemap).toContain("https://verotechcare.com/special");
   expect(sitemap).toContain("https://verotechcare.com/business-websites");
@@ -1300,18 +1303,21 @@ test("public route and sitemap contracts stay simplified", async () => {
   expect(sitemap).not.toContain("testhome3");
   expect(sitemap).not.toContain("rhythm-soul-studio-overview");
   expect(sitemap).not.toContain("workshop-check-in");
+  expect(sitemap).not.toContain("<loc>https://verotechcare.com/check-in</loc>");
   expect(headers).not.toContain("/testhome1*");
   expect(headers).not.toContain("/testhome2*");
   expect(headers).not.toContain("/testhome3*");
   expect(headers).not.toContain("/rhythm-soul-studio-overview*");
   expect(headers).toContain("/workshop-check-in");
+  expect(headers).toContain("/check-in");
   expect(headers).toContain("X-Robots-Tag: noindex, nofollow, noarchive");
   expect(headers).toContain("Cache-Control: no-store, max-age=0");
 });
 
 test("direct-only workshop check-in pages stay private, minimal, and senior-friendly", async () => {
   const checkin = fs.readFileSync(path.join(siteRoot, "workshop-check-in.html"), "utf8");
-  const setup = fs.readFileSync(path.join(siteRoot, "workshop-check-in-setup.html"), "utf8");
+  const setup = fs.readFileSync(path.join(siteRoot, "check-in.html"), "utf8");
+  const legacySetup = fs.readFileSync(path.join(siteRoot, "workshop-check-in-setup.html"), "utf8");
   const stylesheet = fs.readFileSync(path.join(siteRoot, "workshop-check-in.css"), "utf8");
   const sitemap = fs.readFileSync(path.join(siteRoot, "sitemap.xml"), "utf8");
   const navigation = fs.readFileSync(path.join(siteRoot, "navigation.js"), "utf8");
@@ -1320,7 +1326,7 @@ test("direct-only workshop check-in pages stay private, minimal, and senior-frie
 
   for (const [fileName, source] of [
     ["workshop-check-in.html", checkin],
-    ["workshop-check-in-setup.html", setup]
+    ["check-in.html", setup]
   ]) {
     expect(source, `${fileName} should be no-indexed`).toContain(
       '<meta name="robots" content="noindex, nofollow, noarchive" />'
@@ -1339,8 +1345,11 @@ test("direct-only workshop check-in pages stay private, minimal, and senior-frie
   );
   expect(checkin).not.toMatch(/localStorage/i);
   expect(setup).toContain('type="password"');
+  expect(setup).toBe(legacySetup);
   expect(sitemap).not.toContain("workshop-check-in");
+  expect(sitemap).not.toContain("<loc>https://verotechcare.com/check-in</loc>");
   expect(navigation).not.toContain("workshop-check-in");
+  expect(navigation).not.toContain('href="/check-in"');
   expect(routes.include).toContain("/api/workshop-check-in/*");
   for (const privateRoute of [
     "/README.md",

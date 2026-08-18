@@ -4,7 +4,9 @@
 /digital-presence-management /business-websites 301
 /book-digital-presence-checkup.html /book-digital-presence-checkup 301
 /workshop-check-in.html /workshop-check-in 301
-/workshop-check-in-setup.html /workshop-check-in-setup 301
+/check-in.html /check-in 301
+/workshop-check-in-setup.html /check-in 301
+/workshop-check-in-setup /check-in 301
 /testhome1.html / 301
 /testhome1 / 301
 /testhome2.html / 301

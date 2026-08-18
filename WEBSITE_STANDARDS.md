@@ -143,14 +143,15 @@ Use each page for its job. Do not make every page carry the whole business.
 - `ai-for-everyday-life-workshop.html`: evergreen, date-and-location-agnostic overview for a future AI for Everyday Life workshop; keep it interest-only until an actual event has a verified direct booking destination
 - `phone-clean-up-speed-up-workshop.html`: evergreen, date-and-location-agnostic overview for a future Phone Clean Up & Speed Up workshop; keep it interest-only until an actual event has a verified direct booking destination
 - `workshop-check-in.html`: direct-only, no-indexed in-person attendance kiosk; use one distraction-free form with required full name, optional email, optional phone, the exact approved email disclosure, confirmed-save feedback, and automatic reset; omit it from navigation and the sitemap
-- `workshop-check-in-setup.html`: direct-only, no-indexed CJ setup surface for opening or closing one named workshop and activating one kiosk session; never expose the setup code, attendee data, export controls, or an attendee list
+- `check-in.html`: direct-only, no-indexed CJ setup surface served at the short private route `/check-in`; use it to open or close one named workshop and activate one kiosk session; never expose the setup code, attendee data, export controls, or an attendee list
+- `workshop-check-in-setup.html`: retained only as the legacy source route, with both its extensionless and `.html` URLs permanently redirecting to `/check-in`
 - `404.html`: recover visitors and route them to booking or contact
 
 When adding or revising copy, decide which page owns that message. Link to the owning page instead of repeating the same explanation everywhere.
 
 ### Direct-Only Workshop Check-In Exception
 
-The two workshop check-in routes are operational tools, not customer-facing discovery or conversion pages. They are the explicit exception to the shared hero, footer, navigation, mobile dock, metadata, and three-card requirements. Preserve the VTC palette, typography, calm voice, large touch targets, and senior-friendly readability without adding public-site navigation or booking actions.
+The attendee route `/workshop-check-in` and CJ setup route `/check-in` are operational tools, not customer-facing discovery or conversion pages. They are the explicit exception to the shared hero, footer, navigation, mobile dock, metadata, and three-card requirements. Preserve the VTC palette, typography, calm voice, large touch targets, and senior-friendly readability without adding public-site navigation or booking actions.
 
 The kiosk contract is locked:
 

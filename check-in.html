@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <meta name="referrer" content="no-referrer" />
+  <title>Workshop Check-In Setup | Vero Tech Care</title>
+  <meta name="theme-color" content="#111514" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="workshop-check-in.css" />
+  <script src="workshop-check-in-setup.js" defer></script>
+</head>
+<body class="checkin-page setup-page">
+  <main class="checkin-shell" aria-labelledby="page-title">
+    <header class="checkin-header">
+      <p class="checkin-brand">Vero Tech Care</p>
+      <h1 id="page-title">Workshop Setup</h1>
+      <p class="checkin-intro">CJ-only controls for preparing this iPad.</p>
+    </header>
+
+    <section class="checkin-card">
+      <form id="setup-form" novalidate autocomplete="off">
+        <div class="form-field">
+          <label for="event-id">Workshop code</label>
+          <input
+            id="event-id"
+            name="eventId"
+            type="text"
+            value="smartphone-confidence-part-1-2026-08-30"
+            maxlength="80"
+            autocapitalize="none"
+            autocomplete="off"
+            spellcheck="false"
+            required
+          />
+          <p class="field-help">Use lowercase letters, numbers, and hyphens.</p>
+        </div>
+
+        <div class="form-field">
+          <label for="event-title">Workshop title</label>
+          <input
+            id="event-title"
+            name="eventTitle"
+            type="text"
+            value="Smartphone Confidence, Part 1: Smartphone Basics"
+            maxlength="140"
+            autocomplete="off"
+            required
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="event-details">Date and location</label>
+          <input
+            id="event-details"
+            name="eventDetails"
+            type="text"
+            value="August 30, 2026 at 11:30 AM · Unity Spiritual Center"
+            maxlength="220"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="admin-token">Private setup code</label>
+          <input
+            id="admin-token"
+            name="adminToken"
+            type="password"
+            minlength="24"
+            autocomplete="off"
+            spellcheck="false"
+            required
+          />
+        </div>
+
+        <div class="setup-actions">
+          <button id="open-button" class="checkin-primary-action" type="submit" data-action="open">
+            Open and activate this iPad
+          </button>
+          <button id="close-button" class="checkin-secondary-button" type="button" data-action="close">
+            Close this workshop
+          </button>
+        </div>
+
+        <p id="setup-status" class="submission-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="setup-success" class="checkin-card setup-success" hidden>
+      <h2 id="setup-success-title">The workshop is open.</h2>
+      <p id="setup-success-copy">This iPad is ready for attendee check-in.</p>
+      <a id="open-checkin-link" class="checkin-primary-action checkin-link-action" href="/workshop-check-in">
+        Open check-in screen
+      </a>
+    </section>
+  </main>
+</body>
+</html>
