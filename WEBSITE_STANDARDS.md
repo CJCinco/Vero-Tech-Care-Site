@@ -143,7 +143,7 @@ Use each page for its job. Do not make every page carry the whole business.
 - `ai-for-everyday-life-workshop.html`: evergreen, date-and-location-agnostic overview for a future AI for Everyday Life workshop; keep it interest-only until an actual event has a verified direct booking destination
 - `phone-clean-up-speed-up-workshop.html`: evergreen, date-and-location-agnostic overview for a future Phone Clean Up & Speed Up workshop; keep it interest-only until an actual event has a verified direct booking destination
 - `workshop-check-in.html`: direct-only, no-indexed in-person attendance kiosk; use one distraction-free form with required full name, optional email, optional phone, the exact approved email disclosure, confirmed-save feedback, and automatic reset; omit it from navigation and the sitemap
-- `check-in.html`: direct-only, no-indexed CJ setup surface served at the short private route `/check-in`; use it to open or close one named workshop and activate one kiosk session; never expose the setup code, attendee data, export controls, or an attendee list
+- `check-in.html`: direct-only, no-indexed CJ setup surface served at the short private route `/check-in`; use it to enter the workshop title and dated details, open or close that workshop, and activate one kiosk session without asking CJ to create or type an internal workshop code; never expose the setup password, attendee data, export controls, or an attendee list
 - `workshop-check-in-setup.html`: retained only as the legacy source route, with both its extensionless and `.html` URLs permanently redirecting to `/check-in`
 - `404.html`: recover visitors and route them to booking or contact
 
@@ -159,6 +159,8 @@ The kiosk contract is locked:
 - Full name is required. Email and phone are optional. Phone does not grant SMS-marketing permission.
 - The email disclosure must appear exactly: `Email is optional. If you share it, Vero Tech Care may send workshop follow-up and occasional tech tips. You can unsubscribe anytime.`
 - A signed, expiring, secure kiosk session binds the iPad to one open server-side event and its current activation generation. Reopening an event rotates that generation so old iPad sessions cannot revive. Attendee submissions do not choose or send a trusted event destination.
+- Derive the internal workshop identifier on the server from the validated workshop title and written date. Keep that identifier stable for the approved AOS import allowlist without showing or requesting it on the iPad setup page.
+- The iPad setup password may authorize only workshop open and close actions. Keep it separate from the stronger export and AOS custody credential so it cannot retrieve attendee data, verify AOS custody, or purge records. Store all credentials only as environment secrets, never in public source or browser storage.
 - Show success only after a confirmed database write or an idempotent receipt recovery. Preserve all visible fields on an uncertain or failed request.
 - Bind every idempotency key to its normalized submitted fields. A repeated key with different fields must fail with a conflict and never confirm the earlier attendee's receipt.
 - Clear attendee fields immediately after confirmation. Show no prior record, attendee list, search, edit, delete, or export control on either iPad page.

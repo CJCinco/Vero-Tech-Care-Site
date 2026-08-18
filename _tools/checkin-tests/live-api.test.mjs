@@ -3,9 +3,10 @@ import { createHash, randomUUID } from "node:crypto";
 import test from "node:test";
 
 const baseUrl = process.env.CHECKIN_BASE_URL;
+const setupPassword = process.env.CHECKIN_SETUP_PASSWORD;
 const adminToken = process.env.CHECKIN_ADMIN_TOKEN;
 const exportToken = process.env.CHECKIN_EXPORT_TOKEN;
-const integrationReady = Boolean(baseUrl && adminToken && exportToken);
+const integrationReady = Boolean(baseUrl && setupPassword && adminToken && exportToken);
 
 async function jsonFetch(pathname, options = {}) {
   const response = await fetch(new URL(pathname, baseUrl), options);
@@ -15,8 +16,12 @@ async function jsonFetch(pathname, options = {}) {
 
 test("live Pages Function and D1 check-in contract", { skip: !integrationReady }, async () => {
   const origin = new URL(baseUrl).origin;
-  const eventId = `system-test-${Date.now()}`;
-  const event = { id: eventId, title: "VTC System Test", details: "Fake data only" };
+  const runId = Date.now();
+  const eventId = `vtc-system-test-${runId}-2026-08-18`;
+  const event = {
+    title: `VTC System Test ${runId}`,
+    details: "August 18, 2026 · Fake data only"
+  };
   const jsonHeaders = { "Content-Type": "application/json", Origin: origin };
 
   const unauthorized = await jsonFetch("/api/workshop-check-in/status");
@@ -26,14 +31,14 @@ test("live Pages Function and D1 check-in contract", { skip: !integrationReady }
   const wrongOrigin = await jsonFetch("/api/workshop-check-in/activate", {
     method: "POST",
     headers: { "Content-Type": "application/json", Origin: "https://example.com" },
-    body: JSON.stringify({ action: "open", adminToken, event })
+    body: JSON.stringify({ action: "open", setupPassword, event })
   });
   assert.equal(wrongOrigin.response.status, 403);
 
   const activation = await jsonFetch("/api/workshop-check-in/activate", {
     method: "POST",
     headers: jsonHeaders,
-    body: JSON.stringify({ action: "open", adminToken, event })
+    body: JSON.stringify({ action: "open", setupPassword, event })
   });
   assert.equal(activation.response.status, 200);
   assert.equal(activation.body.event.id, eventId);
@@ -117,7 +122,7 @@ test("live Pages Function and D1 check-in contract", { skip: !integrationReady }
   const closed = await jsonFetch("/api/workshop-check-in/activate", {
     method: "POST",
     headers: jsonHeaders,
-    body: JSON.stringify({ action: "close", adminToken, event })
+    body: JSON.stringify({ action: "close", setupPassword, event })
   });
   assert.equal(closed.response.status, 200);
 
@@ -165,7 +170,7 @@ test("live Pages Function and D1 check-in contract", { skip: !integrationReady }
   const reopened = await jsonFetch("/api/workshop-check-in/activate", {
     method: "POST",
     headers: jsonHeaders,
-    body: JSON.stringify({ action: "open", adminToken, event })
+    body: JSON.stringify({ action: "open", setupPassword, event })
   });
   assert.equal(reopened.response.status, 200);
   const newCookie = reopened.response.headers.get("set-cookie");
@@ -183,7 +188,7 @@ test("live Pages Function and D1 check-in contract", { skip: !integrationReady }
   const reclosed = await jsonFetch("/api/workshop-check-in/activate", {
     method: "POST",
     headers: jsonHeaders,
-    body: JSON.stringify({ action: "close", adminToken, event })
+    body: JSON.stringify({ action: "close", setupPassword, event })
   });
   assert.equal(reclosed.response.status, 200);
 

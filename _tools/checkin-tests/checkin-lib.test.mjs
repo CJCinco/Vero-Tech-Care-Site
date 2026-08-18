@@ -7,6 +7,8 @@ import {
   InputError,
   clearSessionCookie,
   createSessionToken,
+  deriveEventId,
+  ensureSetupPasswordConfigured,
   receiptDigest,
   secureEqual,
   sessionCookie,
@@ -85,14 +87,33 @@ test("submission validation rejects malformed and control-character input", () =
   );
 });
 
-test("event setup accepts only safe event codes", () => {
+test("event setup derives a stable internal code from the title and written date", () => {
   assert.deepEqual(
-    validateEventInput({ id: "workshop-2026-08-30", title: "Workshop", details: "Vero Beach" }),
-    { id: "workshop-2026-08-30", title: "Workshop", details: "Vero Beach" }
+    validateEventInput({
+      title: "Smartphone Confidence, Part 1: Smartphone Basics",
+      details: "August 30, 2026 at 11:30 AM · Unity Spiritual Center"
+    }),
+    {
+      id: "smartphone-confidence-part-1-2026-08-30",
+      title: "Smartphone Confidence, Part 1: Smartphone Basics",
+      details: "August 30, 2026 at 11:30 AM · Unity Spiritual Center"
+    }
   );
   assert.throws(
-    () => validateEventInput({ id: "../../private", title: "Workshop", details: "" }),
+    () => validateEventInput({ title: "Workshop", details: "Vero Beach" }),
     InputError
+  );
+  assert.equal(
+    deriveEventId("AI for Everyday Life: Part 2", "September 20, 2026 · Vero Beach"),
+    "ai-for-everyday-life-2026-09-20"
+  );
+});
+
+test("the easy setup password remains separate from strong system credentials", () => {
+  assert.equal(ensureSetupPasswordConfigured({ CHECKIN_SETUP_PASSWORD: "short" }), false);
+  assert.equal(
+    ensureSetupPasswordConfigured({ CHECKIN_SETUP_PASSWORD: "simple-pass" }),
+    true
   );
 });
 

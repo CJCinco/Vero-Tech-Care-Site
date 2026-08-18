@@ -2,6 +2,7 @@ import {
   clearSessionCookie,
   createSessionToken,
   ensureConfigured,
+  ensureSetupPasswordConfigured,
   errorPayload,
   hasJsonContentType,
   isSameOrigin,
@@ -21,14 +22,18 @@ export async function onRequestPost({ request, env }) {
   if (!hasJsonContentType(request)) {
     return jsonResponse({ ok: false, code: "INVALID_CONTENT_TYPE", message: "That request was not accepted." }, 415);
   }
-  if (!env?.CHECKINS_DB || !ensureConfigured(env, ["CHECKIN_SESSION_KEY", "CHECKIN_ADMIN_TOKEN"])) {
+  if (
+    !env?.CHECKINS_DB ||
+    !ensureConfigured(env, ["CHECKIN_SESSION_KEY"]) ||
+    !ensureSetupPasswordConfigured(env)
+  ) {
     return jsonResponse({ ok: false, code: "SETUP_REQUIRED", message: "Workshop check-in is not configured yet." }, 503);
   }
 
   try {
     const body = await readJsonBody(request);
-    if (!secureEqual(body?.adminToken, env.CHECKIN_ADMIN_TOKEN)) {
-      return jsonResponse({ ok: false, code: "ACCESS_DENIED", message: "The setup code was not accepted." }, 403);
+    if (!secureEqual(body?.setupPassword, env.CHECKIN_SETUP_PASSWORD)) {
+      return jsonResponse({ ok: false, code: "ACCESS_DENIED", message: "The setup password was not accepted." }, 403);
     }
 
     const event = validateEventInput(body.event);

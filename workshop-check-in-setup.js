@@ -6,7 +6,7 @@ const setupSuccess = document.querySelector("#setup-success");
 const setupSuccessTitle = document.querySelector("#setup-success-title");
 const setupSuccessCopy = document.querySelector("#setup-success-copy");
 const openCheckinLink = document.querySelector("#open-checkin-link");
-const adminTokenInput = document.querySelector("#admin-token");
+const setupPasswordInput = document.querySelector("#setup-password");
 const NETWORK_TIMEOUT_MS = 12000;
 
 async function fetchWithTimeout(resource, options = {}) {
@@ -21,7 +21,6 @@ async function fetchWithTimeout(resource, options = {}) {
 
 function eventPayload() {
   return {
-    id: document.querySelector("#event-id").value.trim(),
     title: document.querySelector("#event-title").value.trim(),
     details: document.querySelector("#event-details").value.trim()
   };
@@ -37,7 +36,7 @@ async function runAction(action) {
   setupStatus.removeAttribute("data-state");
 
   if (!setupForm.reportValidity()) return;
-  const adminToken = adminTokenInput.value;
+  const setupPassword = setupPasswordInput.value;
   setBusy(true);
   setupStatus.textContent = action === "close" ? "Closing the workshop…" : "Opening the workshop…";
 
@@ -47,12 +46,12 @@ async function runAction(action) {
       cache: "no-store",
       credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action, adminToken, event: eventPayload() })
+      body: JSON.stringify({ action, setupPassword, event: eventPayload() })
     });
     const body = await response.json();
     if (!response.ok || !body.ok) throw new Error(body.message || "The setup was not confirmed.");
 
-    adminTokenInput.value = "";
+    setupPasswordInput.value = "";
     setupStatus.textContent = "";
     setupSuccess.hidden = false;
     if (action === "close") {
@@ -68,7 +67,7 @@ async function runAction(action) {
   } catch (error) {
     setupStatus.dataset.state = "error";
     setupStatus.textContent = error.message || "The setup was not confirmed. Please try again.";
-    adminTokenInput.focus();
+    setupPasswordInput.focus();
   } finally {
     setBusy(false);
   }

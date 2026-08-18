@@ -23,22 +23,6 @@
     <section class="checkin-card">
       <form id="setup-form" novalidate autocomplete="off">
         <div class="form-field">
-          <label for="event-id">Workshop code</label>
-          <input
-            id="event-id"
-            name="eventId"
-            type="text"
-            value="smartphone-confidence-part-1-2026-08-30"
-            maxlength="80"
-            autocapitalize="none"
-            autocomplete="off"
-            spellcheck="false"
-            required
-          />
-          <p class="field-help">Use lowercase letters, numbers, and hyphens.</p>
-        </div>
-
-        <div class="form-field">
           <label for="event-title">Workshop title</label>
           <input
             id="event-title"
@@ -52,7 +36,7 @@
         </div>
 
         <div class="form-field">
-          <label for="event-details">Date and location</label>
+          <label for="event-details">Date, time, and location</label>
           <input
             id="event-details"
             name="eventDetails"
@@ -60,17 +44,19 @@
             value="August 30, 2026 at 11:30 AM · Unity Spiritual Center"
             maxlength="220"
             autocomplete="off"
+            required
           />
+          <p class="field-help">Write the date as Month Day, Year, followed by the time and location.</p>
         </div>
 
         <div class="form-field">
-          <label for="admin-token">Private setup code</label>
+          <label for="setup-password">Setup password</label>
           <input
-            id="admin-token"
-            name="adminToken"
+            id="setup-password"
+            name="setupPassword"
             type="password"
-            minlength="24"
-            autocomplete="off"
+            minlength="10"
+            autocomplete="current-password"
             spellcheck="false"
             required
           />

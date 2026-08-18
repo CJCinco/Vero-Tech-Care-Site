@@ -40,6 +40,10 @@ export function ensureConfigured(env, names) {
   return names.every((name) => typeof env?.[name] === "string" && env[name].length >= 24);
 }
 
+export function ensureSetupPasswordConfigured(env) {
+  return typeof env?.CHECKIN_SETUP_PASSWORD === "string" && env.CHECKIN_SETUP_PASSWORD.length >= 10;
+}
+
 export function isSameOrigin(request) {
   const origin = request.headers.get("Origin");
   if (!origin) return false;
@@ -97,21 +101,65 @@ function normalizedText(value, field, maximumLength, { required = false } = {}) 
   return normalized;
 }
 
+const EVENT_MONTHS = Object.freeze({
+  january: 1,
+  february: 2,
+  march: 3,
+  april: 4,
+  may: 5,
+  june: 6,
+  july: 7,
+  august: 8,
+  september: 9,
+  october: 10,
+  november: 11,
+  december: 12
+});
+
+export function deriveEventId(titleValue, detailsValue) {
+  const title = normalizedText(titleValue, "eventTitle", 140, { required: true });
+  const details = normalizedText(detailsValue, "eventDetails", 220, { required: true });
+  const dateMatch = details.match(
+    /\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+([0-3]?\d),\s*(\d{4})\b/i
+  );
+  if (!dateMatch) throw new InputError("INVALID_FIELD", "eventDetails");
+
+  const month = EVENT_MONTHS[dateMatch[1].toLowerCase()];
+  const day = Number(dateMatch[2]);
+  const year = Number(dateMatch[3]);
+  const parsedDate = new Date(Date.UTC(year, month - 1, day));
+  if (
+    year < 2020 ||
+    year > 2100 ||
+    parsedDate.getUTCFullYear() !== year ||
+    parsedDate.getUTCMonth() !== month - 1 ||
+    parsedDate.getUTCDate() !== day
+  ) {
+    throw new InputError("INVALID_FIELD", "eventDetails");
+  }
+
+  const titleOwner = title.split(":", 1)[0];
+  const slug = titleOwner
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  const boundedSlug = slug.slice(0, 69).replace(/-+$/g, "");
+  if (boundedSlug.length < 3) throw new InputError("INVALID_FIELD", "eventTitle");
+
+  return `${boundedSlug}-${String(year).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+}
+
 export function validateEventInput(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     throw new InputError("INVALID_EVENT");
   }
 
-  const id = normalizedText(value.id, "eventId", 80, { required: true }).toLowerCase();
-  if (!/^[a-z0-9][a-z0-9-]{2,79}$/.test(id)) {
-    throw new InputError("INVALID_FIELD", "eventId");
-  }
-
-  return {
-    id,
-    title: normalizedText(value.title, "eventTitle", 140, { required: true }),
-    details: normalizedText(value.details, "eventDetails", 220)
-  };
+  const title = normalizedText(value.title, "eventTitle", 140, { required: true });
+  const details = normalizedText(value.details, "eventDetails", 220, { required: true });
+  return { id: deriveEventId(title, details), title, details };
 }
 
 export function validateSubmission(value) {

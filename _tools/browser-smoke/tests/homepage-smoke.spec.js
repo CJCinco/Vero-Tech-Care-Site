@@ -1345,6 +1345,10 @@ test("direct-only workshop check-in pages stay private, minimal, and senior-frie
   );
   expect(checkin).not.toMatch(/localStorage/i);
   expect(setup).toContain('type="password"');
+  expect(setup).toContain('id="setup-password"');
+  expect(setup).not.toContain('id="event-id"');
+  expect(setup).not.toContain("Workshop code");
+  expect(setup).not.toMatch(/id="setup-password"[\s\S]*?\svalue=/i);
   expect(setup).toBe(legacySetup);
   expect(sitemap).not.toContain("workshop-check-in");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/check-in</loc>");
