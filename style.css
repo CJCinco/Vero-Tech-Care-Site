@@ -1417,7 +1417,6 @@ h3 {
 .review-actions {
   display: grid;
   gap: 0.75rem;
-  width: 100%;
 }
 
 .review-actions .button {

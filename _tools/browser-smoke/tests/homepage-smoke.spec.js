@@ -911,16 +911,16 @@ test("Smartphone Confidence workflow stays discoverable, fact-backed, and low fr
   const noteHeadings = await page.locator("#notes h2").allTextContents();
   expect(noteHeadings.some((heading) => /^\d+\./.test(heading.trim()))).toBe(false);
   await expect(page.locator('.resource-next-steps a[href="https://g.page/r/CWFhUlhmySkxEAE/review"]')).toHaveText(
-    "Leave a Google Review"
+    "Google Review"
   );
   await expect(
     page.locator('.resource-next-steps a[href="https://www.facebook.com/61588252239878/reviews/"]')
-  ).toHaveText("Leave a Facebook Review");
+  ).toHaveText("Facebook Review");
   await expect(
     page.locator(
       '.resource-next-steps a[href="https://nextdoor.com/pages/vero-tech-care-vero-beach-fl/recommend/"]'
     )
-  ).toHaveText("Recommend on Nextdoor");
+  ).toHaveText("Nextdoor Review");
   await expect(page.locator(".review-actions a")).toHaveCount(3);
   await expect(page.locator('.resource-next-steps a[href="/special"]')).toHaveText(
     "Book the Tech Tune-Up"
