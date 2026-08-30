@@ -927,6 +927,18 @@ test("Smartphone Confidence workflow stays discoverable, fact-backed, and low fr
   );
   await assertNoOverflow(page);
 
+  await page.setViewportSize({ width: 1022, height: 998 });
+  const reviewPanelWidths = await page
+    .locator(".resource-next-steps .service-scope-panel")
+    .first()
+    .evaluate((panel) => ({
+      copy: panel.firstElementChild.getBoundingClientRect().width,
+      actions: panel.querySelector(".review-actions").getBoundingClientRect().width
+    }));
+  expect(reviewPanelWidths.copy).toBeGreaterThan(250);
+  expect(reviewPanelWidths.actions).toBeLessThan(300);
+  await assertNoOverflow(page);
+
   await page.emulateMedia({ media: "print" });
   await expect(page.locator(".site-header")).toBeHidden();
   await expect(page.locator(".site-footer")).toBeHidden();
