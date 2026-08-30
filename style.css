@@ -1414,6 +1414,18 @@ h3 {
   margin-top: 2.5rem;
 }
 
+.review-actions {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.review-actions .button {
+  width: 100%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
 .class-summary {
   display: grid;
   gap: 1rem;
