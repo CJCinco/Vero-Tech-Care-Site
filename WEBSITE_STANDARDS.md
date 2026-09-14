@@ -283,8 +283,9 @@ Current public offer model:
 
 - The `Tech Tune-Up Visit` is the single core public residential offer.
 - The public Tune-Up price is `$250`.
+- Describe the agreed service outcome without hourly rates, minimum hours, included time, or time allowances. The Tune-Up two-hour boundary is internal scope and scheduling guidance under `Services.md`; retain it internally.
 - Other residential outcomes, remote help, larger projects, and ongoing care may be described as capabilities available by request, not as a public package catalog.
-- Keep non-Tune-Up package prices, remote-session pricing, hourly floors, and membership tiers/prices internal unless CJ explicitly approves a new public offer change.
+- Keep non-Tune-Up package prices, remote-session pricing, internal hourly targets, and membership tiers/prices internal unless CJ explicitly approves a new public offer change.
 - Custom work should be described as scoped and priced before starting.
 - Specials should be added value or seasonal launch value, not percent-off or slashed-price framing.
 

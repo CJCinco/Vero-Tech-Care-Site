@@ -8,7 +8,7 @@ AI editing contract:
 - `WEBSITE_STANDARDS.md` is the primary, binding website editing standard. Current HTML/CSS implement it but do not outrank it.
 - This `README.md` is the site map and workflow reference.
 
-Current residential offer: `special.html` is the evergreen Tech Tune-Up Visit landing and booking page; `/special` is the public URL. The Tech Tune-Up is the single core public residential offer at `$250`. Other home outcomes, remote help, larger projects, and ongoing care remain available by request or custom quote without a public package or membership price catalog. Two-hour language may describe included scope, but dated promo/code language should not return without a clear expiry/removal plan.
+Current residential offer: `special.html` is the evergreen Tech Tune-Up Visit landing and booking page; `/special` is the public URL. The Tech Tune-Up is the single core public residential offer at `$250`. Other home outcomes, remote help, larger projects, and ongoing care remain available by request or custom quote without a public package or membership price catalog. Duration allowances stay internal; client copy describes the service outcome and price. Dated promo/code language should not return without a clear expiry/removal plan.
 
 `book.html` is a no-indexed legacy booking file using the same verified Tech Tune-Up appointment embed. The public `/book` and `/book.html` routes redirect to `/special`.
 

@@ -2027,6 +2027,16 @@ test("shared HTML source contracts stay valid", async () => {
   }
 });
 
+test("residential job pricing keeps time allowances out of public copy", async () => {
+  for (const fileName of ["special.html", "home-tech-help.html", "book.html", "tips-iphone-storage.html", "tips-when-to-book-help.html"]) {
+    const source = fs.readFileSync(path.join(siteRoot, fileName), "utf8");
+    expect(source, `${fileName} retains the public Tune-Up price`).toContain("$250");
+    expect(source, `${fileName} keeps internal time allowances out of copy and metadata`).not.toMatch(
+      /(?:\b(?:one|two|1|2)[ -]hours?\b|\bminimum[ -]hours?\b|\$\d+\s*(?:per\s+hour|\/\s*(?:hr|hour)))/i
+    );
+  }
+});
+
 test("visual system contract stays stable", async () => {
   const stylesheet = fs.readFileSync(path.join(siteRoot, "style.css"), "utf8");
 
