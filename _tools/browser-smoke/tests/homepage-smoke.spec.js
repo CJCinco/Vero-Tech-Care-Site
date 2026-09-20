@@ -4,6 +4,7 @@ const path = require("path");
 const { pathToFileURL } = require("url");
 
 const siteRoot = path.resolve(__dirname, "../../..");
+const heroCardPages = new Set(["index.html", "home-tech-help.html", "business-websites.html"]);
 const operationalHtmlFiles = new Set([
   "check-in.html",
   "workshop-check-in.html",
@@ -76,8 +77,8 @@ async function installSetupCatalog(page, payload = setupCatalogPayload) {
 
 const primaryHeaderPages = [
   ["Home", homepageUrl],
-  ["Personal Tech Support", homeTechHelpUrl],
-  ["Business Tech Support", businessWebsitesUrl]
+  ["Personal Support", homeTechHelpUrl],
+  ["Business Support", businessWebsitesUrl]
 ];
 
 const secondaryPages = [
@@ -99,8 +100,8 @@ const secondaryPages = [
 
 const sharedHeroPages = [
   ["Home", "index.html"],
-  ["Personal Tech Support", "home-tech-help.html"],
-  ["Business Tech Support", "business-websites.html"],
+  ["Personal Support", "home-tech-help.html"],
+  ["Business Support", "business-websites.html"],
   ["Business Tech Consult", "business-consult.html"],
   ["Tech Tune-Up", "special.html"],
   ["Legacy booking", "book.html"],
@@ -110,17 +111,17 @@ const sharedHeroPages = [
 
 const mobileDockPages = [
   ["Home", "index.html", "Choose Support", "#choose-path", false],
-  ["Personal Tech Support", "home-tech-help.html", "Book Tech Tune-Up", "/special", false],
-  ["Business Tech Support", "business-websites.html", "Book Consult", "/business-consult", false],
+  ["Personal Support", "home-tech-help.html", "Book Tech Tune-Up", "/special", false],
+  ["Business Support", "business-websites.html", "Book Consult", "/business-consult", false],
   ["Business Tech Consult", "business-consult.html", "Book Consult", "#booking-embed", true],
   ["Tech Tune-Up", "special.html", "Book Tech Tune-Up", "#booking-embed", true],
   ["Legacy booking", "book.html", "Book Tech Tune-Up", "#booking-embed", true],
   ["Digital Presence Checkup", "book-digital-presence-checkup.html", "Book Checkup", "#booking-embed", true],
   ["404", "404.html", "Book Tech Tune-Up", "/special", false],
   ["Tech Tips", "tech-tips.html", "Book Tech Tune-Up", "/special", false],
-  ["Workshops", "workshops.html", "Book Tech Tune-Up", "/special", false],
+  ["Workshops", "workshops.html", "Ask CJ", "#workshop-contact", false],
   ["Smartphone Confidence", "smartphone-confidence.html", "Choose a Class", "#series-parts", false],
-  ["Smartphone Basics", "smartphone-confidence-basics.html", "Explore Series", "/smartphone-confidence", false],
+  ["Smartphone Basics", "smartphone-confidence-basics.html", "Explore Series", "/workshops#smartphone-confidence", false],
   ["AI for Everyday Life", "ai-for-everyday-life.html", "View Part 1", "#series-parts", false],
   ["Future AI Workshop", "ai-for-everyday-life-workshop.html", "Ask About a Future Session", "#interest", false],
   ["Phone Clean Up", "phone-clean-up-speed-up.html", "Workshop Details", "#workshop-details", false],
@@ -174,7 +175,7 @@ async function assertPrimaryNavigation(page, currentHref, currentLabel, ctaLabel
   await expect(shell).toHaveCount(1);
   await expect(shell.locator(".topbar")).toBeHidden();
   await expect(shell.locator(".brand-mark")).toHaveText("Vero Tech Care");
-  await expect(shell.locator(".site-nav-links a")).toHaveCount(3);
+  await expect(shell.locator(".site-nav-links a")).toHaveText(["Home", "Personal Support", "Business Support", "Workshops"]);
   await expect(activeLink).toHaveCount(1);
   await expect(activeLink).toHaveAttribute("href", currentHref);
   await expect(activeLink).toHaveText(currentLabel);
@@ -356,11 +357,11 @@ async function runHomepageSmoke(page, viewportName, viewport) {
   );
   expect(homepageStructure).toEqual(["choose-path", "about", "contact"]);
 
-  await expect(page.locator(".nav-links a")).toHaveCount(3);
+  await expect(page.locator(".nav-links a")).toHaveCount(4);
   await expect(page.locator('.nav-links a[href="/"]')).toHaveText("Home");
   await expect(page.locator('.nav-links a[href="/"]')).toHaveAttribute("aria-current", "page");
-  await expect(page.locator('.nav-links a[href="/home-tech-help"]')).toHaveText("Personal Tech Support");
-  await expect(page.locator('.nav-links a[href="/business-websites"]')).toHaveText("Business Tech Support");
+  await expect(page.locator('.nav-links a[href="/home-tech-help"]')).toHaveText("Personal Support");
+  await expect(page.locator('.nav-links a[href="/business-websites"]')).toHaveText("Business Support");
   await expect(page.locator(".site-navigation-shell .nav-cta")).toHaveCount(0);
   await expect(page.locator(".overview-hero .hero-actions")).toHaveCount(0);
   await expect(page.locator(".page-nav")).toHaveCount(0);
@@ -390,7 +391,7 @@ async function runHomeTechHelpSmoke(page, viewportName, viewport) {
   await page.setViewportSize(viewport);
   await page.goto(homeTechHelpUrl, { waitUntil: "domcontentloaded" });
   await expect(page).toHaveTitle(/In-Home Tech Support in Vero Beach/);
-  await assertPrimaryNavigation(page, "/home-tech-help", "Personal Tech Support", "Book Tune-Up");
+  await assertPrimaryNavigation(page, "/home-tech-help", "Personal Support", "Book Tune-Up");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     "https://verotechcare.com/home-tech-help"
@@ -441,18 +442,18 @@ async function runHomeTechHelpSmoke(page, viewportName, viewport) {
   ]);
 
   await expect(page.locator('.nav-links a[href="/business-websites"]')).toHaveCount(1);
-  await expect(page.locator(".nav-links a")).toHaveCount(3);
+  await expect(page.locator(".nav-links a")).toHaveCount(4);
   await expect(page.locator('.nav-links a[href="/"]')).toHaveText("Home");
-  await expect(page.locator('.nav-links a[href="/home-tech-help"]')).toHaveText("Personal Tech Support");
+  await expect(page.locator('.nav-links a[href="/home-tech-help"]')).toHaveText("Personal Support");
   await expect(page.locator('.nav-links a[href="/home-tech-help"]')).toHaveAttribute(
     "aria-current",
     "page"
   );
-  await expect(page.locator('.nav-links a[href="/business-websites"]')).toHaveText("Business Tech Support");
+  await expect(page.locator('.nav-links a[href="/business-websites"]')).toHaveText("Business Support");
   await expect(page.locator(".business-bridge-main")).toContainText("free 15-minute consultation");
   await expect(page.locator(".business-bridge-main")).not.toContainText("$1,500");
   await expect(page.locator('.business-bridge-main a[href="/business-websites"]')).toHaveText(
-    "Explore Business Tech Support"
+    "Explore Business Support"
   );
   await expect(page.locator('.nav-cta[href="/special"]')).toHaveText("Book Tune-Up");
   await expect(page.locator(".page-nav")).toHaveCount(0);
@@ -499,11 +500,11 @@ async function runBusinessWebsitesSmoke(page, viewportName, viewport) {
 
   await page.setViewportSize(viewport);
   await page.goto(businessWebsitesUrl, { waitUntil: "domcontentloaded" });
-  await expect(page).toHaveTitle(/Business Tech Support in Vero Beach/);
+  await expect(page).toHaveTitle(/Business Support in Vero Beach/);
   await assertPrimaryNavigation(
     page,
     "/business-websites",
-    "Business Tech Support",
+    "Business Support",
     "Book Consult"
   );
   await expect(page.locator("#hero-title")).toHaveText("For local business owners.");
@@ -520,14 +521,14 @@ async function runBusinessWebsitesSmoke(page, viewportName, viewport) {
   await expect(page.locator(".business-bridge-main")).toContainText("For home and family");
   await expect(page.locator(".business-bridge-main")).toContainText("Need technology help at home?");
   await expect(page.locator('.business-bridge-main a[href="/home-tech-help"]')).toHaveText(
-    "Explore Personal Tech Support"
+    "Explore Personal Support"
   );
   await expect(page.locator("body")).not.toContainText("Digital Presence");
   await expect(page.locator("body")).not.toContainText("$300");
   await expect(page.locator("body")).not.toContainText("Book Checkup");
   await expect(page.locator('.nav-links a[href="/"]')).toHaveCount(1);
   await expect(page.locator('.nav-links a[href="/home-tech-help"]')).toHaveText(
-    "Personal Tech Support"
+    "Personal Support"
   );
   await expect(page.locator('.nav-links a[href="/business-websites"]')).toHaveAttribute(
     "aria-current",
@@ -585,7 +586,7 @@ async function runBusinessConsultBookingSmoke(page, viewportName, viewport) {
   await assertPrimaryNavigation(
     page,
     "/business-websites",
-    "Business Tech Support",
+    "Business Support",
     "Choose Time"
   );
   await expect(page.locator("#hero-title")).toHaveText("Free 15-minute business consult.");
@@ -594,7 +595,7 @@ async function runBusinessConsultBookingSmoke(page, viewportName, viewport) {
     "href",
     "https://verotechcare.com/business-consult"
   );
-  await expect(page.locator("header .proof-strip .proof-card")).toHaveCount(3);
+  await expect(page.locator("header .proof-strip .proof-card")).toHaveCount(0);
   await expect(page.locator("#schedule-title")).toHaveText("Choose a time.");
   await expect(page.locator("#booking")).toContainText("CJ will call");
   await expect(page.locator("#booking")).toContainText("do not send passwords");
@@ -667,8 +668,7 @@ async function runDigitalPresenceBookingSmoke(page, viewportName, viewport) {
   await expect(page).toHaveTitle(/Book Digital Presence Checkup/);
   await expect(page.locator("#hero-title")).toHaveText("Digital Presence Checkup.");
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex,follow");
-  await expect(page.locator("header .proof-strip .proof-card")).toHaveCount(3);
-  await expect(page.locator("header .proof-strip")).toContainText("One action plan");
+  await expect(page.locator("header .proof-strip .proof-card")).toHaveCount(0);
   await expect(page.locator("body")).not.toContainText("through 2026");
   await expect(page.locator("#booking")).toContainText("book at least 3 business days out");
   await expect(page.locator("#booking .booking-guide article")).toHaveCount(0);
@@ -749,27 +749,27 @@ test("Vero Tech Care homepage small-phone navigation smoke test", async ({ page 
   await runHomepageSmoke(page, "small-phone", { width: 320, height: 568 });
 });
 
-test("Personal Tech Support page desktop smoke test", async ({ page }) => {
+test("Personal Support page desktop smoke test", async ({ page }) => {
   await runHomeTechHelpSmoke(page, "desktop", { width: 1440, height: 1100 });
 });
 
-test("Personal Tech Support page mobile smoke test", async ({ page }) => {
+test("Personal Support page mobile smoke test", async ({ page }) => {
   await runHomeTechHelpSmoke(page, "mobile", { width: 390, height: 900 });
 });
 
-test("Personal Tech Support page small-phone navigation smoke test", async ({ page }) => {
+test("Personal Support page small-phone navigation smoke test", async ({ page }) => {
   await runHomeTechHelpSmoke(page, "small-phone", { width: 320, height: 568 });
 });
 
-test("Business Tech Support page desktop smoke test", async ({ page }) => {
+test("Business Support page desktop smoke test", async ({ page }) => {
   await runBusinessWebsitesSmoke(page, "desktop", { width: 1440, height: 1100 });
 });
 
-test("Business Tech Support page mobile smoke test", async ({ page }) => {
+test("Business Support page mobile smoke test", async ({ page }) => {
   await runBusinessWebsitesSmoke(page, "mobile", { width: 390, height: 900 });
 });
 
-test("Business Tech Support page small-phone navigation smoke test", async ({ page }) => {
+test("Business Support page small-phone navigation smoke test", async ({ page }) => {
   await runBusinessWebsitesSmoke(page, "small-phone", { width: 320, height: 568 });
 });
 
@@ -803,8 +803,16 @@ test("every customer-facing page shares the four-action mobile dock", async ({ p
         return Math.max(showAfter + 1, Math.min(showAfter + 120, schedulerTop - window.innerHeight - 8));
       });
       await page.evaluate((position) => window.scrollTo(0, position), revealPosition);
-      await expect(dock, `${pageName} dock before scheduler`).toHaveClass(/is-visible/);
-      await expect(dock).toHaveAttribute("aria-hidden", "false");
+      // Short headers can bring the scheduler into view before the dock trigger.
+      const schedulerInView = await page.locator(".scheduler-embed-shell").evaluate((element) => {
+        const bounds = element.getBoundingClientRect();
+        return bounds.top < window.innerHeight && bounds.bottom > 0;
+      });
+      await expect(dock, `${pageName} dock respects scheduler visibility`).toHaveAttribute(
+        "aria-hidden", String(schedulerInView)
+      );
+      if (schedulerInView) await expect(dock).toBeHidden();
+      else await expect(dock).toHaveClass(/is-visible/);
       await assertNoOverflow(page);
 
       await page.locator(".scheduler-embed-shell").scrollIntoViewIfNeeded();
@@ -827,16 +835,17 @@ test("Smartphone Confidence workflow stays discoverable, fact-backed, and low fr
   await page.goto(pathToFileURL(path.join(siteRoot, "index.html")).toString(), {
     waitUntil: "domcontentloaded"
   });
-  await expect(page.locator('#choose-path a[href="/smartphone-confidence"]')).toHaveText(
+  await expect(page.locator('#choose-path a[href="/workshops#smartphone-confidence"]')).toHaveText(
     "Explore community smartphone workshops"
   );
 
   await page.goto(pathToFileURL(path.join(siteRoot, "workshops.html")).toString(), {
     waitUntil: "domcontentloaded"
   });
-  await expect(page.locator('main a[href="/smartphone-confidence"]')).toHaveText(
-    "Explore Smartphone Confidence"
-  );
+  await expect(page.locator("#smartphone-confidence .catalog-row")).toHaveCount(3);
+  // The chosen catalog keeps workshop browsing inline; resource routes remain directly accessible.
+  await expect(page.locator('main a[href="/smartphone-confidence-basics"]')).toHaveCount(0);
+  await assertPrimaryNavigation(page, "/workshops", "Workshops");
   const workshopNavigation = page.locator(".primary-site-nav");
   await expect(workshopNavigation).not.toHaveClass(/is-open/);
   await page.locator(".nav-menu-toggle").click();
@@ -952,17 +961,36 @@ test("additional workshop routes stay factual and fail closed", async ({ page })
   await page.goto(pathToFileURL(path.join(siteRoot, "workshops.html")).toString(), {
     waitUntil: "domcontentloaded"
   });
-  await expect(page.locator('main a[href="/ai-for-everyday-life"]')).toHaveCount(2);
-  await expect(page.locator('main a[href="/phone-clean-up-speed-up"]')).toHaveText(
-    "Phone Clean Up & Speed Up"
-  );
-  await expect(page.locator('main a[href="/ai-for-everyday-life-workshop"]')).toHaveText(
-    "AI for Everyday Life"
-  );
-  await expect(page.locator('main a[href="/phone-clean-up-speed-up-workshop"]')).toHaveText(
-    "Phone Clean Up & Speed Up"
-  );
+  await expect(page.locator(".catalog-series")).toHaveCount(2);
+  await expect(page.locator("#ai-for-everyday-life .catalog-row")).toHaveCount(3);
+  // Series/sequence labels are separate from titles in the approved topic catalog.
+  await expect(page.locator("#ai-for-everyday-life h3")).toHaveText([
+    "Understand AI", "Direct AI", "Put AI to Work"
+  ]);
+  await page.getByRole('button', { name: 'AI', exact: true }).click();
+  await expect(page.locator('#smartphone-confidence')).toBeHidden();
+  await expect(page.locator('#ai-for-everyday-life')).toBeVisible();
+  await expect(page.locator('#workshop-result-count')).toHaveText('3 AI workshops');
+  await page.getByRole('button', { name: 'Smartphone', exact: true }).click();
+  await expect(page.locator('#ai-for-everyday-life')).toBeHidden();
+  await expect(page.locator('#workshop-result-count')).toHaveText('3 smartphone workshops');
+  await page.evaluate(() => { location.hash = '#ai-part-2'; });
+  await expect(page.locator('#ai-part-2')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'AI', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', { name: 'All workshops', exact: true }).click();
+  await expect(page.locator('.catalog-row:visible')).toHaveCount(6);
+  await expect(page.locator('#workshop-result-count')).toHaveText('6 workshops');
+  await expect(page.locator("#smartphone-part-2")).toContainText(/clutter/);
+  await expect(page.locator("#smartphone-part-2")).toContainText(/storage/);
+  await expect(page.locator("main")).not.toContainText(/20\d{2}|forthcoming|registration|past workshops|being planned|Unity Spiritual Center/i);
+  await expect(page.locator('main a[href*="acuityscheduling"]')).toHaveCount(0);
+  await expect(page.locator("main .button")).toHaveCount(1);
+  await expect(page.locator("main .button")).toHaveText("Ask About a Workshop");
+  await expect(page.locator('main .button')).toHaveAttribute("href", "sms:+17725884324");
+  await expect(page.locator("header .proof-card, header .nav-cta")).toHaveCount(0);
+  await assertNoOverflow(page);
 
+  // Retained source files preserve historical evidence; HTTP routes redirect to the directory.
   await page.goto(pathToFileURL(path.join(siteRoot, "ai-for-everyday-life.html")).toString(), {
     waitUntil: "domcontentloaded"
   });
@@ -1148,7 +1176,7 @@ test("customer-facing pages share compact desktop hero spacing without hero acti
     const cards = page.locator("header .proof-strip .proof-card");
     await expect(hero, `${pageName} shared hero`).toHaveCount(1);
     await expect(hero.locator(".hero-actions"), `${pageName} hero actions`).toHaveCount(0);
-    await expect(cards, `${pageName} hero cards`).toHaveCount(3);
+    await expect(cards, `${pageName} hero cards`).toHaveCount(heroCardPages.has(fileName) ? 3 : 0);
     await expect(cards.locator(".card-label"), `${pageName} hero card eyebrow labels`).toHaveCount(0);
 
     const metrics = await page.evaluate(() => {
@@ -1163,7 +1191,7 @@ test("customer-facing pages share compact desktop hero spacing without hero acti
         titleTop: title.getBoundingClientRect().top - sharedHero.getBoundingClientRect().top,
         leadTop: lead.getBoundingClientRect().top - sharedHero.getBoundingClientRect().top,
         leadBottom: lead.getBoundingClientRect().bottom - sharedHero.getBoundingClientRect().top,
-        cardGap: sharedCards[0].getBoundingClientRect().top - lead.getBoundingClientRect().bottom,
+        cardGap: sharedCards.length ? sharedCards[0].getBoundingClientRect().top - lead.getBoundingClientRect().bottom : null,
         cardHeights: sharedCards.map((card) => card.getBoundingClientRect().height),
         scrollWidth: document.documentElement.scrollWidth,
         viewportWidth: document.documentElement.clientWidth
@@ -1180,13 +1208,15 @@ test("customer-facing pages share compact desktop hero spacing without hero acti
     expect(metrics.titleTop, `${pageName} title should begin inside the hero`).toBeGreaterThanOrEqual(0);
     expect(metrics.leadTop, `${pageName} lead should follow the title`).toBeGreaterThan(metrics.titleTop);
     expect(metrics.leadBottom, `${pageName} lead should fit inside the hero`).toBeLessThanOrEqual(metrics.heroHeight);
-    expect(metrics.cardGap, `${pageName} card spacing`).toBeGreaterThanOrEqual(24);
-    expect(metrics.cardGap, `${pageName} card spacing`).toBeLessThanOrEqual(48);
-    expect(metrics.cardHeights, `${pageName} card heights`).toEqual(baseline.cardHeights);
+    if (metrics.cardHeights.length) {
+      expect(metrics.cardGap, `${pageName} card spacing`).toBeGreaterThanOrEqual(24);
+      expect(metrics.cardGap, `${pageName} card spacing`).toBeLessThanOrEqual(48);
+      expect(metrics.cardHeights, `${pageName} card heights`).toEqual(baseline.cardHeights);
+    }
   }
 });
 
-test("customer-facing section headings avoid redundant top gaps", async ({ page }) => {
+test("customer-facing section openings avoid redundant top gaps", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
   const structuralHeadingSelector = [
     ".section-heading > h1",
@@ -1195,7 +1225,9 @@ test("customer-facing section headings avoid redundant top gaps", async ({ page 
     ".contact-copy > h2:first-child",
     ".scheduler-shell > h2:first-child",
     ".article-content > h1:first-child",
-    ".article-content > h2:first-child"
+    ".article-content > h2:first-child",
+    // Breadcrumbs now begin guide articles; their top spacing obeys the same contract.
+    ".article-content > .article-breadcrumbs:first-child"
   ].join(", ");
 
   for (const [pageName, fileName] of sharedHeroPages) {
@@ -1352,12 +1384,25 @@ test("public route and sitemap contracts stay simplified", async () => {
   expect(sitemap).toContain("https://verotechcare.com/business-websites");
   expect(sitemap).toContain("https://verotechcare.com/business-consult");
   expect(sitemap).toContain("https://verotechcare.com/home-tech-help");
-  expect(sitemap).toContain("https://verotechcare.com/smartphone-confidence");
+  expect(sitemap).not.toContain("<loc>https://verotechcare.com/smartphone-confidence</loc>");
   expect(sitemap).toContain("https://verotechcare.com/smartphone-confidence-basics");
-  expect(sitemap).toContain("https://verotechcare.com/ai-for-everyday-life");
-  expect(sitemap).toContain("https://verotechcare.com/ai-for-everyday-life-workshop");
-  expect(sitemap).toContain("https://verotechcare.com/phone-clean-up-speed-up");
-  expect(sitemap).toContain("https://verotechcare.com/phone-clean-up-speed-up-workshop");
+  expect(sitemap).toContain("<loc>https://verotechcare.com/workshops</loc>");
+  for (const [route, anchor] of [
+    ["ai-for-everyday-life", "ai-for-everyday-life"],
+    ["ai-for-everyday-life-workshop", "ai-for-everyday-life"],
+    ["phone-clean-up-speed-up", "smartphone-part-2"],
+    ["phone-clean-up-speed-up-workshop", "smartphone-part-2"]
+  ]) {
+    for (const suffix of ["", ".html"]) {
+      expect(redirects).toContain(`/${route}${suffix} /workshops#${anchor} 301`);
+    }
+  }
+  expect(fs.readFileSync(path.join(siteRoot, "smartphone-confidence.html"), "utf8"))
+    .toContain('<meta name="robots" content="noindex,follow" />');
+  expect(sitemap).not.toContain("<loc>https://verotechcare.com/ai-for-everyday-life</loc>");
+  expect(sitemap).not.toContain("<loc>https://verotechcare.com/ai-for-everyday-life-workshop</loc>");
+  expect(sitemap).not.toContain("<loc>https://verotechcare.com/phone-clean-up-speed-up</loc>");
+  expect(sitemap).not.toContain("<loc>https://verotechcare.com/phone-clean-up-speed-up-workshop</loc>");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/book</loc>");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/book-digital-presence-checkup</loc>");
   expect(sitemap).not.toContain("<loc>https://verotechcare.com/digital-presence-management</loc>");
@@ -2001,14 +2046,13 @@ test("shared HTML source contracts stay valid", async () => {
     );
 
     const heroCards = sharedHeader.match(/<section class="proof-strip[\s\S]*?<\/section>/i)?.[0];
-    expect(heroCards, `${fileName} should include the shared hero card strip`).toBeTruthy();
-    expect(
-      (heroCards.match(/<article class="proof-card\b/gi) || []).length,
-      `${fileName} should use exactly three hero cards`
-    ).toBe(3);
-    expect(heroCards, `${fileName} hero cards should not use eyebrow labels`).not.toMatch(
-      /\bcard-label\b/i
-    );
+    if (heroCardPages.has(fileName)) {
+      expect(heroCards, `${fileName} should retain the hero card strip`).toBeTruthy();
+      expect((heroCards.match(/<article class="proof-card\b/gi) || []).length).toBe(3);
+      expect(heroCards, `${fileName} hero cards should not use eyebrow labels`).not.toMatch(/\bcard-label\b/i);
+    } else {
+      expect(heroCards, `${fileName} should omit hero cards`).toBeUndefined();
+    }
     expect(source, `${fileName} should not publish legacy residential packages or prices`).not.toMatch(
       /(?:Whole-Home Tech Reset|New Device Done Right|Photo (?:&|&amp;) Memory Safety Package|Scam Safety (?:&|&amp;) Account Security Visit|Life Story \/ Tribute Video|Remote Fix Session|Tech Care Check-In|Tech Care Plus|Family Tech Care|\$(?:125|225|325|350|495|750)\b|\$\d+\s+per month)/i
     );
@@ -2046,4 +2090,81 @@ test("visual system contract stays stable", async () => {
   expect(stylesheet).toMatch(/font-family:\s*"Avenir Next",\s*"Segoe UI",\s*"Helvetica Neue",\s*Arial,\s*sans-serif;/i);
   expect(stylesheet).toMatch(/font-family:\s*"Big Caslon",\s*"Book Antiqua",\s*"Palatino Linotype",\s*serif;/i);
   expect(stylesheet).toMatch(/\.wrap\s*\{[\s\S]*?width:\s*min\(1120px,\s*calc\(100%\s*-\s*1\.5rem\)\);/i);
+});
+
+
+// Shared presentation repair: cover every customer-facing header, including legacy secondary markup.
+for (const width of [320, 390, 768, 820, 834, 1024, 1100, 1194, 1440]) {
+  test(`all customer-facing navigation stays aligned at ${width}px`, async ({ page }) => {
+    test.setTimeout(60000);
+    await page.setViewportSize({ width, height: 1100 });
+    await page.route(/^https?:/, (route) => route.abort());
+    let baseline;
+    for (const [pageName, fileName] of sharedHeroPages) {
+      await page.goto(pathToFileURL(path.join(siteRoot, fileName)).toString(), { waitUntil: "domcontentloaded" });
+      const nav = page.locator(".primary-site-nav");
+      await expect(nav, pageName).toHaveCount(1);
+      await expect(page.locator(".site-navigation-shell"), pageName).toHaveCount(1);
+      await expect(nav.locator(".site-nav-links a"), pageName).toHaveText([
+        "Home", "Personal Support", "Business Support", "Workshops"
+      ]);
+      const metrics = await nav.evaluate((el) => {
+        const rect = el.getBoundingClientRect();
+        const brand = el.querySelector(".brand").getBoundingClientRect();
+        return { x: rect.x, width: rect.width, height: rect.height, brandX: brand.x, brandY: brand.y };
+      });
+      baseline ??= metrics;
+      expect(metrics, `${pageName} consistent navigation frame`).toEqual(baseline);
+      if (width < 820) {
+        const toggle = nav.locator(".nav-menu-toggle");
+        await expect(toggle).toBeVisible();
+        await expect(nav.locator(".nav-cluster")).toBeHidden();
+        await toggle.press("Enter");
+        await expect(toggle).toHaveAttribute("aria-expanded", "true");
+        for (const link of await nav.locator(".site-nav-links a").all()) await expect(link).toBeVisible();
+      }
+      const geometry = await nav.evaluate((el) => {
+        const visible = [...el.querySelectorAll(".brand, .site-nav-links a, .nav-cta, .nav-menu-toggle")]
+          .filter((node) => node.getClientRects().length && getComputedStyle(node).visibility !== "hidden");
+        const bounds = visible.map((node) => ({ name: node.textContent.trim(), rect: node.getBoundingClientRect() }));
+        return {
+          clipped: bounds.filter(({rect}) => rect.left < -1 || rect.right > innerWidth + 1).map(({name}) => name),
+          overlaps: bounds.flatMap((a, i) => bounds.slice(i + 1).filter((b) =>
+            Math.min(a.rect.right, b.rect.right) - Math.max(a.rect.left, b.rect.left) > 1 &&
+            Math.min(a.rect.bottom, b.rect.bottom) - Math.max(a.rect.top, b.rect.top) > 1
+          ).map((b) => [a.name, b.name]))
+        };
+      });
+      expect(geometry, `${pageName} unclipped non-overlapping controls`).toEqual({ clipped: [], overlaps: [] });
+      await assertNoOverflow(page);
+      if (width < 820) {
+        await page.keyboard.press("Escape");
+        await expect(nav.locator(".nav-cluster")).toBeHidden();
+        await expect(nav.locator(".nav-menu-toggle")).toBeFocused();
+      }
+    }
+  });
+}
+
+test("Tech Tips index and articles expose matching discovery and author metadata", async ({ page }) => {
+  await page.goto(pathToFileURL(path.join(siteRoot, "tech-tips.html")).toString());
+  await expect(page.locator("#guides .path-number")).toHaveCount(0);
+  const links = await page.locator("#guides .path-card h3 a").evaluateAll((nodes) => nodes.map((node) => ({ title: node.textContent, href: node.getAttribute("href") })));
+  expect(links).toHaveLength(5);
+  for (const link of links) {
+    await page.goto(pathToFileURL(path.join(siteRoot, `${link.href.slice(1)}.html`)).toString());
+    await expect(page.locator(".article-byline a")).toHaveAttribute("href", "/#about");
+    await expect(page.locator('.article-breadcrumbs a[href="/tech-tips"]')).toBeVisible();
+    const data = await page.locator('script[type="application/ld+json"]').evaluateAll((nodes) => nodes.map((node) => JSON.parse(node.textContent)));
+    const article = data.find((item) => item["@type"] === "Article");
+    const breadcrumbs = data.find((item) => item["@type"] === "BreadcrumbList");
+    expect(article.headline).toBe(link.title);
+    expect(article.author.url).toBe("https://verotechcare.com/#about");
+    expect(breadcrumbs.itemListElement.at(-1).item).toBe(article.mainEntityOfPage);
+    for (const related of await page.locator(".related-guides a").all()) {
+      const href = await related.getAttribute("href");
+      expect(href).not.toBe(link.href);
+      expect(fs.existsSync(path.join(siteRoot, `${href.slice(1)}.html`))).toBe(true);
+    }
+  }
 });

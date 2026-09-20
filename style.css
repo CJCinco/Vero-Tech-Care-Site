@@ -1364,7 +1364,8 @@ h3 {
   line-height: 1.1;
 }
 
-.article-content h2:first-child {
+.article-content h2:first-child,
+.article-content .article-byline + h2 {
   margin-top: 0;
 }
 
@@ -2041,6 +2042,15 @@ summary:focus-visible {
   background-size: 100% 100%, auto 100%, 100% 100%;
 }
 
+/* Shorter secondary headers still fill the full width with the beach image. */
+.primary-page-header:not(:has(.proof-strip)) {
+  background-size: 100% 100%, cover, 100% 100%;
+}
+
+.primary-page-header:not(:has(.proof-strip))::before {
+  background-size: 100% 100%, 100% 100%, cover, 100% 100%;
+}
+
 .primary-page-header .topbar-content,
 .primary-page-header .brand-tag,
 .primary-page-header .site-nav-links a,
@@ -2198,6 +2208,8 @@ summary:focus-visible {
   }
 
   .primary-page-header .brand {
+    min-height: 3.6rem;
+    justify-content: center;
     grid-column: 1;
     justify-self: start;
     min-width: 0;
@@ -2247,6 +2259,27 @@ summary:focus-visible {
   .primary-page-header .proof-card {
     height: 11.5rem;
     overflow: hidden;
+  }
+}
+
+/* Keep all four destinations clear of the brand and booking action on tablets. */
+@media (min-width: 820px) and (max-width: 1099px) {
+  .primary-page-header .primary-site-nav {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .primary-page-header .brand {
+    grid-row: 1;
+  }
+
+  .primary-page-header .nav-cta {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .primary-page-header .site-nav-links {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 }
 
@@ -2359,5 +2392,72 @@ summary:focus-visible {
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* Workshop catalog: compact rows, with a consistent tint for each series. */
+.workshop-catalog { padding-top: 2rem; }
+.workshop-catalog [hidden] { display: none !important; }
+.catalog-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.catalog-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; }
+.catalog-filters { display: flex; flex-wrap: wrap; gap: .5rem; }
+.catalog-filters button { font: inherit; font-size: .94rem; font-weight: 600; border: 1px solid var(--line); border-radius: 999px; background: transparent; padding: .55rem 1rem; min-height: 44px; cursor: pointer; color: var(--text); }
+.catalog-filters button[aria-pressed="true"] { background: var(--accent-deep); border-color: var(--accent-deep); color: var(--white); }
+.catalog-filters button:hover { border-color: var(--accent-deep); }
+.catalog-filters button:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+#workshop-result-count { margin: 0; white-space: nowrap; font-size: .9rem; color: var(--text-soft); }
+.catalog-series { border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; scroll-margin-top: 1.5rem; }
+.catalog-series + .catalog-series { margin-top: 1rem; }
+.catalog-series#smartphone-confidence { background: rgba(62, 140, 140, .10); border-left: 3px solid var(--accent-deep); }
+.catalog-series#ai-for-everyday-life { background: var(--ivory-soft); border-left: 3px solid var(--stone-soft); }
+.catalog-row { display: grid; grid-template-columns: 180px 1fr 1.35fr; gap: 1.6rem; align-items: start; padding: 1.35rem 1rem; scroll-margin-top: 1.5rem; }
+.catalog-row + .catalog-row { border-top: 1px solid rgba(17, 21, 20, 0.14); }
+.catalog-row h3 { font-size: 1.12rem; line-height: 1.4; margin: 0; }
+.catalog-meta { color: var(--accent-deep); font-weight: 600; font-size: .9rem; line-height: 1.5; }
+.catalog-meta small { display: block; font-size: .875rem; color: var(--text-soft); font-weight: 400; margin-top: .25rem; }
+.catalog-row p { margin: 0; color: var(--text-soft); line-height: 1.6; }
+.workshop-contact { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding-block: 2.5rem; margin-top: 2rem; border-top: 1px solid rgba(17, 21, 20, 0.14); }
+.workshop-contact .section-heading { margin: 0; }
+.workshop-contact h2 { font-size: clamp(1.7rem,2.6vw,2.3rem); margin: 0 0 .6rem; line-height: 1.15; }
+.workshop-contact p { margin: 0; }
+.workshop-contact .button { flex-shrink: 0; }
+@media(max-width:760px) {
+  .workshop-catalog { padding-top: 1.5rem; }
+  .catalog-top { align-items: start; flex-direction: column; gap: .6rem; }
+  .catalog-row { grid-template-columns: 1fr; gap: .65rem; padding: 1.15rem 1rem; }
+  .catalog-meta { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: baseline; }
+  .catalog-meta small { margin: 0; }
+  .workshop-contact { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+}
+
+/* Compact reading navigation for the existing Local Tech Guide. */
+.article-breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 0.65rem;
+  font-size: 0.95rem;
+}
+
+.article-content .article-byline {
+  margin-bottom: 1.75rem;
+  font-size: 0.95rem;
+}
+
+.related-guides {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(17, 21, 20, 0.14);
+}
+
+.tech-guide-index .primary-page-hero h1 {
+  max-width: 19ch;
+  text-wrap: balance;
+}
+
+@media (min-width: 640px) and (max-width: 1099px) {
+  .tech-guide-index .service-path-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

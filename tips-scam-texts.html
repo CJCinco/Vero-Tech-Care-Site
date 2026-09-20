@@ -34,54 +34,98 @@
   <script src="navigation.js" defer></script>
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "How to Spot Scam Texts Before You Click",
-    "description": "A calm, plain-language guide for Vero Beach neighbors on spotting scam texts, what never to click, and how to verify a suspicious message safely.",
-    "image": "https://verotechcare.com/vero-beach-hero.jpg",
-    "author": {
-      "@type": "Person",
-      "name": "CJ Watson"
-    },
-    "publisher": {
-      "@id": "https://verotechcare.com/#business",
-      "@type": ["LocalBusiness", "ProfessionalService"],
-      "name": "Vero Tech Care",
-      "url": "https://verotechcare.com/"
-    },
-    "datePublished": "2026-07-03",
-    "dateModified": "2026-07-10",
-    "mainEntityOfPage": "https://verotechcare.com/tips-scam-texts"
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Spot Scam Texts Before You Click",
+  "description": "A calm, plain-language guide for Vero Beach neighbors on spotting scam texts, what never to click, and how to verify a suspicious message safely.",
+  "image": "https://verotechcare.com/vero-beach-hero.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "CJ Watson",
+    "url": "https://verotechcare.com/#about"
+  },
+  "publisher": {
+    "@id": "https://verotechcare.com/#business",
+    "@type": [
+      "LocalBusiness",
+      "ProfessionalService"
+    ],
+    "name": "Vero Tech Care",
+    "url": "https://verotechcare.com/"
+  },
+  "datePublished": "2026-07-03",
+  "dateModified": "2026-07-10",
+  "mainEntityOfPage": "https://verotechcare.com/tips-scam-texts",
+  "isPartOf": {
+    "@type": "CollectionPage",
+    "@id": "https://verotechcare.com/tech-tips"
   }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://verotechcare.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tech Tips",
+      "item": "https://verotechcare.com/tech-tips"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "How to Spot Scam Texts Before You Click",
+      "item": "https://verotechcare.com/tips-scam-texts"
+    }
+  ]
+}
   </script>
 </head>
 <body id="top">
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header primary-page-header">
-    <div class="topbar">
-      <div class="wrap topbar-content">
-        <p>Local Tech Guide &bull; Plain-language tech tips for Vero Beach neighbors</p>
+    <div class="site-navigation-shell">
+      <div class="topbar">
+        <div class="wrap topbar-content">
+          <p>Tech Support &bull; Digital Setup &bull; Online Presence &bull; Serving Vero Beach, FL</p>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <nav class="nav primary-site-nav" aria-label="Primary">
+          <a class="brand" href="/" aria-label="Vero Tech Care home">
+            <span class="brand-mark">Vero Tech Care</span>
+            <span class="brand-tag">Tech care you can trust</span>
+          </a>
+
+          <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav-links">
+            Menu
+          </button>
+
+          <div class="nav-cluster">
+            <div id="primary-nav-links" class="nav-links site-nav-links">
+              <a href="/" data-nav-label="Home"><span class="nav-link-label">Home</span></a>
+              <a href="/home-tech-help" data-nav-label="Personal Support"><span class="nav-link-label">Personal Support</span></a>
+              <a href="/business-websites" data-nav-label="Business Support"><span class="nav-link-label">Business Support</span></a>
+              <a href="/workshops" data-nav-label="Workshops"><span class="nav-link-label">Workshops</span></a>
+            </div>
+
+            <a class="button button-solid nav-cta" href="/special">Book Tune-Up</a>
+          </div>
+        </nav>
       </div>
     </div>
 
     <div class="wrap">
-      <nav class="nav" aria-label="Primary">
-        <a class="brand" href="/" aria-label="Vero Tech Care home">
-          <span class="brand-mark">Vero Tech Care</span>
-          <span class="brand-tag">Tech care you can trust</span>
-        </a>
-
-        <div class="nav-cluster">
-          <div class="nav-links site-nav-links">
-            <a href="/">Home</a>
-            <a href="/home-tech-help">Personal Tech Support</a>
-            <a href="/business-websites">Business Tech Support</a>
-          </div>
-
-          <a class="button button-solid nav-cta" href="/special">Book Tune-Up</a>
-        </div>
-      </nav>
 
       <section class="hero booking-hero primary-page-hero" aria-labelledby="hero-title">
         <div class="hero-copy">
@@ -93,11 +137,6 @@
         </div>
       </section>
 
-      <section class="proof-strip" aria-label="Scam text safety steps">
-        <article class="proof-card proof-card-featured"><p class="proof-value">Do not click</p><p>When a message feels off, stop and avoid the link inside it.</p></article>
-        <article class="proof-card"><p class="proof-value">Check the pressure</p><p>Urgency, surprise problems, and unexpected prizes are common warning signs.</p></article>
-        <article class="proof-card"><p class="proof-value">Verify another way</p><p>Use the official app, saved website, card, or paper statement instead.</p></article>
-      </section>
     </div>
   </header>
 
@@ -105,6 +144,10 @@
     <article id="guide" class="section" aria-labelledby="hero-title">
       <div class="wrap">
         <div class="article-content">
+          <nav class="article-breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a><span aria-hidden="true">/</span><a href="/tech-tips">Tech Tips</a>
+          </nav>
+          <p class="article-byline">By <a href="/#about">CJ Watson</a>, Vero Tech Care</p>
           <h2>The one rule that protects you most</h2>
           <p>
             When a text feels off, do not click the link. That single habit prevents most
@@ -173,6 +216,13 @@
             custom scope and price first. Call or text
             <a href="tel:+17725884324">(772) 588 4324</a> with a question.
           </p>
+          <nav class="related-guides" aria-label="Related guides">
+            <h2>Related guides</h2>
+            <ul>
+              <li><a href="/tips-senior-tech-safety-checklist">A Simple Tech Safety Checklist for Seniors in Vero Beach</a></li>
+              <li><a href="/tips-when-to-book-help">When to Book In-Home Tech Help Instead of Struggling Alone</a></li>
+            </ul>
+          </nav>
         </div>
       </div>
     </article>
@@ -199,8 +249,8 @@
 
       <nav class="footer-links" aria-label="Footer">
         <a href="/">Home</a>
-        <a href="/home-tech-help">Personal Tech Support</a>
-        <a href="/business-websites">Business Tech Support</a>
+        <a href="/home-tech-help">Personal Support</a>
+        <a href="/business-websites">Business Support</a>
         <a href="/workshops">Workshops</a>
         <a href="/tech-tips">Tech Tips</a>
       </nav>

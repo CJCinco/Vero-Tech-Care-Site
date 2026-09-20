@@ -69,8 +69,8 @@ These are invariants, not suggestions:
 | Public model | Two public front doors only: residential Tech Tune-Up and practical technology and digital support for local businesses. |
 | Residential offer | One public pricing card: Tech Tune-Up Visit at `$250`, with `/special` as the booking destination. |
 | Business offer | Broad, consultation-first business technology support. Websites and online presence are capabilities within that lane, not the sole front-facing offer. Business work is scoped and quoted after the initial conversation. |
-| Primary navigation | `Home`, `Personal Tech Support`, and `Business Tech Support`. The overview homepage stops at these three destinations; dedicated service pages may add one page-appropriate conversion CTA. Do not add more primary nav items without changing this standard. |
-| Shared hero template | Every customer-facing page uses the root homepage's continuous image-backed header and the same reserved title, lead, and three-card zones. Page copy may change, but the desktop footprint, card count, card shape, and content rhythm stay consistent. Cards begin with their main title and do not use a smaller eyebrow label. |
+| Primary navigation | `Home`, `Personal Support`, `Business Support`, and `Workshops`, in that order. The overview homepage stops at these four destinations; dedicated service pages may add one page-appropriate conversion CTA. Do not add more primary nav items without changing this standard. |
+| Shared hero template | Every customer-facing page uses the shared continuous image-backed header, title, and lead. Only Home (`index.html`), Personal Support (`home-tech-help.html`), and Business Support (`business-websites.html`) include the three-card hero strip. All other customer-facing headers end after the title and lead, with no cards or reserved card space. Retained cards begin with their main title and do not use a smaller eyebrow label. |
 | Homepage structure | Shared image-backed header/nav, general Vero Tech Care hero, three capability cards within the header, two equal audience paths, owner introduction, contact, footer. Preserve this order and section ownership. |
 | Residential CTA | `Book Tune-Up`, `Book a Tech Tune-Up`, or `Book the Tech Tune-Up`, linking to `/special` or the verified scheduler anchor on a booking page. |
 | Business CTA | `Book Consult`, linking to the dedicated Acuity booking page at `/business-consult`. |
@@ -99,19 +99,19 @@ Broad requests such as “improve,” “modernize,” “make it convert,” �
 CJ selected Concept 2, `Business Card Expanded`, as the new root homepage direction.
 
 - `/` is the inclusive overview and routing page for Vero Tech Care.
-- `/home-tech-help` preserves the complete residential Tech Tune-Up homepage and is the dedicated Personal Tech Support route.
-- `/business-websites` remains the dedicated Business Tech Support route until a separate route change is explicitly approved.
-- The root gives Personal Tech Support and Business Tech Support equal prominence and uses `Tech Support`, `Digital Setup`, and `Online Presence` as capability themes, not new packages.
-- The root navigation has no fourth CTA. The two equal audience cards below the hero route directly to Personal Tech Support and Business Tech Support; audience-specific conversion actions live within the dedicated residential and business pages.
+- `/home-tech-help` preserves the complete residential Tech Tune-Up homepage and is the dedicated Personal Support route.
+- `/business-websites` remains the dedicated Business Support route until a separate route change is explicitly approved.
+- The root gives Personal Support and Business Support equal prominence and uses `Tech Support`, `Digital Setup`, and `Online Presence` as capability themes, not new packages.
+- The root navigation includes Workshops as its fourth destination and has no additional booking CTA. The two equal audience cards below the hero route directly to Personal Support and Business Support; audience-specific conversion actions live within the dedicated residential and business pages.
 - The three temporary concept pages are retired. `/testhome1`, `/testhome2`, and `/testhome3`, including their `.html` forms, redirect to `/`.
-- Navigation, metadata, structured data, sitemap, tests, and internal Personal Tech Support links must reflect this routing model together.
+- Navigation, metadata, structured data, sitemap, tests, and internal Personal Support links must reflect this routing model together.
 
 ## Primary Conversion Paths
 
 The root homepage is a balanced router with two equally prominent audience cards beneath its hero:
 
-- `Personal Tech Support` to `/home-tech-help`
-- `Business Tech Support` to `/business-websites`
+- `Personal Support` to `/home-tech-help`
+- `Business Support` to `/business-websites`
 
 The dedicated residential path should guide visitors toward one primary action:
 
@@ -131,17 +131,17 @@ Use each page for its job. Do not make every page carry the whole business.
 - `home-tech-help.html`: primary residential trust, capability overview, one clear Tech Tune-Up offer, local proof, and path to `/special`
 - `book.html`: no-indexed legacy booking file with the verified Tech Tune-Up scheduler; public `/book` redirects to `/special`
 - `special.html`: evergreen Tech Tune-Up Visit landing page at `/special`
-- `business-websites.html`: broad Business Tech Support page served publicly at `/business-websites`; websites are one supported capability, not the page's sole offer
+- `business-websites.html`: broad Business Support page served publicly at `/business-websites`; websites are one supported capability, not the page's sole offer
 - `business-consult.html`: public free 15-minute Business Tech Consult booking page at `/business-consult`, using Acuity appointment type `91121958`
 - `book-digital-presence-checkup.html`: no-indexed direct booking page for standalone Digital Presence Checkup referrals; not a primary public path
 - `tech-tips.html` and tip articles: helpful local education with a light path back to the Tech Tune-Up or contact
-- `workshops.html`: workshop trust and community proof, a visible route into the Smartphone Confidence Series, and a path back to the Tech Tune-Up
-- `smartphone-confidence.html`: evergreen Smartphone Confidence Series hub and permanent public-flyer destination; publish verified per-part Acuity registration links for available classes, keep unavailable parts clearly labeled without dead links, and omit unconfirmed details
+- `workshops.html`: the single evergreen workshop directory, with two series and three inline title/description entries each; no event dates, venues, registration status, past/planned split, or separate Phone Cleanup listing. One bottom workshop-question CTA. Smartphone Confidence uses a supportive progression; AI for Everyday Life uses agency, practical direction, and ethical empowerment.
+- `smartphone-confidence.html`: preserved direct-access registration/flyer compatibility page, no-indexed and outside directory discovery; retain the existing per-class booking destinations pending a separately verified signup transition.
 - `smartphone-confidence-basics.html`: accessible Part 1 class recap with a downloadable PDF handout and full-page image, plus light routes back to the series, a Google review, and one-on-one help
-- `ai-for-everyday-life.html`: evergreen AI for Everyday Life Series hub and stable QR destination; present the completed first workshop factually, keep later parts as neutral forthcoming placeholders, and publish no registration path until a future event is approved
-- `phone-clean-up-speed-up.html`: individual historical event page for the completed February 22, 2026 workshop; do not turn it into a series hub or imply that registration is open
-- `ai-for-everyday-life-workshop.html`: evergreen, date-and-location-agnostic overview for a future AI for Everyday Life workshop; keep it interest-only until an actual event has a verified direct booking destination
-- `phone-clean-up-speed-up-workshop.html`: evergreen, date-and-location-agnostic overview for a future Phone Clean Up & Speed Up workshop; keep it interest-only until an actual event has a verified direct booking destination
+- `ai-for-everyday-life.html`: preserved legacy source; extensionless and `.html` routes redirect to `/workshops#ai-for-everyday-life`.
+- `phone-clean-up-speed-up.html`: preserved legacy source; extensionless and `.html` routes redirect to `/workshops#smartphone-part-2`.
+- `ai-for-everyday-life-workshop.html`: preserved legacy source; extensionless and `.html` routes redirect to `/workshops#ai-for-everyday-life`.
+- `phone-clean-up-speed-up-workshop.html`: preserved legacy source; extensionless and `.html` routes redirect to `/workshops#smartphone-part-2`.
 - `workshop-check-in.html`: direct-only, no-indexed in-person attendance kiosk; use one distraction-free form with required full name, optional email, optional phone, the exact approved email disclosure, confirmed-save feedback, and automatic reset; omit it from navigation and the sitemap
 - `check-in.html`: direct-only, no-indexed CJ setup surface served at the short private route `/check-in`; use it to choose one server-approved, import-ready workshop, open or close that workshop, and activate one kiosk session without asking CJ to create or type an internal workshop code, title, or date; never expose the setup password, attendee data, export controls, or an attendee list
 - `workshop-check-in-setup.html`: retained only as the legacy source route, with both its extensionless and `.html` URLs permanently redirecting to `/check-in`
@@ -173,35 +173,22 @@ The kiosk contract is locked:
 - Keep local, preview, and production databases and secrets separate. Preview uses fake attendees only.
 - Keep the Numbers workbook available as the offline fallback.
 
-### Workshop Resource Architecture
+### Workshop Directory and Resource Architecture
 
-The Smartphone Confidence Series uses a hybrid structure:
+CJ approved this local website direction on September 15, 2026:
 
-- `/smartphone-confidence` is the stable series hub and the destination encoded in public series flyers.
-- Available classes register separately through verified class-specific Acuity direct links on their hub cards; do not place a general workshop embed on the hub or route visitors through Acuity's full appointment catalog.
-- Part 1 uses Acuity appointment type `96581893`, and Part 2 uses Acuity appointment type `96621892`. Registration links open in the current tab so the browser Back action returns visitors to the hub.
-- Registration is free. A suggested `$20` donation may be given at the workshop but is not required and is not collected through Acuity.
-- The registration form requires an email address for class logistics; phone remains optional.
-- Publish a class date, time, location, registration link, or availability state only after it is verified. The current confirmed classes are Part 1 on August 30, 2026 at 11:30 AM and Part 2 on September 20, 2026 at 11:30 AM at Unity Spiritual Center of Vero Beach.
-- Each class receives one short, stable resource URL only when its reviewed notes are ready. Part 1 uses `/smartphone-confidence-basics`.
-- Class-slide QR codes should point directly to that class resource page, while the page itself always links back to the series hub.
-- Unconfirmed class dates, locations, registration terms, donations, and availability stay off public pages.
-- Unreleased parts may appear on the hub as plain unavailable-status cards without dead links or disabled controls.
-- Each class resource page should summarize the workshop in one or two plain-language paragraphs rather than repeating the lesson step by step.
-- The detailed teaching material belongs in a reviewed handout offered both as a downloadable PDF and a visible full-page image that can be saved from a phone.
-- Resource pages and handouts should be readable without an account or download gate and written for older or less-confident smartphone users.
-- Google review requests are secondary end-of-class actions, never the only way to continue.
-- Registration is the hub's primary action. On class resource pages, booking, contact, and upcoming-class questions remain visible but secondary to the educational content.
-- Use stable first-party URLs in printed QR codes. Add campaign tracking at the redirect or analytics layer rather than printing fragile tracked URLs.
-
-Other workshop routes follow the same source and QR safeguards without copying the Smartphone Confidence registration model where it does not fit:
-
-- `/ai-for-everyday-life` is the stable AI series overview and QR destination. Part 1 may use the completed April 19, 2026 workshop facts. Parts 2 and 3 remain plain forthcoming placeholders until CJ approves their titles, order, logistics, availability, and registration destinations.
-- `/phone-clean-up-speed-up` is one individual historical event page, not a hub. Its QR may route to that exact page, but the page and flyer must not imply a new session or open registration.
-- `/ai-for-everyday-life-workshop` and `/phone-clean-up-speed-up-workshop` are evergreen workshop overviews and interest surfaces. They are not canonical destinations for an actual event flyer.
-- An individual future event receives its own verified booking instance and registration CTA only after its title, date, time, venue, terms, capacity, and destination are approved.
-- Each actual event flyer uses its own unique QR that routes directly to that event's verified booking instance. Until that verified destination exists, the evergreen workshop overview remains interest-only and must not claim that registration is open.
-- If no verified registration destination exists, use a plain status or workshop-question contact path. Never substitute the general Acuity catalog, a disabled button, or another workshop's registration link.
+- `/workshops` is the single discovery page. List Smartphone Confidence and AI for Everyday Life as two three-part series, with each workshop title and a brief description visible inline.
+- The selected topic catalog uses All workshops, Smartphone, and AI filters, a visible result count, and a continuous series tint: soft teal for Smartphone Confidence and warm ivory for AI. Keep series and workshop sequence labels visible in each row. Preserve existing series and workshop fragment links. The catalog does not link out to individual workshop/resource pages; existing resource and registration routes remain accessible under their compatibility rules below.
+- Smartphone parts: Smartphone Basics: Getting Comfortable; Smartphone Made Easier; Smartphone Made Smarter. Phone cleanup and storage awareness belong in Part 2, with no standalone catalog entry.
+- AI parts: Understand AI; Direct AI; Put AI to Work. Emphasize human judgment, clear instructions, privacy, checking outputs, consent, and honest use. Avoid mirroring the smartphone confidence/comfort language or suggesting unquestioning reliance on AI.
+- These are evergreen topic descriptions, not event announcements, proof of delivery, finalized teaching materials, or changes to current class commitments. Existing internal lesson plans and live booking facts retain their own review gates.
+- Omit dates, times, venues, prices, availability, registration links, and past/planned categories from the directory. Use one bottom `Ask About a Workshop` question CTA. The directory has no additional header CTA; its mobile primary action is `Ask CJ`, linking to `#workshop-contact`.
+- Keep the approved Part 1 notes and handout available at `/smartphone-confidence-basics`. Resource-page return links point to `/workshops#smartphone-confidence`. No account or download gate.
+- `/ai-for-everyday-life` and `/ai-for-everyday-life-workshop`, including their `.html` forms, redirect to `/workshops#ai-for-everyday-life`.
+- `/phone-clean-up-speed-up` and `/phone-clean-up-speed-up-workshop`, including their `.html` forms, redirect to `/workshops#smartphone-part-2`. Preserve the historical files; do not rewrite past delivery evidence into the new curriculum.
+- `/smartphone-confidence` remains a no-indexed direct-access compatibility route for existing flyers and per-class Acuity links. Remove it from discovery/sitemap, but preserve the current class-specific destinations until a separate signup transition is verified. Part 1 uses type `96581893`; Part 2 uses `96621892`. Never substitute the general appointment catalog or another class's link.
+- No account-side booking, attendee custody, check-in, donation, event capacity, or logistics change is authorized by this catalog edit. Unconfirmed future events stay non-actionable.
+- No push or deployment is included in the local website approval.
 
 ### Root Homepage Section Ownership
 
@@ -209,16 +196,16 @@ Each root homepage section has one job:
 
 - hero: inclusive positioning and equal Home/Business actions, using the same image-backed base layout as the dedicated pages
 - capability strip: three dark glass cards within the image-backed header, with one concise explanation for each capability theme; no package or pricing ladder
-- audience paths: one Personal Tech Support card and one Business Tech Support card with equal visual prominence; the Home and Family card may include one quiet text link to the Smartphone Confidence Series without becoming a third audience path
+- audience paths: one Personal Support card and one Business Support card with equal visual prominence; the Home and Family card may include one quiet text link to `/workshops#smartphone-confidence` without becoming a third audience path
 - owner introduction: personal trust, working style, and what it feels like to receive help; no service catalog
 - contact: repeat the two audience routes and keep phone, text, and email secondary
 - footer: compact navigation, contact facts, and real social links
 
 Adding a root homepage section, a fourth capability card, or a third audience path is a Class C structure change.
 
-The dedicated Personal Tech Support page uses this approved page-specific sequence: residential hero, three-card proof strip, one Tech Tune-Up offer, four-item capability guide, six-item FAQ, business bridge, and footer.
+The dedicated Personal Support page uses this approved page-specific sequence: residential hero, three-card proof strip, one Tech Tune-Up offer, four-item capability guide, six-item FAQ, business bridge, and footer.
 
-The dedicated Business Tech Support page uses this approved page-specific sequence: business hero, three-card capability strip, one business support offer, six-item FAQ, personal-tech-support bridge, and footer. The bridge mirrors the residential page&rsquo;s business bridge and routes to `/home-tech-help`.
+The dedicated Business Support page uses this approved page-specific sequence: business hero, three-card capability strip, one business support offer, six-item FAQ, personal-tech-support bridge, and footer. The bridge mirrors the residential page&rsquo;s business bridge and routes to `/home-tech-help`.
 
 ### Locked Owner Introduction Copy
 
@@ -234,7 +221,7 @@ This is approved credibility language, not a service catalog. Preserve the meani
 
 ## CTA Rules
 
-Hero action rows are intentionally absent from every site hero. Keep the shared hero limited to its title, lead, and three-card strip; place page-appropriate conversion actions in the relevant content section or mobile dock instead.
+Hero action rows are intentionally absent from every site hero. Keep the shared hero limited to its title and lead, plus the three-card strip only on Home, Personal Support, and Business Support; place page-appropriate conversion actions in the relevant content section or mobile dock instead.
 
 Default primary CTA:
 
@@ -246,7 +233,7 @@ Default primary CTA:
 Acceptable contextual CTAs:
 
 - `See what is included`
-- `Explore Business Tech Support`
+- `Explore Business Support`
 
 Secondary helper language:
 
@@ -266,12 +253,11 @@ Mobile quick-action rules:
 
 - Show exactly four actions, in this order: the page-appropriate primary action, `Text`, `Call`, and `Email`.
 - Use `Choose Support` on the overview homepage, linking to its audience-path section.
-- Use `Book Tech Tune-Up` on Personal Tech Support, Tech Tips, Workshops, tip articles, the 404 page, and residential booking pages. Link to `/special`, or to the scheduler anchor when already on a residential booking page.
+- Use `Book Tech Tune-Up` on Personal Support, Tech Tips, tip articles, the 404 page, and residential booking pages. Link to `/special`, or to the scheduler anchor when already on a residential booking page.
 - Use `Choose a Class` on the Smartphone Confidence Series hub, linking to `#series-parts`.
-- Use `Explore Series` on Smartphone Confidence class resource pages, linking to `/smartphone-confidence`.
-- Use `View Part 1` on the AI for Everyday Life hub, linking to `#series-parts`, while no future AI registration is verified.
-- Use `Workshop Details` on the historical Phone Clean Up event page, linking to `#workshop-details`.
-- Use `Book Consult` on Business Tech Support and the Business Tech Consult page. Link to `/business-consult`, or to the scheduler anchor when already on that booking page.
+- Use `Ask CJ` on Workshops, linking to `#workshop-contact`.
+- Use `Explore Series` on Smartphone Confidence class resource pages, linking to `/workshops#smartphone-confidence`.
+- Use `Book Consult` on Business Support and the Business Tech Consult page. Link to `/business-consult`, or to the scheduler anchor when already on that booking page.
 - Keep `Book Checkup` only on the no-indexed direct-referral Checkup page, linking to its scheduler anchor.
 - The dock appears only on mobile after the visitor reaches the page&rsquo;s main content. On any page with an embedded scheduler, hide it while the scheduler is visible so no booking controls are covered.
 
@@ -301,7 +287,7 @@ Membership rules:
 Business support rules:
 
 - `../06 Admin + Legal/Digital Presence Management Launch Plan.md` is the authority for strategy, pricing, and founding-mode rules.
-- The public business front door is `Business Tech Support` at `/business-websites`.
+- The public business front door is `Business Support` at `/business-websites`.
 - Lead with practical technology and digital support for local businesses. Websites, online presence, digital setup, customer contact paths, and focused technology projects may be described as capabilities rather than a package catalog.
 - Do not publish a business starting price on the general support page. Scope and quote each project after the initial conversation.
 - The primary action is `Book Consult`, routing to the dedicated Acuity booking page at `/business-consult`.
@@ -393,11 +379,11 @@ Readability and spacing rules:
 
 Small spacing, consistency, wrapping, accessibility, and alignment improvements are acceptable when directly tied to the requested edit.
 
-Every customer-facing page uses the same continuous, image-backed top section as the root homepage: shared logo treatment, navigation spacing, base hero layout, and a three-card strip inside the photograph. The Google ownership-verification stub is the only non-page exception. Exactly one primary destination link uses `aria-current="page"` where the page belongs directly to Home, Personal Tech Support, or Business Tech Support. The overview homepage omits a fourth navigation CTA; other pages may retain one page-appropriate navigation CTA when it supports the page's established conversion path.
+Every customer-facing page uses the same continuous, image-backed top section as the root homepage: shared logo treatment, navigation spacing, and base hero layout. Only Home, Personal Support, and Business Support include a three-card strip inside the photograph; all other customer-facing pages omit it. The Google ownership-verification stub is the only non-page exception. Exactly one primary destination link uses `aria-current="page"` where the page belongs directly to Home, Personal Support, Business Support, or Workshops. The overview homepage omits an additional navigation CTA; other pages may retain one page-appropriate navigation CTA when it supports the page's established conversion path.
 
-Within that shared top section, every page uses one typography and spacing rhythm: the same brand and navigation type sizes, responsive `h1` scale and line height, hero padding, button sizing, and glass-card padding. The title, lead, and action area each occupy a reserved zone on desktop so different copy does not change the overall header footprint. Every hero includes an action zone, even when its contents are page-specific, followed by exactly three equal-width, equal-height cards. Each card begins with its main title and one concise supporting description; do not add a small uppercase eyebrow or category label above the card title. Keep card titles and descriptions concise enough to preserve the common template. On smaller screens the same zones and cards may grow naturally to avoid clipping, but their order, spacing rhythm, and shape remain consistent.
+Within that shared top section, every page uses the same brand and navigation type sizes, responsive `h1` scale, line height, and hero padding. Hero height follows its content; do not reserve an action or missing-card zone. Only Home, Personal Support, and Business Support have exactly three equal-width, equal-height hero cards. Each retained card begins with its main title and one concise supporting description, without a small eyebrow label. On smaller screens, text and cards may grow naturally to avoid clipping.
 
-Do not stack a small eyebrow title above a larger title that repeats or competes with it elsewhere in the site. Use the clearer short phrase as the heading when it carries the section meaning, while preserving unique article titles and the locked `About CJ` title. On desktop, the destination links stay centered in a reserved three-column navigation grid so they do not move when a page adds its CTA.
+Do not stack a small eyebrow title above a larger title that repeats or competes with it elsewhere in the site. Use the clearer short phrase as the heading when it carries the section meaning, while preserving unique article titles and the locked `About CJ` title. On wide desktop screens, the four destination links stay centered in a reserved three-column navigation grid so they do not move when a page adds its CTA. At tablet widths, place the centered destinations on a second row beneath the brand and optional CTA to prevent crowding.
 
 ## Redundancy Gate
 

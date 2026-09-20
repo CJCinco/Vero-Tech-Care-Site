@@ -86,9 +86,10 @@
       trigger: "#guides"
     },
     workshops: {
-      label: "Book Tech Tune-Up",
-      href: "/special",
-      trigger: "#next-workshop"
+      label: "Ask CJ",
+      href: "#workshop-contact",
+      trigger: "#workshop-catalog",
+      emailSubject: "Workshop Question"
     },
     "smartphone-confidence": {
       label: "Choose a Class",
@@ -98,7 +99,7 @@
     },
     "smartphone-confidence-basics": {
       label: "Explore Series",
-      href: "/smartphone-confidence",
+      href: "/workshops#smartphone-confidence",
       trigger: "#notes",
       emailSubject: "Smartphone Confidence Series Question"
     },

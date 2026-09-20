@@ -11,6 +11,23 @@ SITE_ROOT = Path(__file__).resolve().parents[2]
 
 
 class CleanRouteHandler(SimpleHTTPRequestHandler):
+    def send_head(self):
+        # Honor exact local redirects, including workshop section anchors.
+        request_path = urlsplit(self.path).path
+        for line in (SITE_ROOT / "_redirects").read_text().splitlines():
+            fields = line.split()
+            if len(fields) != 3 or fields[0] != request_path:
+                continue
+            source, destination, status = fields
+            if status not in {"301", "302", "307", "308"}:
+                continue
+            self.send_response(int(status))
+            self.send_header("Location", destination)
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+            return None
+        return super().send_head()
+
     def translate_path(self, path: str) -> str:
         translated = Path(super().translate_path(path))
         request_path = urlsplit(path).path
