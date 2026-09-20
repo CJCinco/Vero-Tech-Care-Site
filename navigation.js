@@ -80,6 +80,12 @@
       trigger: "header .primary-page-hero",
       emailSubject: "Digital Presence Checkup Question"
     },
+    review: {
+      label: "Leave a Review",
+      href: "#review-links",
+      trigger: "main",
+      emailSubject: "Vero Tech Care Question"
+    },
     "tech-tips": {
       label: "Book Tech Tune-Up",
       href: "/special",

@@ -28,3 +28,8 @@
 /phone-clean-up-speed-up.html /workshops#smartphone-part-2 301
 /phone-clean-up-speed-up-workshop /workshops#smartphone-part-2 301
 /phone-clean-up-speed-up-workshop.html /workshops#smartphone-part-2 301
+
+# Review route. Activate the two lines below only when /smartphone-confidence-basics
+# is actually removed, so already-printed Part 1 QR codes land on /review instead of a 404.
+# /smartphone-confidence-basics /review 301
+# /smartphone-confidence-basics.html /review 301

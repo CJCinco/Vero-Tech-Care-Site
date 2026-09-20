@@ -2025,7 +2025,8 @@ test("shared HTML source contracts stay valid", async () => {
       "/home-tech-help",
       "/business-websites",
       "/workshops",
-      "/tech-tips"
+      "/tech-tips",
+      "/review"
     ]);
     expect(footerNavigation, `${fileName} footer should not include Book Tune-Up`).not.toContain(
       "Book Tune-Up"
