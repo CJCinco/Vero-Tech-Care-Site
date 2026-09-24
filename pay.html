@@ -4,35 +4,37 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,follow" />
-  <title>Leave a Review | Vero Tech Care</title>
+  <title>Make a Payment | Vero Tech Care</title>
   <meta
     name="description"
-    content="Share your experience with Vero Tech Care on Google, Facebook, or Nextdoor."
+    content="Pay an amount agreed with CJ for Vero Tech Care services through secure Stripe checkout."
   />
-  <link rel="canonical" href="https://verotechcare.com/review" />
+  <link rel="canonical" href="https://verotechcare.com/pay" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <meta name="theme-color" content="#111514" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Vero Tech Care" />
-  <meta property="og:title" content="Leave a Review | Vero Tech Care" />
+  <meta property="og:title" content="Make a Payment | Vero Tech Care" />
   <meta
     property="og:description"
-    content="Share your experience with Vero Tech Care on Google, Facebook, or Nextdoor."
+    content="Pay an amount agreed with CJ for Vero Tech Care services through secure Stripe checkout."
   />
-  <meta property="og:url" content="https://verotechcare.com/review" />
+  <meta property="og:url" content="https://verotechcare.com/pay" />
   <meta property="og:image" content="https://verotechcare.com/vero-beach-hero.jpg" />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Leave a Review | Vero Tech Care" />
+  <meta name="twitter:title" content="Make a Payment | Vero Tech Care" />
   <meta
     name="twitter:description"
-    content="Share your experience with Vero Tech Care on Google, Facebook, or Nextdoor."
+    content="Pay an amount agreed with CJ for Vero Tech Care services through secure Stripe checkout."
   />
   <meta name="twitter:image" content="https://verotechcare.com/vero-beach-hero.jpg" />
   <link rel="stylesheet" href="style.css" />
   <script src="navigation.js" defer></script>
+  <link rel="stylesheet" href="payment.css" />
+  <script src="payment.js" defer></script>
 </head>
 <body id="top" class="workshop-resource-page">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -71,10 +73,9 @@
     <div class="wrap">
       <section class="hero booking-hero primary-page-hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <h1 id="hero-title">Leave a review.</h1>
+          <h1 id="hero-title">Make a payment.</h1>
           <p class="lead">
-            Thank you for spending time with Vero Tech Care. A short, honest review
-            helps more Vero Beach neighbors find patient technology help.
+            Complete your Vero Tech Care payment through Stripe’s secure checkout.
           </p>
         </div>
       </section>
@@ -83,41 +84,51 @@
   </header>
 
   <main id="main">
-    <article class="section">
+    <section class="section" aria-labelledby="payment-title">
       <div class="wrap">
         <div class="article-content">
-          <div class="resource-next-steps">
-            <div class="service-scope-panel">
-              <div>
-                <p class="card-label">Share your experience</p>
-                <p>
-                  Choose Google, Facebook, or Nextdoor below. Any one of them is plenty,
-                  and a sentence or two is enough. Thank you for taking the time.
-                </p>
+          <div class="section-heading"><h2 id="payment-title">Pay the agreed amount.</h2></div>
+          <div id="payment" class="payment-panel">
+            <form id="payment-amount-form" class="payment-amount-form">
+              <label for="payment-amount">Amount in US dollars</label>
+              <div class="payment-amount-row">
+                <div class="payment-amount-input"><span aria-hidden="true">$</span><input id="payment-amount" name="amount" type="text" inputmode="decimal" autocomplete="off" pattern="[0-9]+(\.[0-9]{1,2})?" maxlength="8" required placeholder="0.00" /></div>
+                <button id="payment-continue" class="button button-accent" type="submit" disabled>Continue to Payment</button>
               </div>
-
-              <div id="review-links" class="review-actions" aria-label="Choose a review site">
-                <a class="button button-solid" href="https://g.page/r/CWFhUlhmySkxEAE/review" target="_blank" rel="noreferrer noopener">Google Review</a>
-                <a class="button button-solid" href="https://www.facebook.com/61588252239878/reviews/" target="_blank" rel="noreferrer noopener">Facebook Review</a>
-                <a class="button button-solid" href="https://nextdoor.com/pages/vero-tech-care-vero-beach-fl/recommend/" target="_blank" rel="noreferrer noopener">Nextdoor Review</a>
+            </form>
+            <div class="payment-trust" aria-label="Payment security and payment methods">
+              <a class="payment-stripe-badge" href="https://stripe.com" target="_blank" rel="noopener noreferrer"><img src="payment-stripe.svg" alt="Powered by Stripe" width="150" height="34" /></a>
+              <div class="payment-card-brands" role="group" aria-label="Cards and wallet options">
+                <span class="payment-brand-group">
+                <img src="payment-visa.svg" alt="Visa" width="48" height="30" />
+                <img src="payment-mastercard.svg" alt="Mastercard" width="48" height="30" />
+                <img src="payment-amex.svg" alt="American Express" width="48" height="30" />
+                <img src="payment-discover.svg" alt="Discover" width="48" height="30" />
+                </span>
+                <span class="payment-brand-group">
+                <img src="payment-apple-pay.svg" alt="Apple Pay" width="48" height="30" />
+                <img src="payment-google-pay.svg" alt="Google Pay" width="48" height="30" />
+                <img class="payment-link-logo" src="payment-link.svg" alt="Link" width="48" height="30" />
+                </span>
               </div>
             </div>
-
-            <div class="service-scope-panel">
-              <div>
-                <p class="card-label">Need help with something?</p>
-                <p>
-                  If a question came up after class or after a visit, tell me directly
-                  and I will point you in the right direction.
-                </p>
-              </div>
-
-              <a class="button button-solid" href="mailto:cj@verotechcare.com?subject=Vero%20Tech%20Care%20Question">Email CJ</a>
+            <p class="payment-security-note">Your card details go directly to Stripe.</p>
+            <p id="payment-status" class="payment-status" role="status" aria-live="polite">Loading secure payment…</p>
+            <div id="payment-checkout" class="payment-checkout" hidden></div>
+            <button id="payment-change" class="payment-change" type="button" hidden>Change amount</button>
+            <div id="payment-complete" tabindex="-1" hidden>
+              <h3>Thank you for your payment.</h3>
+              <p>Your payment was submitted through Stripe. Keep the receipt emailed to you for your records.</p>
             </div>
+            <div id="payment-fallback" class="payment-fallback">
+              <p>Having trouble with the form?</p>
+              <a class="button button-outline" href="https://buy.stripe.com/eVq8wIa22fEM7YO1JZ2Fa00">Pay on Stripe Instead</a>
+            </div>
+            <noscript><p>Use “Pay on Stripe Instead” to complete your payment securely.</p></noscript>
           </div>
         </div>
       </div>
-    </article>
+    </section>
   </main>
 
   <footer class="site-footer">

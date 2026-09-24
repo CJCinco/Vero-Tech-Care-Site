@@ -106,6 +106,7 @@ const sharedHeroPages = [
   ["Tech Tune-Up", "special.html"],
   ["Legacy booking", "book.html"],
   ["Digital Presence Checkup", "book-digital-presence-checkup.html"],
+  ["Make a Payment", "pay.html"],
   ...secondaryPages
 ];
 
@@ -117,6 +118,7 @@ const mobileDockPages = [
   ["Tech Tune-Up", "special.html", "Book Tech Tune-Up", "#booking-embed", true],
   ["Legacy booking", "book.html", "Book Tech Tune-Up", "#booking-embed", true],
   ["Digital Presence Checkup", "book-digital-presence-checkup.html", "Book Checkup", "#booking-embed", true],
+  ["Make a Payment", "pay.html", "Make a Payment", "#payment", true],
   ["404", "404.html", "Book Tech Tune-Up", "/special", false],
   ["Tech Tips", "tech-tips.html", "Book Tech Tune-Up", "/special", false],
   ["Workshops", "workshops.html", "Ask CJ", "#workshop-contact", false],
@@ -774,7 +776,7 @@ test("Business Support page small-phone navigation smoke test", async ({ page })
 });
 
 test("every customer-facing page shares the four-action mobile dock", async ({ page }) => {
-  for (const [pageName, fileName, primaryLabel, primaryHref, hasScheduler] of mobileDockPages) {
+  for (const [pageName, fileName, primaryLabel, primaryHref, hasEmbeddedControls] of mobileDockPages) {
     await page.setViewportSize({ width: 390, height: 900 });
     const pageUrl = pathToFileURL(path.join(siteRoot, fileName)).toString();
     await page.goto(pageUrl, { waitUntil: "domcontentloaded" });
@@ -792,11 +794,11 @@ test("every customer-facing page shares the four-action mobile dock", async ({ p
     await expect(dock).toBeHidden();
     await assertNoOverflow(page);
 
-    if (hasScheduler) {
+    if (hasEmbeddedControls) {
       await page.setViewportSize({ width: 320, height: 568 });
       const revealPosition = await page.evaluate(() => {
         const hero = document.querySelector("header .primary-page-hero");
-        const scheduler = document.querySelector(".scheduler-embed-shell");
+        const scheduler = document.querySelector(".scheduler-embed-shell, #payment");
         const heroTop = hero.getBoundingClientRect().top + window.scrollY;
         const schedulerTop = scheduler.getBoundingClientRect().top + window.scrollY;
         const showAfter = Math.max(0, heroTop - window.innerHeight * 0.25);
@@ -804,19 +806,19 @@ test("every customer-facing page shares the four-action mobile dock", async ({ p
       });
       await page.evaluate((position) => window.scrollTo(0, position), revealPosition);
       // Short headers can bring the scheduler into view before the dock trigger.
-      const schedulerInView = await page.locator(".scheduler-embed-shell").evaluate((element) => {
+      const schedulerInView = await page.locator(".scheduler-embed-shell, #payment").evaluate((element) => {
         const bounds = element.getBoundingClientRect();
         return bounds.top < window.innerHeight && bounds.bottom > 0;
       });
-      await expect(dock, `${pageName} dock respects scheduler visibility`).toHaveAttribute(
+      await expect(dock, `${pageName} dock respects embedded control visibility`).toHaveAttribute(
         "aria-hidden", String(schedulerInView)
       );
       if (schedulerInView) await expect(dock).toBeHidden();
       else await expect(dock).toHaveClass(/is-visible/);
       await assertNoOverflow(page);
 
-      await page.locator(".scheduler-embed-shell").scrollIntoViewIfNeeded();
-      await expect(dock, `${pageName} dock over scheduler`).not.toHaveClass(/is-visible/);
+      await page.locator(".scheduler-embed-shell, #payment").scrollIntoViewIfNeeded();
+      await expect(dock, `${pageName} dock over embedded controls`).not.toHaveClass(/is-visible/);
       await expect(dock).toHaveAttribute("aria-hidden", "true");
       await expect(dock).toBeHidden();
     } else {
@@ -1997,6 +1999,19 @@ test("workshop setup cannot serialize a password when its script is unavailable"
   await context.close();
 });
 
+test("payment page offers embedded amount entry with a hosted Stripe fallback", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(pathToFileURL(path.join(siteRoot, "pay.html")).toString());
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex,follow");
+  await expect(page.locator("header .proof-strip")).toHaveCount(0);
+  await expect(page.getByLabel("Amount in US dollars")).toBeVisible();
+  await expect(page.locator('#payment-fallback a')).toHaveAttribute("href", "https://buy.stripe.com/eVq8wIa22fEM7YO1JZ2Fa00");
+  await expect(page.locator('#payment-fallback a')).toHaveText("Pay on Stripe Instead");
+  await expect(page.locator('#payment-checkout')).toHaveCount(1);
+  await expect(page.locator('input[autocomplete="cc-number"]')).toHaveCount(0);
+  await assertNoOverflow(page);
+});
+
 test("shared HTML source contracts stay valid", async () => {
   const htmlFiles = fs.readdirSync(siteRoot).filter((file) => file.endsWith(".html"));
 
@@ -2026,7 +2041,8 @@ test("shared HTML source contracts stay valid", async () => {
       "/business-websites",
       "/workshops",
       "/tech-tips",
-      "/review"
+      "/review",
+      "/pay"
     ]);
     expect(footerNavigation, `${fileName} footer should not include Book Tune-Up`).not.toContain(
       "Book Tune-Up"

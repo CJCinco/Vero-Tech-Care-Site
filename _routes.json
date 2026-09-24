@@ -2,6 +2,8 @@
   "version": 1,
   "include": [
     "/api/workshop-check-in/*",
+    "/api/payment/config",
+    "/api/payment/session",
     "/README.md",
     "/WEBSITE_STANDARDS.md",
     "/AGENTS.md",

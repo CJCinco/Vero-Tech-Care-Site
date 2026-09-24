@@ -86,6 +86,12 @@
       trigger: "main",
       emailSubject: "Vero Tech Care Question"
     },
+    pay: {
+      label: "Make a Payment",
+      href: "#payment",
+      trigger: "header .primary-page-hero",
+      emailSubject: "Vero Tech Care Payment Question"
+    },
     "tech-tips": {
       label: "Book Tech Tune-Up",
       href: "/special",
@@ -161,7 +167,7 @@
   document.body.appendChild(mobileDock);
 
   const trigger = document.querySelector(pageDock.trigger) || document.querySelector("main");
-  const scheduler = document.querySelector(".scheduler-embed-shell");
+  const scheduler = document.querySelector(".scheduler-embed-shell, #payment");
   let updateQueued = false;
 
   const schedulerIsVisible = () => {

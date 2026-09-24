@@ -1,0 +1,29 @@
+.payment-panel { padding: clamp(1.25rem, 3vw, 2.25rem); background: #fff; border: 1px solid rgba(17, 21, 20, .13); border-radius: 24px; }
+.payment-panel [hidden] { display: none !important; }
+.payment-amount-form { margin: 0; }
+.payment-amount-form label { display: block; margin-bottom: .65rem; font-weight: 600; }
+.payment-amount-row { display: flex; align-items: stretch; gap: .85rem; flex-wrap: wrap; }
+.payment-amount-input { display: flex; align-items: center; border: 1px solid #727978; border-radius: 12px; background: var(--ivory); flex: 1 1 180px; min-width: 0; }
+.payment-amount-input span { padding-left: 1rem; font-size: 1.3rem; }
+.payment-amount-input input { width: 100%; min-width: 0; padding: .9rem 1rem .9rem .45rem; border: 0; background: transparent; color: var(--charcoal); font: inherit; font-size: 1.3rem; }
+.payment-amount-input:focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }
+.payment-amount-input input:focus { outline: none; }
+.payment-trust { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .8rem 1.25rem; margin-top: 1.25rem; }
+.payment-stripe-badge { display: inline-flex; flex: 0 0 auto; align-items: center; min-height: 44px; }
+.payment-stripe-badge img { display: block; width: 150px; height: auto; }
+.payment-card-brands { display: flex; align-items: center; flex-wrap: wrap; gap: .4rem; }
+.payment-brand-group { display: inline-flex; align-items: center; gap: .4rem; }
+.payment-card-brands img { display: block; width: 48px; height: 30px; object-fit: contain; }
+.payment-card-brands .payment-link-logo { padding: 5px 2px; }
+.payment-panel .payment-security-note { margin: .5rem 0 0; font-size: .875rem; line-height: 1.5; color: #535d59; }
+.payment-status { margin: 1rem 0; }
+.payment-status:empty { display: none; }
+.payment-status.is-error { color: #8a291f; }
+.payment-amount-row button:disabled { opacity: .6; cursor: not-allowed; }
+.payment-checkout { margin: 1.5rem -1rem 0; min-height: 200px; }
+.payment-change { padding: .5rem 0; border: 0; background: none; font: inherit; text-decoration: underline; color: var(--charcoal); cursor: pointer; }
+.payment-fallback { margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid rgba(17, 21, 20, .15); }
+.payment-fallback p:first-child { margin-top: 0; }
+@media (max-width: 560px) { .payment-amount-row { flex-direction: column; } .payment-amount-input { flex: auto; } .payment-amount-row .button, .payment-fallback .button { width: 100%; text-align: center; } .payment-card-brands { flex-direction: column; align-items: flex-start; } }
+
+.payment-fallback .button-outline { color: var(--charcoal); border-color: #727978; background: transparent; box-shadow: none; }

@@ -133,6 +133,7 @@ Use each page for its job. Do not make every page carry the whole business.
 - `special.html`: evergreen Tech Tune-Up Visit landing page at `/special`
 - `business-websites.html`: broad Business Support page served publicly at `/business-websites`; websites are one supported capability, not the page's sole offer
 - `business-consult.html`: public free 15-minute Business Tech Consult booking page at `/business-consult`, using Acuity appointment type `91121958`
+- `pay.html`: no-indexed payment page at `/pay`, linked from the shared footer but omitted from primary navigation and sitemap. CJ approved embedded Stripe Checkout as the primary payment flow on September 23, 2026. The customer enters the amount agreed with CJ on /pay; Stripe’s embedded form collects name, email, service reference, and payment details. Keep a visible Stripe-hosted payment-link fallback usable without JavaScript or the payment API. Card data goes directly to Stripe; server credentials stay in private environment bindings. The page states no new price.
 - `book-digital-presence-checkup.html`: no-indexed direct booking page for standalone Digital Presence Checkup referrals; not a primary public path
 - `tech-tips.html` and tip articles: helpful local education with a light path back to the Tech Tune-Up or contact
 - `workshops.html`: the single evergreen workshop directory, with two series and three inline title/description entries each; no event dates, venues, registration status, past/planned split, or separate Phone Cleanup listing. One bottom workshop-question CTA. Smartphone Confidence uses a supportive progression; AI for Everyday Life uses agency, practical direction, and ethical empowerment.
@@ -259,6 +260,7 @@ Mobile quick-action rules:
 - Use `Explore Series` on Smartphone Confidence class resource pages, linking to `/workshops#smartphone-confidence`.
 - Use `Book Consult` on Business Support and the Business Tech Consult page. Link to `/business-consult`, or to the scheduler anchor when already on that booking page.
 - Keep `Book Checkup` only on the no-indexed direct-referral Checkup page, linking to its scheduler anchor.
+- Use `Make a Payment` on `/pay`, linking to the payment card; the card starts embedded Stripe Checkout and retains a secondary hosted-checkout fallback. Hide the mobile dock while the payment controls are visible.
 - The dock appears only on mobile after the visitor reaches the page&rsquo;s main content. On any page with an embedded scheduler, hide it while the scheduler is visible so no booking controls are covered.
 
 ## Offer And Pricing Rules
