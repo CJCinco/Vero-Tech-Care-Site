@@ -14,25 +14,37 @@ for (const width of [320, 390, 1280]) {
     await expect(proof.locator('.customer-review-card')).toHaveCount(2);
     await expect(proof.locator('.review-name')).toHaveText(['Linda Barnett', 'Michele']);
     await expect(proof.locator('.review-avatar')).toHaveCount(2);
+    const headersAligned = await proof.locator('figcaption').evaluateAll(headers => headers.every(header => {
+      const avatar = header.querySelector('.review-avatar').getBoundingClientRect();
+      const name = header.querySelector('.review-name').getBoundingClientRect();
+      return name.left >= avatar.right && Math.abs((name.top + name.bottom) / 2 - (avatar.top + avatar.bottom) / 2) < 1;
+    }));
+    expect(headersAligned).toBe(true);
+    await expect(proof.locator('.customer-review-card').first()).toHaveCSS('text-align', 'left');
     const portrait = proof.locator('img.review-avatar');
     await portrait.scrollIntoViewIfNeeded();
     await expect.poll(() => portrait.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
     await expect(portrait).toHaveCSS('border-radius', '50%');
-    await expect(proof.locator('.review-source')).toHaveCount(2);
+    await expect(proof.locator('[data-review-toggle]')).toHaveCount(2);
+    await expect(proof.locator('.review-source')).toHaveCount(0);
     const cardOrder = await proof.locator('.customer-review-card').first().evaluate(card => [...card.children].map(el => el.tagName));
-    expect(cardOrder).toEqual(['FIGCAPTION', 'P', 'BLOCKQUOTE', 'A']);
+    expect(cardOrder).toEqual(['FIGCAPTION', 'P', 'BLOCKQUOTE', 'DIV', 'BUTTON']);
     await expect(proof.getByRole('img', { name: '5 out of 5 stars' })).toHaveCount(2);
-    await expect(proof.locator('blockquote')).toHaveText([
+    await expect(proof.locator('[data-review-excerpt]')).toHaveText([
       '“Patient, efficient and well prepared for the service call.”',
       '“very respectful and responsive”'
     ]);
     await expect(proof.locator('.customer-trust-line')).toContainText('5 out of 5 on Google');
     await expect(proof.locator('a[href="https://nextdoor.com/page/vero-tech-care-vero-beach-fl/"]')).toHaveText('Recommended and favorited by neighbors on Nextdoor');
     await expect(proof).not.toContainText(/\d+ (Faves|recommendations|mentions|customers)/i);
-    for (const link of await proof.locator('a').all()) {
+    for (const link of await proof.locator('a:visible').all()) {
       await link.focus();
       await expect(link).toBeFocused();
     }
+    // The user rejected summaries; do not expose empty expansion controls.
+    await expect(proof.locator('.customer-review-card a')).toHaveCount(0);
+    await expect(proof.locator('.review-summary-label')).toHaveCount(0);
+    await expect(proof.locator('[data-review-toggle]:visible')).toHaveCount(0);
     await page.keyboard.press('Tab');
     const geometry = await proof.evaluate(el => ({
       pageFits: document.documentElement.scrollWidth <= innerWidth,
