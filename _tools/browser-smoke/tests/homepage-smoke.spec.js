@@ -333,9 +333,11 @@ async function runHomepageSmoke(page, viewportName, viewport) {
   await expect(page.locator('#choose-path .test-path-card h2 a[href="/home-tech-help"]')).toHaveText(
     "For Home and Family"
   );
-  await expect(page.locator("#choose-path .audience-actions a", { hasText: "More Info" })).toHaveCount(2);
-  await expect(page.locator('#choose-path a[href="/business-consult"]')).toHaveText("Book Consult");
-  await expect(page.locator('#choose-path a[href="/special"]')).toHaveText("Book Tune-Up");
+  // Approved Stage 2 returns audience cards to the saved single service-page action contract.
+  await expect(page.locator("#choose-path .audience-actions a")).toHaveCount(2);
+  await expect(page.locator('#choose-path .audience-actions a[href="/business-websites"]')).toHaveText("Explore Business Support");
+  await expect(page.locator('#choose-path .audience-actions a[href="/home-tech-help"]')).toHaveText("Explore Personal Support");
+  await expect(page.locator('#choose-path a[href="/business-consult"], #choose-path a[href="/special"]')).toHaveCount(0);
 
   const about = page.locator("#about");
   await expect(about).toBeVisible();
@@ -599,7 +601,9 @@ async function runBusinessConsultBookingSmoke(page, viewportName, viewport) {
   );
   await expect(page.locator("header .proof-strip .proof-card")).toHaveCount(0);
   await expect(page.locator("#schedule-title")).toHaveText("Choose a time.");
-  await expect(page.locator("#booking")).toContainText("CJ will call");
+  // Approved guidance names the required consultation-only field; the booking contract is unchanged.
+  await expect(page.locator("#booking .scheduler-copy")).toContainText("CJ should call");
+  await expect(page.locator("#booking .scheduler-copy")).toContainText("required Callback phone number field");
   await expect(page.locator("#booking")).toContainText("do not send passwords");
 
   const bookingFrame = page.locator("#booking-embed");
@@ -2031,6 +2035,10 @@ test("shared HTML source contracts stay valid", async () => {
     expect(footer, `${fileName} footer should include the shared contact links`).toContain(
       'aria-label="Contact Vero Tech Care"'
     );
+
+    // Each promised contact action must have its own correct destination.
+    expect(footer, `${fileName} footer should offer a distinct Call link`).toMatch(/href="tel:\+17725884324">\s*<span>Call<\/span>/);
+    expect(footer, `${fileName} footer should offer a distinct Text link`).toMatch(/href="sms:\+17725884324">\s*<span>Text<\/span>/);
 
     const footerNavigation = footer.match(/<nav class="footer-links"[\s\S]*?<\/nav>/i)?.[0];
     const footerHrefs = [...footerNavigation.matchAll(/\bhref="([^"]+)"/gi)]
