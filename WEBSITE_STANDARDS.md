@@ -198,7 +198,7 @@ Each root homepage section has one job:
 - hero: inclusive positioning and equal Home/Business actions, using the same image-backed base layout as the dedicated pages
 - capability strip: three dark glass cards within the image-backed header, with one concise explanation for each capability theme; no package or pricing ladder
 - audience paths: one Personal Support card and one Business Support card with equal visual prominence; the Home and Family card may include one quiet text link to `/workshops#smartphone-confidence` without becoming a third audience path
-- customer proof within the audience-path section: CJ approved a linked Google rating and Nextdoor recommendation/Fave line, followed by exactly two attributed Google review cards on September 29, 2026; one Linda excerpt and one Michele excerpt, each with its verified five-star rating; no social activity counts or repeated cross-platform endorsements
+- customer proof within the audience-path section: CJ approved a linked Google rating and Nextdoor recommendation/Fave line, followed by exactly two attributed Google review cards on September 29, 2026; one Linda excerpt and one Michele excerpt, each ordered as circular profile photo (or initial when no photo exists), name, verified five-star rating, quote and source link; no social activity counts or repeated cross-platform endorsements
 - owner introduction: personal trust, working style, and what it feels like to receive help; no service catalog
 - contact: repeat the two audience routes and keep phone, text, and email secondary
 - footer: compact navigation, contact facts, and real social links

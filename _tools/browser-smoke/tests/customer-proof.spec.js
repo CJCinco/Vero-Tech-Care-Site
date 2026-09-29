@@ -12,7 +12,15 @@ for (const width of [320, 390, 1280]) {
     await page.goto(home);
     const proof = page.locator('.customer-proof');
     await expect(proof.locator('.customer-review-card')).toHaveCount(2);
-    await expect(proof.locator('figcaption')).toHaveText(['Linda Barnett · Google review', 'Michele · Google review']);
+    await expect(proof.locator('.review-name')).toHaveText(['Linda Barnett', 'Michele']);
+    await expect(proof.locator('.review-avatar')).toHaveCount(2);
+    const portrait = proof.locator('img.review-avatar');
+    await portrait.scrollIntoViewIfNeeded();
+    await expect.poll(() => portrait.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+    await expect(portrait).toHaveCSS('border-radius', '50%');
+    await expect(proof.locator('.review-source')).toHaveCount(2);
+    const cardOrder = await proof.locator('.customer-review-card').first().evaluate(card => [...card.children].map(el => el.tagName));
+    expect(cardOrder).toEqual(['FIGCAPTION', 'P', 'BLOCKQUOTE', 'A']);
     await expect(proof.getByRole('img', { name: '5 out of 5 stars' })).toHaveCount(2);
     await expect(proof.locator('blockquote')).toHaveText([
       '“Patient, efficient and well prepared for the service call.”',
@@ -25,6 +33,7 @@ for (const width of [320, 390, 1280]) {
       await link.focus();
       await expect(link).toBeFocused();
     }
+    await page.keyboard.press('Tab');
     const geometry = await proof.evaluate(el => ({
       pageFits: document.documentElement.scrollWidth <= innerWidth,
       cardsFit: [...el.querySelectorAll('.customer-review-card')].every(card => {
