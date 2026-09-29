@@ -700,7 +700,8 @@ h3 {
   text-underline-offset: 0.15em;
 }
 
-.scheduler-note {
+.scheduler-note,
+.scheduler-timezone {
   margin-bottom: 1.4rem;
   max-width: 48rem;
   color: var(--text-soft);
@@ -764,6 +765,31 @@ h3 {
   color: var(--text-soft);
   font-size: 1rem;
   text-align: center;
+}
+
+/* Preserve the embedded scheduler's usable width on phones. */
+@media (max-width: 600px) {
+  .booking-page .section-booking > .wrap {
+    width: 100%;
+  }
+
+  .booking-page .section-booking .scheduler-shell {
+    padding-inline: 0;
+    border-inline: 0;
+  }
+
+  .booking-page .section-booking .scheduler-shell > :not(.scheduler-embed-shell) {
+    margin-inline: 1rem;
+  }
+
+  .booking-page .section-booking .scheduler-embed-shell {
+    border-inline: 0;
+    border-radius: 0;
+  }
+
+  .booking-page .section-booking .scheduler-frame {
+    border-radius: 0;
+  }
 }
 
 .hero-card {
