@@ -25,10 +25,13 @@ for (const width of [320, 390, 1280]) {
     await portrait.scrollIntoViewIfNeeded();
     await expect.poll(() => portrait.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
     await expect(portrait).toHaveCSS('border-radius', '50%');
-    await expect(proof.locator('[data-review-toggle]')).toHaveCount(2);
+    for (const avatar of await proof.locator('.review-avatar').all()) {
+      await expect(avatar).toHaveCSS('width', '40px');
+      await expect(avatar).toHaveCSS('height', '40px');
+    }
     await expect(proof.locator('.review-source')).toHaveCount(0);
     const cardOrder = await proof.locator('.customer-review-card').first().evaluate(card => [...card.children].map(el => el.tagName));
-    expect(cardOrder).toEqual(['FIGCAPTION', 'P', 'BLOCKQUOTE', 'DIV', 'BUTTON']);
+    expect(cardOrder).toEqual(['FIGCAPTION', 'P', 'BLOCKQUOTE', 'A']);
     await expect(proof.getByRole('img', { name: '5 out of 5 stars' })).toHaveCount(2);
     await expect(proof.locator('[data-review-excerpt]')).toHaveText([
       '“Patient, efficient and well prepared for the service call.”',
@@ -41,8 +44,15 @@ for (const width of [320, 390, 1280]) {
       await link.focus();
       await expect(link).toBeFocused();
     }
-    // The user rejected summaries; do not expose empty expansion controls.
-    await expect(proof.locator('.customer-review-card a')).toHaveCount(0);
+    const fullReviews = proof.locator('.customer-review-card a');
+    await expect(fullReviews).toHaveCount(2);
+    for (const link of await fullReviews.all()) {
+      await expect(link).toBeVisible();
+      await expect(link).toHaveText('Read more');
+      await expect(link).toHaveAttribute('href', 'https://www.google.com/maps/place/Vero+Tech+Care/@27.7090496,-80.5725545,11z/data=!4m8!3m7!1s0x493d3f6e5940e81:0x3129c96658526161!8m2!3d27.7090496!4d-80.5725545!9m1!1b1!16s%2Fg%2F11n51m53m0');
+      await expect(link).toHaveAttribute('target', '_blank');
+      await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    }
     await expect(proof.locator('.review-summary-label')).toHaveCount(0);
     await expect(proof.locator('[data-review-toggle]:visible')).toHaveCount(0);
     await page.keyboard.press('Tab');
