@@ -862,3 +862,7 @@
   color: var(--text-soft);
   line-height: 1.6;
 }
+
+.homepage-overview .review-full p {
+  white-space: pre-wrap;
+}
