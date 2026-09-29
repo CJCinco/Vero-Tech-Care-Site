@@ -731,3 +731,79 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* September 29 approved customer proof, within the existing audience section. */
+.homepage-overview .customer-proof {
+  margin-top: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.homepage-overview .customer-trust-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+  margin: 0 0 1.25rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.homepage-overview .customer-trust-line a,
+.homepage-overview .customer-review-card a {
+  color: var(--accent-deep);
+  text-underline-offset: 0.2em;
+}
+
+.homepage-overview .customer-review-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.homepage-overview .customer-review-card {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border: 1px solid rgba(17, 21, 20, 0.12);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  color: var(--text);
+}
+
+.homepage-overview .customer-review-card .review-stars {
+  margin: 0 0 0.8rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+}
+
+.homepage-overview .customer-review-card blockquote {
+  margin: 0 0 1rem;
+  font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", serif;
+  font-size: clamp(1.35rem, 2.5vw, 1.65rem);
+  line-height: 1.35;
+}
+
+.homepage-overview .customer-review-card blockquote p {
+  margin: 0;
+}
+
+.homepage-overview .customer-review-card figcaption {
+  margin-top: auto;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 679px) {
+  .homepage-overview .customer-review-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .homepage-overview .customer-trust-line {
+    flex-direction: column;
+  }
+
+  .homepage-overview .trust-divider {
+    display: none;
+  }
+}

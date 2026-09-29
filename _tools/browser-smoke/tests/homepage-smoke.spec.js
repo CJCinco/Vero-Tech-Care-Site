@@ -2027,7 +2027,7 @@ test("shared HTML source contracts stay valid", async () => {
     const footer = source.match(/<footer\b[\s\S]*?<\/footer>/i)?.[0];
     expect(footer, `${fileName} should use the shared site footer`).toBeTruthy();
     expect(footer, `${fileName} footer should use the shared brand copy`).toContain(
-      "Premium, patient in-home tech support for Vero Beach and nearby homes."
+      "Patient, practical tech support for Vero Beach homes and local businesses."
     );
     expect(footer, `${fileName} footer should include the shared social links`).toContain(
       'aria-label="Social links"'
