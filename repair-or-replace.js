@@ -18,3 +18,40 @@ const concernLabels={more:'More long-term concern if damage is present',moderate
 function update(){const m=models[$('model').value];$('model-value').textContent=$('model').value==='a2179'?'≈ $100–$200':($('model').value===''?'Select a model':'Assessment needed');$('repair-rows').replaceChildren(...rowsFor(m).map((r,index)=>({...r,index})).sort((a,b)=>({more:0,moderate:1,slight:2,unranked:3}[a.concern]-{more:0,moderate:1,slight:2,unranked:3}[b.concern])||a.index-b.index).map(r=>{const row=document.createElement('tr');row.className=`concern-${r.concern}`;for(const [title,main,kind] of [['Part or repair',r.name,'part'],['Rough cost',r.price,'cost'],['What the symptoms suggest',r.likelihood,'likelihood']]){const cell=document.createElement('td');cell.dataset.label=title;cell.className=kind;const lead=document.createElement('strong');lead.textContent=main;cell.append(lead);if(kind==='likelihood'){const accessible=document.createElement('span');accessible.className='sr-only';accessible.textContent=`. ${concernLabels[r.concern]}.`;cell.append(accessible);}row.append(cell);}return row;}));}
 function openPanel(name){document.querySelectorAll('[role=tabpanel]').forEach(p=>p.hidden=p.id!==`${name}-panel`);document.querySelectorAll('[role=tab]').forEach(t=>{const selected=t.dataset.panel===name;t.setAttribute('aria-selected',String(selected));t.tabIndex=selected?0:-1;});}
 $('model').addEventListener('change',update);$('model').addEventListener('input',update);document.querySelectorAll('[role=tab]').forEach(t=>{t.addEventListener('click',()=>openPanel(t.dataset.panel));t.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const tabs=[...document.querySelectorAll('[role=tab]')],i=tabs.indexOf(t),next=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;openPanel(tabs[next].dataset.panel);tabs[next].focus();}});});window.LaptopGuide={models,estimate,rowsFor};update();
+
+// Use the standard website menu behavior.
+(() => {
+  const toggles = document.querySelectorAll(".nav-menu-toggle");
+
+  toggles.forEach((toggle) => {
+    const navigation = toggle.closest(".primary-site-nav");
+    if (!navigation) return;
+
+    const closeMenu = () => {
+      navigation.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+    };
+
+    toggle.addEventListener("click", () => {
+      const willOpen = !navigation.classList.contains("is-open");
+      navigation.classList.toggle("is-open", willOpen);
+      toggle.setAttribute("aria-expanded", String(willOpen));
+    });
+
+    navigation.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeMenu();
+        toggle.focus();
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 820) closeMenu();
+    });
+  });
+
+})();
