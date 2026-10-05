@@ -624,3 +624,7 @@ display: inline-flex;
 .laptop-site-navigation .workshop-contact .button {
 flex-shrink: 0;
 }
+
+/* Keep guide typography from overriding the standard navigation. */
+.laptop-site-navigation .brand {color:var(--white);}
+.laptop-site-navigation .brand-tag {font-weight:400;}
