@@ -628,3 +628,6 @@ flex-shrink: 0;
 /* Keep guide typography from overriding the standard navigation. */
 .laptop-site-navigation .brand {color:var(--white);}
 .laptop-site-navigation .brand-tag {font-weight:400;}
+
+/* Ranked shopping sources below the replacement cards. */
+.shop-directory{margin-top:32px}.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.shop-column{background:#fffefa;border:1px solid var(--line);border-radius:13px;padding:23px}.shop-column h3{margin:0 0 12px}.shop-column ol{margin:0;padding-left:25px}.shop-column li{padding:14px 0;border-top:1px solid #e2e6dc}.shop-column li::marker{color:var(--deep);font-weight:650}.shop-column li a{font-size:16px;font-weight:650;line-height:1.5}.shop-column li p{font-size:13px;line-height:1.6;color:var(--muted);margin:6px 0 0}.model-picker .value-caution{font-size:12px;line-height:1.5;max-width:340px;margin-top:8px;color:var(--muted)}@media(max-width:800px){.shop-grid{grid-template-columns:1fr;gap:18px}.shop-column{padding:21px}}
