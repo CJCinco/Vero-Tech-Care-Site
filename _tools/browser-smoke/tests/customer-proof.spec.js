@@ -106,7 +106,7 @@ test('all customer-facing footers include both approved audiences', async () => 
   const pages = fs.readdirSync(root).filter(name => name.endsWith('.html'))
     .map(name => fs.readFileSync(path.join(root, name), 'utf8'))
     .filter(text => text.includes('class="footer-copy"'));
-  expect(pages).toHaveLength(23);
+  expect(pages).toHaveLength(24);
   for (const text of pages) {
     expect(text).toContain('Patient, practical tech support for Vero Beach homes and local businesses.');
     expect(text).not.toContain('Premium, patient in-home tech support for Vero Beach and nearby homes.');

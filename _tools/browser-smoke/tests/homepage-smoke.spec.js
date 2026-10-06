@@ -2175,7 +2175,7 @@ test("Tech Tips index and articles expose matching discovery and author metadata
   await page.goto(pathToFileURL(path.join(siteRoot, "tech-tips.html")).toString());
   await expect(page.locator("#guides .path-number")).toHaveCount(0);
   const links = await page.locator("#guides .path-card h3 a").evaluateAll((nodes) => nodes.map((node) => ({ title: node.textContent, href: node.getAttribute("href") })));
-  expect(links).toHaveLength(5);
+  expect(links).toHaveLength(6);
   for (const link of links) {
     await page.goto(pathToFileURL(path.join(siteRoot, `${link.href.slice(1)}.html`)).toString());
     await expect(page.locator(".article-byline a")).toHaveAttribute("href", "/#about");
